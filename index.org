@@ -1,0 +1,1062 @@
+#+SETUPFILE: ./org-html-themes/org/theme-readtheorg.setup
+#+Title: Dynamic effects of health insurance reform
+#+Author: 
+#+PROPERTY: header-args  :session mortality :kernel pymc_env :async yes
+
+#+LANGUAGE: en
+#+INFOJS_OPT: view:showall toc:t ltoc:t mouse:underline path:http://orgmode.org/org-info.js
+#+LaTeX_CLASS: article-12
+#+LATEX_HEADER: \renewcommand{\floatpagefraction}{.8} %% avoids figures getting their own page
+#+latex_header: \input{author.tex}
+#+latex_engraved_theme: t
+#+latex_header: \usepackage[mathletters]{ucs}
+#+latex_header: \usepackage[utf8x]{inputenc}
+#+latex_header: \usepackage{libertine}
+#+latex_header: \usepackage[libertine]{newtxmath}
+#+latex_header: \usepackage{unicode-math}
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+OPTIONS: toc:nil num:2 timestamp:nil ':t \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
+#+HTML_HEAD: <link rel="stylesheet" href="./css/Latex.css">
+#+HTML_HEAD: <link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
+#+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+
+
+# this file must exist be a path or exist in `org-cite-csl-styles-dir': # apa-5th-edition.csl
+#+csl-style: chicago-author-date-16th-edition.csl
+
+# this must be a locales file in `org-cite-csl-locales-dir'. Defaults to en-US
+#+csl-locale: en-US
+
+
+  
+
+#+begin_abstract
+#+end_abstract
+
+
+*JEL codes:* I11, I13, I18
+
+*Keywords:* out-of-pocket payments, mortality, health insurance, poverty, unmet medical needs
+
+
+@@html:<p class="author">Author: Jan Boone</p>@@
+
+
+
+
+#+LATEX: \newpage
+
+
+
+* How does this work? :code:
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+
+With this document, the reader can retrace the code which we used to produce the results, figures, tables etc. for this paper.
+
+This file is written in [[https://www.gnu.org/software/emacs/][Emacs]] [[https://orgmode.org/][org mode]] which allows us to combine text and code. The file is exported to pdf (via latex) and to html for the web-version. The web-version --which you are reading now-- contains the sections tagged =code= which are not exported to the pdf version of the paper.
+
+Here you can download [[./out_of_pocket_payments_and_health.pdf][the pdf of the paper]].
+
+For the export to html we use [[https://github.com/vincentdoerig/latex-css][LaTeX.CSS]] with some small tweaks to make it compatible with the org-exporter that we use which is based on [[https://github.com/jkitchin/org-ref][org-ref]]. The export of the org file to html is almost perfect, but some issues are not yet resolved. To illustrate, the html export has trouble with latex environments like =align=, =split= in equations etc. For the time being this is resolved by using multiple =equation= environments. Further, whereas latex drops the label on equations that are not cited, the html exporter is not able to do this. Hence, there are more numbered equations in the web-version of the paper. This is all a bit clumsy but otherwise works fine.
+
+We use [[https://www.python.org/][Python]] to program the model and [[https://docs.pymc.io/][PyMC]] for the Bayesian analysis. All these resources are open source and freely available. If you want to install Python, [[https://www.anaconda.com/products/individual][Anaconda]] is a good place to start.
+
+To avoid replicating code that is used for different models, we use [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb]]. This is used as follows. First, we give the code block a name, like =code-preamble=. Then we want to use this code, we call the code block by =<<code-preamble>>=.
+
+There is a separate [[./getting_data.org][file]] which describes how we get the data from Eurostat. The dataset itself is too big for github and can be found on [[https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AABEBD][DataverseNL]].
+
+The repository for the paper can be found [[https://github.com/janboone/out_of_pocket_payments_and_health][here]].
+
+* preamble :code:
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+
+#+caption: code-header
+#+name: code-header
+#+begin_src jupyter-python
+#########################################################
+# This file is tangled from the index.org file in the root directory
+# the author runs the code from the index.org file directly in emacs
+# if you do not have emacs, you can run the code to generate the trace files
+# from this file
+# the file expects the following folder structure to run without problems:
+# the folder with the data should be located at: ./data/data_deaths_by_age_nuts_2.csv
+# the trace files are written to ./traces
+# figures are written to ./figures
+#########################################################
+#+end_src
+
+
+
+
+#+caption: code-preamble
+#+name: code-preamble
+#+begin_src jupyter-python :display plain
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy.lib.stride_tricks import sliding_window_view
+import scipy as sc
+import pandas as pd
+import pymc as pm
+from pymc.model.transform.conditioning import do
+import arviz as az
+import pytensor
+import pytensor.tensor as pt
+import xarray as xr
+import seaborn as sns
+from tabulate import tabulate
+#+end_src
+
+#+RESULTS: code-preamble
+
+#+RESULTS:
+
+We use the following versions of pymc and numpy:
+
+#+begin_src jupyter-python :display plain
+print(pm.__version__)
+print(np.__version__)
+#+end_src
+
+#+RESULTS:
+: 5.19.1
+: 1.26.4
+
+
+
+** loading data
+
+In order to have sufficient data for all our variables we analyze data from 2008-2020. Further we analyze mortality for ages 45-85. At lower ages, mortality is very close to zero; for ages above 85 the number of observations per age group drops rapidly.
+  
+#+caption: code-data
+#+name: code-data
+#+begin_src jupyter-python :display plain
+low_year = 2008
+high_year = 2020
+low_age = 45 #(to capture age category Y45-54)
+high_age = 85 #(but we exlude age category Y_GE85)
+ds = xr.open_dataset('./data/oop_health_data.nc')
+ds
+#+end_src
+
+#+RESULTS: code-data
+#+begin_example
+<xarray.Dataset> Size: 62MB
+Dimensions:                          (nuts2: 313, year: 31, sex: 2, age: 99)
+Coordinates:
+  ,* nuts2                            (nuts2) <U4 5kB 'AT11' 'AT12' ... 'UKN0'
+  ,* year                             (year) int64 248B 1990 1991 ... 2019 2020
+  ,* sex                              (sex) <U1 8B 'F' 'M'
+  ,* age                              (age) float64 792B 1.0 2.0 ... 98.0 99.0
+    country                          (nuts2) <U14 18kB ...
+    age_category                     (age) <U6 2kB ...
+Data variables:
+    population                       (age, sex, year, nuts2) float64 15MB ...
+    country_code                     (age, sex, year, nuts2) <U2 15MB ...
+    HF3_PC_CHE                       (age, sex, year, nuts2) float64 15MB ...
+    deaths                           (age, sex, year, nuts2) float64 15MB ...
+    percentage_material_deprivation  (year, nuts2) float64 78kB ...
+    TOOEXP                           (year, nuts2) float64 78kB ...
+    UNMET                            (year, nuts2) float64 78kB ...
+    infant mortality                 (year, nuts2) float64 78kB ...
+#+end_example
+
+
+
+
+#+begin_src jupyter-python
+cohorts = 30
+age_matrix = sliding_window_view(np.arange(low_age,high_age+1), cohorts)[:-1]
+age_indices = age_matrix-low_age
+# print(tabulate(age_matrix, tablefmt="orgtbl"))
+#+end_src
+
+#+RESULTS:
+
+
+
+#+begin_src jupyter-python :display plain
+my_countries = ["Bulgaria","Hungary","Denmark","Sweden"]
+ds = ds.where((low_age <= ds.age) & (ds.age <= high_age) &\
+              (low_year <= ds.year) & (ds.year <= high_year) &\
+              (ds.country.isin(my_countries) & (ds.country_code != "") &\
+              (ds.population > 1.0) & (ds.population > ds.deaths)), drop=True)
+# ds.dropna(dim= "nuts2",how="all")
+ds["TOOEXP"] = ds["TOOEXP"].isel(age=0,sex=0)
+ds["infant mortality"] = ds["infant mortality"].isel(age=0,sex=0)
+ds["UNMET"] = ds["UNMET"].isel(age=0,sex=0)
+ds["UNMET_other"] = ds["UNMET"]-ds["TOOEXP"]
+ds["percentage_material_deprivation"] = ds["percentage_material_deprivation"].isel(age=0,sex=0)
+ds
+#+end_src
+
+#+RESULTS:
+#+begin_example
+<xarray.Dataset> Size: 795kB
+Dimensions:                          (age: 41, sex: 2, year: 11, nuts2: 27)
+Coordinates:
+  ,* nuts2                            (nuts2) <U4 432B 'BG31' 'BG32' ... 'SE33'
+  ,* year                             (year) int64 88B 2008 2009 ... 2017 2018
+  ,* sex                              (sex) <U1 8B 'F' 'M'
+  ,* age                              (age) float64 328B 45.0 46.0 ... 84.0 85.0
+    country                          (nuts2) <U14 2kB 'Bulgaria' ... 'Sweden'
+    age_category                     (age) <U6 984B 'Y45-54' ... 'Y_GE85'
+Data variables:
+    population                       (age, sex, year, nuts2) float64 195kB 5....
+    country_code                     (age, sex, year, nuts2) object 195kB 'BG...
+    HF3_PC_CHE                       (age, sex, year, nuts2) float64 195kB na...
+    deaths                           (age, sex, year, nuts2) float64 195kB 11...
+    percentage_material_deprivation  (year, nuts2) float64 2kB nan nan ... 0.4
+    TOOEXP                           (year, nuts2) float64 2kB nan nan ... 0.0
+    UNMET                            (year, nuts2) float64 2kB nan nan ... 2.5
+    infant mortality                 (year, nuts2) float64 2kB nan nan ... 2.8
+    UNMET_other                      (year, nuts2) float64 2kB nan nan ... 2.5
+#+end_example
+
+
+#+begin_src jupyter-python :display plain
+country = ds.country.values
+category = ds.age_category.values
+n_regions = ds.nuts2.values.shape[0] # number of regions per country
+n_countries = len(np.unique(ds.country.values)) # total number of countries
+
+# Mapping of regions to countries
+# Example: regions 0, 1 -> country 0; regions 2, 3 -> country 1; regions 4, 5 -> country 2
+region_to_country = pd.factorize(country)[0]
+
+# Create the matrix (countries x regions)
+country_region_matrix_01 = np.zeros((n_countries, n_regions)) # 0-1 matrix with a 1 at position cr if region r belongs to country c
+for r,c in enumerate(region_to_country):
+     country_region_matrix_01[c, r] = 1
+
+# Normalize rows to compute averages per country (across regions)
+country_region_matrix = country_region_matrix_01 / country_region_matrix_01.sum(axis=1, keepdims=True)
+
+n_ages = ds.age.values.shape[0] # number of ages
+n_categories = len(np.unique(ds.age_category.values)) # number of age categories
+
+# Mapping of ages to categories
+age_to_category = pd.factorize(category)[0]
+
+# Create the matrix: 1 at ca if age a is in category c
+category_age_matrix = np.zeros((n_categories, n_ages))
+for a,c in enumerate(age_to_category):
+     category_age_matrix[c, a] = 1
+
+# Normalize rows to compute averages per age category (across ages)
+category_age_matrix = category_age_matrix / category_age_matrix.sum(axis=1, keepdims=True)
+#+end_src
+
+#+RESULTS:
+
+**** TODO if OOP = 0; make it NaN (instead of adding 0.00001 to avoid error in beta distribution)
+  - same for Deprivation: but we can allow for poverty equal to 0????
+  - happens after including Hungary
+
+In python xarray library I want to replace value zero with nan. what is the code for this?
+
+ You can replace zeros in an xarray DataArray or Dataset with NaN values using the =where= function. Here's how you could do it:
+
+#+begin_src python
+# Replace zeros with NaNs
+da = da.where(da != 0)
+#+end_src
+
+In this case, =da= is your DataArray or Dataset. This will replace all zero values in the DataArray with NaN values.
+
+
+
+
+~OOP~ does not vary with age/gender and hence we can take the average over these dimensions ~OOP.mean(axis=(0,1))~. Then we turn ~OOP~ into a year/country dimension instead of region.
+
+#+begin_src jupyter-python :display plain
+Population = ds.population.values.astype(int)
+OOP = ds.HF3_PC_CHE.where(ds.HF3_PC_CHE!=0)/100.0
+m_infant = ds['infant mortality'].where(ds['infant mortality']!=0)/100.0
+OOP_c = np.dot(OOP.mean(axis=(0,1)),country_region_matrix.T)
+M = ds.deaths.values.astype(int)
+Deprivation = ds.percentage_material_deprivation/100.0 + 0.0001
+Unmet = ds.UNMET.where(ds.UNMET!=0)/100.0 # replaces UNMET equal to 0 with nan
+Unmet_o = ds.UNMET_other/100.0 # used to calculate σ per age/sex category
+U_log_odds = np.log((Unmet)/(1-Unmet))
+U_o_log_odds = np.log((Unmet_o)/(1-Unmet_o))
+TooExp = ds.TOOEXP/100.0
+#+end_src
+
+#+RESULTS:
+
+
+- there are missing observations for TOOEXP but not for UNMET; hence I use UNMET in the model and not too exp.
+- OOP_c has 0.0 in 2010 for Bulgaria; should be NaN
+
+#+begin_src jupyter-python :display plain
+print(np.sum(Unmet.isnull()))
+print(np.sum(OOP.isnull()))
+print(np.sum(Deprivation.isnull()))
+print(Population.shape)
+#+end_src
+
+#+RESULTS:
+: <xarray.DataArray 'UNMET' ()> Size: 8B
+: array(45)
+: <xarray.DataArray 'HF3_PC_CHE' ()> Size: 8B
+: array(2296)
+: <xarray.DataArray 'percentage_material_deprivation' ()> Size: 8B
+: array(45)
+: (41, 2, 11, 27)
+
+** creating cohort data
+
+
+- to create cohort data use =np.diagonal=:
+  - 45 year old in 2007; 46 in 2008, ..., 54 in 2016
+
+
+- start all cohorts in 2008 and let them run till 2018
+- 45-55: 45 in 2008 and 55 in 2018
+- 46-56
+- 47-57 ... 74-84
+- we start with =c_dim= equal to 30 cohorts in 2008 that we follow over time till 2018
+- cohorts that we miss are: starting at 45 in 2009 and in 2010; adding these 2 makes the coding very hard and hardly adds information
+- with =cohorts = 30= the first year has ages 45-74 which correspond to 3 age categories
+- in the final year (year 11) we have 55-84 which also corresponds to 3 age categories
+- what can we do for years in between? match fewer age categories???
+  - 55-64 and 65-74 can be matched every year
+  - 45-54 only in the first year; 75-84 only in the last year
+  - how do we structure Bad_health_cohort? What is the simplest way to map it to observed in the pymc model???
+
+#+begin_src jupyter-python :display plain
+c_dim, g_dim, t_dim, r_dim = cohorts, 2, len(ds.year), n_regions
+n_dim = n_countries
+P_cohort = np.zeros((t_dim, c_dim, g_dim, r_dim))
+M_cohort = np.zeros((t_dim, c_dim, g_dim, r_dim))
+
+for offset in range(c_dim):
+  for g in range(g_dim):
+     for r in range(r_dim):
+        P_cohort[:,offset,g,r] = np.diagonal(Population, axis1=0, axis2=2, offset=-offset)[g,r,:]
+        M_cohort[:,offset,g,r] = np.diagonal(M, axis1=0, axis2=2, offset=-offset)[g,r,:]
+#+end_src
+
+#+RESULTS:
+
+
+We use the following moments to specify our priors. To deal with missing values in ~Deprivation~ we model it as a distribution from which we draw missing values. Such a distribution cannot have a standard deviation of zero and hence we add a small number to the standard deviation to avoid this.
+
+
+#+begin_src jupyter-python
+mean_depr = Deprivation.mean(axis=(0)).values
+std_depr = Deprivation.std(axis=(0)).values + 0.0001
+mean_oop_c = np.nanmean(OOP_c,axis=0)
+std_oop_c = np.nanstd(OOP_c,axis=0)
+mean_m_infant = np.nanmean(m_infant,axis=0)
+std_m_infant = np.nanstd(m_infant,axis=0)
+mean_unmet = np.mean(Unmet, axis=0).values
+prior_delta =np.log(np.tensordot((M/Population), country_region_matrix.T, axes=([3],[0]))/(1- np.tensordot((M/Population), country_region_matrix.T, axes=([3],[0])))).mean() # varies by country
+prior_delta_s =np.log(np.tensordot((M/Population), country_region_matrix.T, axes=([3],[0]))/(1- np.tensordot((M/Population), country_region_matrix.T, axes=([3],[0])))).std() # varies by country
+log_odds_mort = np.log(((1+M)/Population)/(1-((1+M)/Population)))
+mort_c = np.log(np.tensordot((M_cohort/P_cohort), country_region_matrix.T, axes=([3],[0]))/(1- np.tensordot((M_cohort/P_cohort),\
+                                              country_region_matrix.T, axes=([3],[0])))) # varies by age, cohorts, gender, country
+gender_effect_π = (mort_c.mean(axis=(0,1,3))-mort_c.mean(axis=(0,1,2,3))) # varies by gender
+country_effect_π = (mort_c.mean(axis=(0,1,2))-mort_c.mean(axis=(0,1,2,3))) # varies by country
+prior_π = (M/Population).mean(axis=(1,2,3))[:,None,None] + country_effect_π[None,None,:] + gender_effect_π[None,:,None] 
+#+end_src
+
+#+RESULTS:
+
+
+
+
+* Introduction
+
+
+Most developed economies face rising healthcare expenditures. In many countries the healthcare sector grows faster than the economy as a whole [[citep:&oecd-2021-healt-glanc]]. One of the instruments that governments have to curb this expenditure growth is demand-side cost-sharing. The effect of demand-side cost-sharing on healthcare utilization is well known. As cost-sharing increases, healthcare becomes more expensive for the individual and demand for treatments falls. It is less clear whether and to which extent demand-side cost-sharing induces people to forgo low value care only [[citep:&newhouse;&glied-2011-chapt-user]].
+
+It is commonly believed that health insurance subsidizes health consumption, incentivizing individuals to seek expensive treatments with limited health benefits. Economists refer to this phenomenon as moral hazard. When considering the social costs of such treatments, which exceed the individual's out-of-pocket (oop) expenditures, it is advantageous to reduce moral hazard through increased demand-side cost-sharing. This trade-off involves balancing the efficiency gains resulting from reduced moral hazard against the increased risk to risk-averse individuals stemming from oop expenses.
+
+** Map :code:
+:properties:
+:header-args: :session geopandas :kernel geo_env :async yes
+:END:
+
+As we use a different python kernel here from the one used in the rest of the paper (due to conflicting supporting packages at the time of the analysis), we need to import some libraries and the data again. We use [[https://geopandas.org/en/stable/][geopandas]] to plot the map of the NUTS 2 regions where the color indicates mortality per 100k population.
+
+#+begin_src jupyter-python
+import numpy as np
+import geopandas as gpd
+import matplotlib.pyplot as plt
+plt.style.use('Solarize_Light2')
+import pandas as pd
+# import altair as alt
+#+end_src
+
+#+RESULTS:
+
+#+begin_src jupyter-python
+# read the NUTS shapefile and extract
+# the polygons for a individual countries
+nuts=gpd.read_file('./SHP/NUTS_RG_60M_2021_4326_LEVL_2.shp')
+
+age_min = 35
+age_max = 85
+plot_age = np.arange(age_min,age_max+1)
+first_year = 2009
+last_year = 2019
+df = pd.read_csv('./data/data_deaths_by_age_nuts_2.csv')
+df.dropna(subset=['deaths','population', 'TOOEXP',\
+                  'HF3_PC_CHE','lagged_mortality'],
+                    axis=0, how ='any',inplace=True)
+df = df[(df.population > df.deaths) & (df.age >= age_min) & \
+        (df.age <= age_max) & (df.year <= last_year) &\
+        (df.year >= first_year)]
+df['mortality'] = df.deaths/df.population*100000
+df = df[(df.year==2018) & (df.age==40) & (df.sex=='F')]
+
+
+nuts = nuts.to_crs(epsg=3035)
+nuts['centroids'] = nuts.centroid
+nuts = nuts.merge(df, how='inner',\
+                  left_on = 'NUTS_ID', right_on = 'nuts2')
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src jupyter-python :file ./figures/Europe_mortality_40_F_2018.png
+nuts[nuts.sex=='F'].plot(column='mortality',
+                         legend=True,
+                         figsize=(16,16),
+                         # vmin = 71,
+                         vmax = 0.002*100000,
+                         missing_kwds={'color': 'lightgrey'},
+                         legend_kwds={'label': "Mortality rate",
+                                      'orientation': "vertical"})
+# adjust plot domain to focus on EU region
+plt.xlim(0.25e7, 0.6e7)
+plt.ylim(1.3e6, 5.5e6)
+plt.xticks([],[])
+plt.yticks([],[])
+plt.title(\
+  'Mortality 40 year old females in 2018 (per 100,000 population)');
+# plt.tight_layout()
+# plt.legend('right');
+#+end_src
+
+#+RESULTS:
+[[file:./figures/Europe_mortality_40_F_2018.png]]
+
+
+* Theory
+
+
+* Data
+
+The data that we use is from [[https://ec.europa.eu/eurostat/web/regions/data/database][Eurostat's regional database]] and provides for NUTS 2 regions population size and number of deaths per age-gender category. In principle, we have data on 14 countries and 78 regions for the years 2009-2019, ages 35-85 for women and men. The years 2009-2019 were chosen  because, at the time of the analysis, data on poverty was available from 2009 onward and data on the [[https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en][number of deaths]] ran till 2019. Further, we want to exclude the corona years which were exceptional in terms of mortality. We start at age 35 because at ages below 35, mortality is so low that there is hardly a difference between mortality in regions with different poverty levels (see Figure ref:fig:DifferenceMortalityData below). For ages above 85 population numbers per region get rather low. 
+
+We drop NUTS 2 region-year combinations where for an age-gender category --due to reporting issues or people moving-- the number of deaths in a year exceeds the population size at the start of the year. We focus on observations where we have complete records on mortality, the fraction of people indicating they postponed treatment because it was too expensive and oop expenditure. 
+
+Table ref:tab:summary shows the summary statistics for our variables. We briefly discuss the main variables, the appendix provides more detail. We have more than 50k observations.[fn::A rough estimate of the max. number of observations that we could have is: 78 (regions) $*$ 10 (years) $*$ 50 (ages) $*$ 2 (genders) $=78k$. Missing observations on some of the key variables reduces this to 50k.] The average population size per region-age-gender category is about 7500 and the average number of deaths 100. Median population size per category equals 6500 and median number of deaths 56. In our data, the percentage of people dying in a NUTS 2/year/age/gender category (=mortality=) equals 2% on average with a maximum of 20% for some region and age combination.
+
+#+caption: Summary statistics main variables
+#+name: tab:summary
+|                                     |   count |   mean |    std |   min |   median |     max |
+|-------------------------------------+---------+--------+--------+-------+----------+---------|
+| population                          |   52612 | 7491.3 | 4805.3 | 440   |   6477   | 36117   |
+| deaths                              |   52612 |  103.2 |  126.5 |   0   |     56   |  1033   |
+| mortality (%)                       |   52612 |    2.1 |    2.9 |   0   |      0.8 |    20.7 |
+| poverty (%)                         |   50878 |   16.5 |    6.6 |   2.6 |     15.3 |    36.1 |
+| deprivation (%)                     |   52612 |   11.2 |   12.8 |   0   |      3.4 |    52.3 |
+| too exp. (%)                        |   52612 |    2   |    3.1 |   0   |      0.6 |    16   |
+| unmet (%)                           |   52612 |    5.8 |    4.1 |   0   |      4.8 |    20.9 |
+| out-of-pocket (%)                   |   52612 |   22   |    8.9 |   8.8 |     19.5 |    47.7 |
+| voluntary (%)                       |   52612 |    3.1 |    3.1 |   0.3 |      1.6 |    15.2 |
+| expend. per head                    |   52612 | 3386.6 | 2691.3 | 307.7 |   3559.5 |  8484.9 |
+| infant mortality (\textperthousand) |   52612 |    4.3 |    2.3 |   0.8 |      3.6 |    11.6 |
+| bad health (%)                      |   52612 |   12.8 |   12.2 |   0.8 |      8.3 |    78.9 |
+
+We use two measures for poverty; each of these measures comes from the EU statistics on income and living conditions ([[https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:EU_statistics_on_income_and_living_conditions_(EU-SILC)][EU-SILC]]) survey. The first is "at-risk-of-poverty rate" that we refer to as =poverty=. This is a relative poverty measure: the share of people with disposable income after social transfers below a threshold based on the national median disposable income. The material deprivation measure (denoted =deprivation=) refers to the enforced inability to pay unexpected expenses, afford adequate heating of the home, durable goods like a washing machine etc. 
+
+In our data, the (unweighted) average (across regions and years) percentage of people at risk of poverty equals 16% with a maximum of 36%. For material deprivation the numbers are 11% and 52%. These measures vary by NUTS 2 region and year but not by age or gender. We use =deprivation= in our baseline analysis because it captures more closely the idea of postponing treatment due to financial constraints. The =poverty= variable is used in a robustness check.
+
+Also from the EU-SILC survey, we use the variable capturing unmet medical needs because the forgone treatment was too expensive (=too exp=). The variable =unmet= measures percentage of people in need of healthcare that postpone or forgo treatment because it is either too expensive, the hospital is too far away, there is a waiting list for the treatment, the patient hopes that symptoms will disappear without treatment, the patient is afraid of treatment or has no time to visit a physician. As explained in the model above, our analysis uses both =too exp=  and =unmet= (which includes =too exp= as reason for unmet medical needs) as variables.
+
+The measure =OOP= that we use in the baseline model, is based on household oop payments (=out-of-pocket=). In particular, this measures the percentage of healthcare expenditures paid oop. This varies by country and year. The higher =OOP=, the less generous the healthcare system is (in terms of higher coinsurance $\xi$ or deductible $D$ in the model above). We expect that high =OOP= is especially problematic in regions with a high percentage of people with low income.
+
+In a robustness analysis we consider the sum of oop and payments to voluntary health insurance (=voluntary=) as a percentage of health expenditures as our =OOP= measure. The reason why we also consider voluntary insurance is that basic or mandatory insurance packages can differ between countries. If people are willing to spend money on voluntary insurance, it can be the case that this voluntary insurance covers treatments that people deem to be important. Put differently, a country that finances all expenditure ("free at point of service") for a very narrow set of treatments would appear generous if we only used oop payments. The narrowness of this insurance would then be signalled by people buying voluntary insurance to cover other treatments. 
+
+As can be seen in Table ref:tab:summary, =out-of-pocket= is the most important component of the two =OOP= inputs. Percentage of healthcare expenditure paid oop is a multiple of the percentage financed via voluntary insurance (both in terms of the mean and of the minimum, median and maximum reported in the table). Therefore, the baseline model works with oop payments (only).
+
+As shown in Lemma ref:prop:1, healthcare expenditure per head $\bar x_{ct}$ (=expend per head=) affects how =OOP= influences the fraction of people forgoing treatment because it is too expensive. Expenditure per head is on average 3300 euro for the countries in our data. But the variation is big with a standard deviation of almost 2700 euro.
+
+The last two variables are used in our analysis of confounding effects. Infant mortality is a well known measure of population health and healthcare quality [[citep:&2023-healt-glanc]]. In contrast to measures like treatable and preventable mortality, infant mortality is not directly correlated with our mortality measure which considers people above age 35. If there is a negative shock in a year reducing the quality of care, we expect infant mortality to pick this up. It is defined as the number of deaths of infants (younger than one year of age at death) per 1000 live births in a given year.
+
+Finally, =bad health= gives the percentage of people who answer bad or very bad when asked about their health status in the EU-SILC survey. Around 12% report self-perceived bad or very bad health and this ranges from less than 1% in some regions to almost 80% in others. This variable is used to control for health shocks over time as potential confounding effects. If healthcare quality deteriorates one would also expect more people indicating lower health status.
+
+
+Figure ref:fig:DifferenceMortalityData (left panel) shows average mortality as a function of age for women and men. This is the pattern that one would expect: clearly increasing with age from age 40 onward and higher for men than for women (as women tend to live longer than men). Figure ref:fig:DifferenceMortalityData (middle panel) shows the effect we are interested in: mortality is higher in regions where the interaction =OOP= $\times$ Poverty is high than where it is low and this difference increases with age. 
+
+Both for women and for men, we plot per age category the difference between average mortality in regions that are at least 0.5 standard deviation above the mean for =OOP= $\times$ Poverty and regions that are at least 0.5 standard deviation below the mean. Around age 82, this mortality difference equals approximately 4 percentage points. In the raw data, for 100 (wo)men aged 82, there are 4 additional deaths in regions with high interaction =OOP= $\times$ Poverty compared to regions with low interaction. Note that this plot of the raw data does not correct for other factors, like the poverty level itself, and thus over-estimates the effect of =OOP= $\times$ Poverty on mortality. The right panel in this figure does a similar exercise with the fraction of people reporting unmet medical needs. Mortality is higher in regions where unmet needs are at least 0.5 standard deviation above the mean compared to regions where it is 0.5 standard deviation below the mean.
+
+The observation from the figure that the difference between the two sets of regions is approximately zero for people below 35, is our motivation to include ages above 35 only in our data. Further, the difference in mortality between the regions increases with the mortality level in the left panel. This is in line with our specification in Lemma ref:prop:1 where unmet needs has a multiplicative effect on the underlying (biological) mortality rate modeled by $e^{\beta_{ag}}/(1+e^{\beta_{ag}})$.
+
+
+#+caption: Mortality and difference in mortality between regions with high and low interaction =OOP= $\times$ Poverty and high and low unmet medical needs.
+#+attr_latex: scale=0.75
+#+name: fig:DifferenceMortalityData
+[[./figures/IncreaseMortalityInteractionData.png]]
+
+
+
+** data :code:
+
+The following python code generates Table ref:tab:summary with summary statistics. The noweb notation =<<code-preamble>>= runs the code from Listing ref:code-preamble into the python cell without using copy/paste.
+
+#+begin_src jupyter-python :noweb yes
+<<code-preamble>>
+<<code-data>>
+headers = ['count','mean','std','min','median','max']
+variables = df[['population','deaths','mortality',\
+                'poverty',\
+                'deprivation',\
+                'TOOEXP','unmet',\
+                'HF3_PC_CHE','HF2_PC_CHE',\
+           'health expenditure per capita',\
+           'infant mortality', 'bad_self_perceived_health','transport mortality']]\
+           .describe().T[['count','mean','std','min','50%','max']]
+variables = variables.round(1)
+variables['count'] = variables['count'].astype(int)
+variables.rename({'poverty':'poverty (%)',\
+                  'mortality':'mortality (%)',\
+                  'deprivation':\
+                  'deprivation (%)', 'HF2_PC_CHE':'voluntary (%)',\
+                  'HF3_PC_CHE':'out-of-pocket (%)',\
+                  'TOOEXP':'too exp. (%)',\
+                  'health expenditure per capita':\
+                  'expend. per head',\
+                  'unmet':'unmet (%)',\
+                  'bad_self_perceived_health':'bad health (%)',\
+                  'infant mortality':'infant mortality (\\textperthousand)'},inplace=True)
+print(tabulate(variables,headers,tablefmt="orgtbl"))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+|                                     |   count |   mean |    std |   min |   median |     max |
+|-------------------------------------+---------+--------+--------+-------+----------+---------|
+| population                          |   52612 | 7491.3 | 4805.3 | 440   |   6477   | 36117   |
+| deaths                              |   52612 |  103.2 |  126.5 |   0   |     56   |  1033   |
+| mortality (%)                       |   52612 |    2.1 |    2.9 |   0   |      0.8 |    20.7 |
+| poverty (%)                         |   50878 |   16.5 |    6.6 |   2.6 |     15.3 |    36.1 |
+| deprivation (%)                     |   52612 |   11.2 |   12.8 |   0   |      3.4 |    52.3 |
+| too exp. (%)                        |   52612 |    2   |    3.1 |   0   |      0.6 |    16   |
+| unmet (%)                           |   52612 |    5.8 |    4.1 |   0   |      4.8 |    20.9 |
+| out-of-pocket (%)                   |   52612 |   22   |    8.9 |   8.8 |     19.5 |    47.7 |
+| voluntary (%)                       |   52612 |    3.1 |    3.1 |   0.3 |      1.6 |    15.2 |
+| expend. per head                    |   52612 | 3386.6 | 2691.3 | 307.7 |   3559.5 |  8484.9 |
+| infant mortality (\textperthousand) |   52612 |    4.3 |    2.3 |   0.8 |      3.6 |    11.6 |
+| bad health (%)                      |   52612 |   12.8 |   12.2 |   0.8 |      8.3 |    78.9 |
+| transport mortality                 |   36818 |    6.7 |    3.3 |   1.7 |      5.9 |    17.1 |
+#+end_example
+
+
+
+
+
+
+
+
+
+|                                     |   count |   mean |    std |   min |   median |     max |
+|-------------------------------------+---------+--------+--------+-------+----------+---------|
+| population                          |   52612 | 7491.3 | 4805.3 | 440   |   6477   | 36117   |
+| deaths                              |   52612 |  103.2 |  126.5 |   0   |     56   |  1033   |
+| mortality (%)                       |   52612 |    2.1 |    2.9 |   0   |      0.8 |    20.7 |
+| poverty (%)                         |   50878 |   16.5 |    6.6 |   2.6 |     15.3 |    36.1 |
+| deprivation (%)                     |   52612 |   11.2 |   12.8 |   0   |      3.4 |    52.3 |
+| too exp. (%)                        |   52612 |    2   |    3.1 |   0   |      0.6 |    16   |
+| unmet (%)                           |   52612 |    5.8 |    4.1 |   0   |      4.8 |    20.9 |
+| out-of-pocket (%)                   |   52612 |   22   |    8.9 |   8.8 |     19.5 |    47.7 |
+| voluntary (%)                       |   52612 |    3.1 |    3.1 |   0.3 |      1.6 |    15.2 |
+| expend. per head                    |   52612 | 3386.6 | 2691.3 | 307.7 |   3559.5 |  8484.9 |
+| infant mortality (\textperthousand) |   52612 |    4.3 |    2.3 |   0.8 |      3.6 |    11.6 |
+| bad health (%)                      |   52612 |   12.8 |   12.2 |   0.8 |      8.3 |    78.9 |
+
+
+
+* Estimation
+:PROPERTIES:
+:ID:       sec:estimation
+:END:
+@@latex:\label{sec:estimation}@@
+
+
+** estimation code :noexport:
+
+**** TODO add infant mortality to correct for quality in $\lambda$
+
+
+#+begin_src jupyter-python
+def transition(π,σ,I,δ):
+    fit = I*σ+(1-π)*(1-I)
+    ill = π*(1-I)+pt.clip(1-σ-δ,0.0,1.0)*I
+    fraction_ill = ill/(fit+ill)
+    return fraction_ill
+
+n_y = 2 # low/high income
+n_g = 2 # female/male
+
+# index: age, gender, start_year, region, income
+# for some variables we use country instead of region
+
+coords = {
+    "region" : ds.nuts2.values,\
+    "ages" : ds.age.values,\
+    "cohort" : age_matrix[0],\
+    "age_category" : np.unique(ds.age_category.values),\
+    "gender" : ds.sex.values,\
+    "year" : ds.year.values,\
+    "income" : ['y_l','y_h'],\
+    "country": np.unique(ds.country.values),\
+     # we define dummy dimensions for parameters that do not
+     # vary by this dimension
+     "dummy0": np.arange(1),\
+     "dummy1": np.arange(1),\
+     "dummy2": np.arange(1)} 
+
+with pm.Model(coords=coords) as AR_model:
+    logodds_ι = pm.Normal("logodds_ι",-4.0,1,\
+              dims=("cohort","gender","region","income"),\
+              shape=(cohorts,n_g,n_regions,n_y)) 
+    ι_0 = pm.Deterministic("ι_0",pm.math.invlogit(logodds_ι),dims=("cohort","gender","region","income"))
+    # ι_0 is used to start the sequence in scan =>
+    # no need to add age dimension: we build up the matrix I by following each cohort over the years
+    logodds_δ = pm.Normal("logodds_δ",prior_delta,prior_delta_s) # conditional on being ill, same prob. of death
+    # δ is a non_sequence in the scan loop; no need to add age as a dimension
+    δ = pm.Deterministic("δ",pm.math.invlogit(logodds_δ))
+    # we build up the prior for π
+    logodds_age_π = pm.Normal("logodds_age_π",log_odds_mort.mean(axis=(1,2,3)),log_odds_mort.std(axis=(1,2,3)),dims=("ages"))
+    logodds_sex_π = pm.Normal("logodds_sex_π", gender_effect_π, 0.05, dims=("gender"))
+    logodds_country_π = pm.Normal("logodds_country_π",country_effect_π,0.05, dims=("country"))
+    logodds_π = pm.Deterministic("logodds_π",logodds_age_π[:,None,None] + logodds_sex_π[None,:,None] + pt.dot(logodds_country_π, country_region_matrix_01)[None,None,:]) # prob. of falling ill varies by age, gender and country
+    # the priors do not impose that women tend to be healthier than men
+    # but we do impose that people on low income have low health status (high π)
+    delta_π = pm.HalfNormal("delta_π",sigma=0.05,\
+          dims=("ages","dummy0","dummy1"),\
+          shape=(n_ages,1,1))
+    π = pm.Deterministic("π",pt.stack([pm.math.invlogit(\
+                                    logodds_π+ delta_π),\
+                   pm.math.invlogit(logodds_π)],axis=-1), dims=("ages","gender","region","income"))
+    # when we draw missing values for OOP, we should draw the same value for all regions/age/gender in the same country
+    # this we do via oop_c which we later bring back to region dimension with country_region_matrix_01
+    pov = pm.Normal("pov", mean_depr[None,:], std_depr[None,:], observed=Deprivation,dims=("year","region")) # fraction of people on low income
+    poverty = pt.stack([pt.clip(pov,0,1),1-pt.clip(pov,0,1)],axis=-1) # vector with fraction of low/high income people
+    oop_c = pm.Normal("oop_c", mean_oop_c[None,:], std_oop_c[None,:], observed=OOP_c,dims=("year","country"))
+    oop = pt.dot(oop_c,country_region_matrix_01)
+
+    slope_ζ = pm.HalfNormal("slope_ζ",sigma=0.1)
+    delta_ζ = pm.HalfNormal("delta_ζ",sigma=0.05)
+    ζ = pm.Deterministic("ζ",pt.stack([(slope_ζ+ delta_ζ),\
+                   (slope_ζ)],axis=-1),dims=("income")) # varies with income
+    τ = pm.Deterministic("τ", ζ[None,:]*oop[:,:,None])
+    mu_U_o = Unmet_o.mean(axis=0).values[None,:]
+    nu_U_o = pm.Exponential("nu_U_o", 1)
+    U_o = pm.Beta("U_o", alpha = mu_U_o*nu_U_o, beta = (1-mu_U_o)*nu_U_o,dims=("year","region"), observed=Unmet_o)
+    mu_U = pt.clip(U_o+pt.sum(poverty*τ,axis=2),0.000001,0.9999)
+    nu_U = pm.Exponential("nu_U", 1)
+    U = pm.Beta("U",alpha=mu_U*nu_U, beta=(1-mu_U)*nu_U,dims=("year","region"), observed=Unmet)
+    # λ measures prob. patient heals if treated (i.e. one minus unmet)
+    M_infant = pm.Normal("M_infant",mean_m_infant[None,:],std_m_infant[None,:],dims=("year","region"),observed=m_infant)
+    lambda_quality = pm.HalfNormal("lambda_quality",sigma=0.01)
+    lamba_0 = pm.Normal("lambda_0",0.0,0.1)
+    logodds_λ = pm.Normal("logodds_λ",lamba_0-lambda_quality*M_infant,0.1)
+    λ = pm.Deterministic("λ",pm.math.invlogit(logodds_λ))# λ is between 0 and 1
+    ε = pm.Uniform("ε",0,1) # ε = ξ_l - ξ_h > 0
+    ξ = 1-poverty[:,:,0]*ε
+    υ = pm.Deterministic("υ", pt.stack([(ξ+ε)*U_o,ξ*U_o],axis=-1) + τ)
+    σ = pm.Deterministic("σ",λ[:,None,None,:,None]*(1-υ)[:,None,None,:,:])
+    I = pt.zeros((t_dim,cohorts,n_g,n_regions,n_y))
+    I = pt.set_subtensor(I[0],ι_0)
+
+    outputs, updates = pytensor.scan(
+        transition,
+     # age/year is the dynamic part of the model
+     # i.e. first dimension of π
+        sequences=[dict(input=π[age_indices]),dict(input=σ)], # check sequences with order of arguments in =transition=
+     # we loop over the first dimension: age
+     # the inittial value for I (at low_age)
+     # outputs_info has no age dimension
+        outputs_info=[dict(initial=ι_0)],
+     # variables that have no age dimension:
+        non_sequences=[δ],
+    )
+
+    I = pt.set_subtensor(I[1:],outputs[:t_dim-1])
+    # μ is probability of death for age/gender/year/region
+    ill = pm.Deterministic("ill",I)
+    μ = pm.Deterministic("μ",(pt.sum(δ*I*poverty[:,None,None,:,:],axis=4)))# aggregate over income
+    mortality = pm.Binomial("mortality",n=P_cohort,p=μ,observed=M_cohort,dims=("year","cohort","gender","region"))
+#+end_src
+
+#+RESULTS:
+: /Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in pov contains missing values and will be automatically imputed from the sampling distribution.
+:   warnings.warn(impute_message, ImputationWarning)
+: /Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in oop_c contains missing values and will be automatically imputed from the sampling distribution.
+:   warnings.warn(impute_message, ImputationWarning)
+: /Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in U_o contains missing values and will be automatically imputed from the sampling distribution.
+:   warnings.warn(impute_message, ImputationWarning)
+: /Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in U contains missing values and will be automatically imputed from the sampling distribution.
+:   warnings.warn(impute_message, ImputationWarning)
+: /Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in M_infant contains missing values and will be automatically imputed from the sampling distribution.
+:   warnings.warn(impute_message, ImputationWarning)
+
+
+*** sampling
+
+
+#+begin_src jupyter-python
+with AR_model:
+    idata = pm.sample(draws=2000,target_accept = 0.95, progressbar=False)
+    pm.sample_posterior_predictive(idata,\
+                                   progressbar=False,\
+                                   extend_inferencedata=True)
+#+end_src
+
+#+RESULTS:
+: Initializing NUTS using jitter+adapt_diag...
+: Multiprocess sampling (4 chains in 4 jobs)
+: NUTS: [logodds_ι, logodds_δ, logodds_age_π, logodds_sex_π, logodds_country_π, delta_π, pov_unobserved, oop_c_unobserved, slope_ζ, delta_ζ, nu_U_o, U_o_unobserved, nu_U, U_unobserved, M_infant_unobserved, lambda_quality, lambda_0, logodds_λ, ε]
+: Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 1580 seconds.
+: The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+: The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+: Sampling: [M_infant_observed, U_o_observed, U_observed, U_unobserved, logodds_λ, mortality, oop_c_observed, pov_observed]
+
+
+
+#+begin_src jupyter-python :display plain
+headers = ['mean', 'sd', 'hdi_3%', 'hdi_97%',\
+           'ess_bulk', 'r_hat']
+variables = ["δ","logodds_λ","λ","ζ","nu_U","nu_U_o","ε","lambda_quality"]
+# variables = ["ζ","δ","λ","π"]
+df_summary = az.summary(idata,var_names=variables)[headers]
+df_summary
+#+end_src
+
+#+RESULTS:
+#+begin_example
+                   mean     sd  hdi_3%  hdi_97%  ess_bulk  r_hat
+δ                 0.140  0.001   0.138    0.141     846.0    1.0
+logodds_λ[0, 0]  -3.601  0.104  -3.796   -3.402    1830.0    1.0
+logodds_λ[0, 1]  -3.586  0.105  -3.784   -3.392    1753.0    1.0
+logodds_λ[0, 2]  -3.599  0.104  -3.787   -3.399    1401.0    1.0
+logodds_λ[0, 3]  -3.565  0.105  -3.768   -3.371    1638.0    1.0
+...                 ...    ...     ...      ...       ...    ...
+ζ[y_h]            0.064  0.012   0.042    0.088    5045.0    1.0
+nu_U             88.028  8.733  71.698  104.401    7553.0    1.0
+nu_U_o           48.121  4.172  40.838   56.737   10924.0    1.0
+ε                 0.046  0.047   0.000    0.132   12202.0    1.0
+lambda_quality    0.010  0.007   0.000    0.022    5932.0    1.0
+
+[601 rows x 6 columns]
+#+end_example
+
+
+
+#+begin_src jupyter-python
+idata.to_netcdf("./trace/baseline_model_4_countries.nc")
+#+end_src
+
+#+RESULTS:
+: ./trace/baseline_model_4_countries.nc
+
+
+
+* Results
+
+In this section we present the results of the estimation of the baseline model. Before presenting the outcome of our estimation, we present two graphical  checks of our model.
+
+** model fit :noexport:
+
+#+begin_src jupyter-python :file ./figures/fit_four_country_model.png
+predictions = idata.posterior_predictive.mortality.\
+              mean(dim=("chain","draw")).values
+plt.scatter((M_cohort),(predictions))
+# plt.scatter((M/Population).flatten(),(predictions/Population).flatten())
+# plt.plot([0,0.2],[0,0.2],c='k')
+plt.plot([0,700],[0,700],c='k')
+plt.xlabel("mortality")
+plt.ylabel("predicted mortality");
+#+end_src
+
+#+RESULTS:
+[[file:./figures/fit_four_country_model.png]]
+
+
+- mortality fit is quite good
+
+
+** results :noexport:
+
+We plot the age profile for the probability of falling ill, $\pi$. As one would expect, this probability increases with age and is higher for men than for women.
+
+#+begin_src jupyter-python :file ./figures/age_profile_pi.png
+pi_avg = np.mean(idata.posterior.π.values,axis=(0,1,4,5))
+plt.plot(np.arange(low_age,high_age-1),pi_avg[:-2,0],label="female");
+plt.plot(np.arange(low_age,high_age-1),pi_avg[:-2,1],label="male")
+plt.legend();
+#+end_src
+
+#+RESULTS:
+[[file:./figures/age_profile_pi.png]]
+
+
+Following Figure shows the offset per country. Probability of falling ill is higher in Bulgaria and Hungary than in Denmark and Sweden.
+
+
+#+begin_src jupyter-python :file ./figures/country_pi.png
+post_logodds_pi = idata.posterior.logodds_country_π.values
+sns.kdeplot(post_logodds_pi[:,:,1].flatten(),label="Denmark")
+sns.kdeplot(post_logodds_pi[:,:,3].flatten(),label="Sweden")
+sns.kdeplot(post_logodds_pi[:,:,0].flatten(),label="Bulgaria")
+sns.kdeplot(post_logodds_pi[:,:,2].flatten(),label="Hungaria")
+# sns.kdeplot(post_logodds_pi[:,:,3].flatten(),label="Hungary")
+plt.xlabel("log-odds falling ill")
+plt.title("Country offsets falling ill")
+plt.legend();
+#+end_src
+
+#+RESULTS:
+[[file:./figures/country_pi.png]]
+
+Finally, as we saw above, men are more likely to fall ill than women. The figure shows that the distributions for men and women do not even overlap. Even with all the uncertainty on the parameter values, the probability that $\pi$ for men is lower than for women is basically zero.
+
+#+begin_src jupyter-python :file ./figures/gender_pi.png
+post_logodds_pi_gender = idata.posterior.logodds_sex_π.values
+sns.kdeplot(post_logodds_pi_gender[:,:,0].flatten(),label="female")
+sns.kdeplot(post_logodds_pi_gender[:,:,1].flatten(),label="male")
+plt.xlabel("log-odds falling ill")
+plt.title("Gender offsets falling ill")
+plt.legend();
+#+end_src
+
+#+RESULTS:
+[[file:./figures/gender_pi.png]]
+
+
+
+** do analysis :noexport:
+
+An advantage of doing Bayesian analysis in =pymc= is that it has implemented the "causal do" operator. In the code below we first run a simulation with the baseline value for unmet, $\upsilon$, which equals the sum of too expensive and other stated reasons why patient decided to forego treatment. The model estimates the fraction of people that forego treatment because it is too expensive as $\zeta oop$. Hence, if $oop$ is increased by $\Delta oop$, the fraction of people skipping treatment because it is too expensive increases by $\zeta \Delta oop$. This we add to the baseline value of $\upsilon$ for the counterfactual simulation. 
+
+#+begin_src jupyter-python
+υ_baseline = idata.posterior.υ.mean(axis=(0,1)).values
+pov_no_missing = idata.posterior.pov.mean(axis=(0,1)).values
+zeta = idata.posterior.ζ.mean(axis=(0,1)).values
+delta_oop = 0.1
+delta_υ = zeta.reshape(1,2)*delta_oop
+iota_0 = idata.posterior.ι_0.mean(axis=(0,1))[0].values
+AR_model_0 = do(AR_model, {"υ": υ_baseline})
+AR_model_1 = do(AR_model, {"υ": υ_baseline + delta_υ})
+#+end_src
+
+#+RESULTS:
+
+We sample from the model with the new values for =U=
+
+
+#+begin_src jupyter-python
+with AR_model_0:
+    idata_0 = pm.sample_prior_predictive(random_seed=44)
+with AR_model_1:
+    idata_1 = pm.sample_prior_predictive(random_seed=44)
+
+#+end_src
+
+#+RESULTS:
+: Sampling: [M_infant_observed, M_infant_unobserved, U_o_observed, U_o_unobserved, U_observed, U_unobserved, delta_ζ, delta_π, lambda_0, lambda_quality, logodds_age_π, logodds_country_π, logodds_sex_π, logodds_δ, logodds_ι, logodds_λ, mortality, nu_U, nu_U_o, oop_c_observed, oop_c_unobserved, pov_observed, pov_unobserved, slope_ζ, ε]
+: Sampling: [M_infant_observed, M_infant_unobserved, U_o_observed, U_o_unobserved, U_observed, U_unobserved, delta_ζ, delta_π, lambda_0, lambda_quality, logodds_age_π, logodds_country_π, logodds_sex_π, logodds_δ, logodds_ι, logodds_λ, mortality, nu_U, nu_U_o, oop_c_observed, oop_c_unobserved, pov_observed, pov_unobserved, slope_ζ, ε]
+
+In order to find the fractions of people who are ill and fit, we need the parameters $\pi,\delta$ and $\sigma$ from the model. From these parameters, only $\sigma$ differs between the baseline and the counterfactual simulation.
+
+#+begin_src jupyter-python
+pi = idata_0.prior.π.values.transpose((2,3,4,5,1,0))[:,:,:,:,:,0]
+delta = idata_0.prior.δ.values
+sigma_0 = idata_0.prior.σ.values.transpose((2,3,4,5,6,1,0))[:,:,:,:,:,:,0].mean(axis=0)
+sigma_1 = idata_1.prior.σ.values.transpose((2,3,4,5,6,1,0))[:,:,:,:,:,:,0].mean(axis=0)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src jupyter-python
+print(pi.shape)
+print(delta.shape)
+print(sigma_0.shape)
+print(idata_0.prior.ι_0.shape)
+#+end_src
+
+#+RESULTS:
+: (41, 2, 27, 2, 500)
+: (1, 500)
+: (1, 1, 27, 2, 500)
+: (1, 500, 30, 2, 27, 2)
+
+
+Since we are interested in the dynamic effects of the change in oop, we consider the longest run that we have in the model: people who are 45 at the start of the simulation and we follow this cohort until they are 85.
+
+In order to calculate/normalize the life years, we start with 1000 forty-five year olds per category gender/income and region. We use our estimate of $\iota_0$ to split the 1000 individuals into fit and ill. Then we run through our Markov model keeping track of who switches state and who dies. 
+
+#+begin_src jupyter-python
+iota_0 = np.transpose(idata_0.prior.ι_0.values,(2,3,4,5,1,0))[0,:,:,:,:,0]
+# outcomes baseline:
+N_0 = np.zeros((2,41,2,27,2,500)) # fit/ill, age, gender, region, income
+N_0[0,0] = (1-iota_0)*1000 # fit
+N_0[1,0] = iota_0*1000     # ill
+# outcomes counterfactual:
+N_1 = np.zeros((2,41,2,27,2,500)) # fit/ill, age, gender, region, income
+N_1[0,0] = (1-iota_0)*1000 # fit
+N_1[1,0] = iota_0*1000     # ill
+# follow these 45 year olds till they are 85
+for j in range(1,41):
+   N_0[0,j] = (1-pi[j-1])*N_0[0,j-1] + sigma_0 * N_0[1,j-1]
+   N_0[1,j] = pi[j-1]*N_0[0,j-1] + (1-sigma_0 - delta) * N_0[1,j-1] 
+   N_1[0,j] = (1-pi[j-1])*N_1[0,j-1] + sigma_1 * N_1[1,j-1]
+   N_1[1,j] = pi[j-1]*N_1[0,j-1] + (1-sigma_1 - delta) * N_1[1,j-1] 
+#+end_src
+
+#+RESULTS:
+
+To calculate life years over the lifetime (from 45-85), we add a healthy life year as 1.0 and a life year while ill at 0.75 and add these together. When someone dies, there are no life years left for this person (weight 0.0).
+
+The variable ~delta_lifeyears~ calculates the difference between life years in the baseline simulation and the counterfactual. 
+
+#+begin_src jupyter-python
+lifeyears_0 = N_0[0].sum(axis=0) + 0.75*N_0[1].sum(axis=0)
+lifeyears_1 = N_1[0].sum(axis=0) + 0.75*N_1[1].sum(axis=0)
+delta_lifeyears = lifeyears_0 - lifeyears_1
+delta_lifeyears.shape
+#+end_src
+
+#+RESULTS:
+| 2 | 27 | 2 | 500 |
+
+shape is: gender, region, income, samples
+
+
+#+begin_src jupyter-python :file ./figures/lifeyears.png
+plt.hist(delta_lifeyears[1,0,0],bins=20,label="low income",density=True)
+plt.hist(delta_lifeyears[1,0,1],bins=20,label="high income",density=True,alpha=0.5)
+plt.legend()
+plt.title('life years lost (per 1000 population) due to oop increase by $0.1$');
+#+end_src
+
+#+RESULTS:
+[[file:./figures/lifeyears.png]]
+
+**** TODO continue here
+
+In order to compare the dynamic and static approach, use the ages 45-74 (first cohort at the start of our data):
+- compare difference between baseline and oop $+0.1$ for 1 year
+- with ~delta_lifeyears~ for the ages 45-74
+
+
+Dynamic loss in life years from 45 to 74:
+
+#+begin_src jupyter-python
+lifeyears_0_d = N_0[0,:30].sum(axis=0) + 1.0*N_0[1,:30].sum(axis=0)
+lifeyears_1_d = N_1[0,:30].sum(axis=0) + 1.0*N_1[1,:30].sum(axis=0)
+delta_lifeyears_d = lifeyears_0_d - lifeyears_1_d
+delta_lifeyears_d.mean()
+#+end_src
+
+#+RESULTS:
+: 2.0693693444872387
+
+Static loss in lifeyears: how many extra people die from $t=0$ till $t=1$ due to change in oop?
+
+Expect the effect in the first year to be very small?
+- it is 0 in the first year? deaths are determined by $\delta I_0$ and $I_0$ is unaffected by change in oop and unmet medical needs. Lower $\sigma$ (due to higher unmet needs) only affects $I_1$ and hence deaths in $t=2$
+  - same number of people with low health status in $t=0$ under the two oop-regimes
+  - hence same number of deaths in $t=0$, even though $\sigma$ is lower
+#+begin_src jupyter-python
+A = 0
+np.mean(N_0[0,A] == N_1[0,A])
+#+end_src
+
+#+RESULTS:
+: 1.0
+
+- fraction ill (and thus number of deaths) is the same in the first period ($t=0$) under the two oop regimes
+- only in second period do we see a difference in fraction ill and hence in the number of deaths in second period ($t=1$)
+#+begin_src jupyter-python
+print(np.mean(idata_0.prior.ill.values[0,:,0,:,:,:,:]-idata_1.prior.ill.values[0,:,0,:,:,:,:]))
+print(np.mean(idata_0.prior.ill.values[0,:,1,:,:,:,:]-idata_1.prior.ill.values[0,:,1,:,:,:,:]))
+#+end_src
+
+#+RESULTS:
+: 0.0
+: -0.0001574690820330843
+
+- dynamic effect is 10 times the static effect
+  - is this the right comparison?
+  - we standardize on ~lifeyears_0~ because in the dynamic case, we follow one cohort of 1000 people; in the static case every age category has 1000 people
+#+begin_src jupyter-python
+ill_0 = idata_0.prior.ill.values[0,:,0,:,:,:,:].transpose((1,2,3,4,0))*1000
+fit_0 = 1000-ill_0
+fit_1_0 = (1-pi[0])*fit_0 + sigma_0 * ill_0
+ill_1_0 = pi[0]*fit_0 + (1-sigma_0-delta) * ill_0
+deaths_1_0 = delta * ill_1_0
+lifeyears_0_s = fit_1_0 + ill_1_0 * (1-delta)
+fit_1_1 = (1-pi[0])*fit_0 + sigma_1 * ill_0
+ill_1_1 = pi[0]*fit_0 + (1-sigma_1-delta) * ill_0
+deaths_1_1 = delta * ill_1_1
+lifeyears_1_s = fit_1_1 + ill_1_1 * (1-delta)
+delta_lifeyears_s = lifeyears_0_s - lifeyears_1_s
+# delta_lifeyears_s = deaths_1_1 - deaths_1_0
+print(np.sum(delta_lifeyears_s)/np.sum(lifeyears_0_s))
+print(np.sum(delta_lifeyears_d)/np.sum(lifeyears_0_d))
+print((np.sum(delta_lifeyears_d)/np.sum(lifeyears_0_d))/(np.sum(delta_lifeyears_s)/np.sum(lifeyears_0_s)))
+#+end_src
+
+#+RESULTS:
+: 4.711986606161815e-06
+: 6.949046047426556e-05
+: 14.747592954401359
+
+
+
+
+
+
+
+* Robustness 
+:PROPERTIES:
+:ID:       sec:robustness
+:END:
+
+
+
+* Discussion and policy implications
+
+
+
+* Bibliography
+bibliography:../references.bib
+
+
+@@latex:\newpage@@
+@@latex:\appendix@@
+
+* Proof of results
+:PROPERTIES:
+:ID:       sec:proofs_appendix
+:END:
+@@latex:\label{sec:proofs_appendix}@@
+
+
+
+
+
+
