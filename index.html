@@ -1,0 +1,2630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dynamic effects of health insurance reform</title>
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link rel="stylesheet" href="./css/Latex.css">
+<link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+
+<script src="http://orgmode.org/org-info.js">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+// @license-end
+</script>
+
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+// @license-end
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Dynamic effects of health insurance reform</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0d42700">How does this work?&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a></li>
+<li><a href="#orgd14764e">preamble&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a>
+<ul>
+<li><a href="#org23d24f8">loading data</a></li>
+<li><a href="#org6b19753">creating cohort data</a></li>
+</ul>
+</li>
+<li><a href="#org4ee482f">1. Introduction</a></li>
+<li><a href="#org87ec7b3">2. Theory</a>
+<ul>
+<li><a href="#org72c8591">2.1. Markov chain graph&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org863d762">3. Data</a>
+<ul>
+<li><a href="#org801d5a1">3.1. data&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orgf37c897">4. Estimation</a>
+<ul>
+<li><a href="#org6c962ef">4.1. estimation code&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a>
+<ul>
+<li><a href="#org9a5cf36">sampling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4fb0486">5. Results</a>
+<ul>
+<li><a href="#org72a97f6">5.1. Model fit</a></li>
+<li><a href="#org030fe68">5.2. Analysis</a></li>
+<li><a href="#org4519116">5.3. model fit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a></li>
+<li><a href="#org01a6fff">5.4. results&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a></li>
+<li><a href="#org5d85e87">5.5. do analysis&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></a>
+<ul>
+<li><a href="#org3623e4a">comparison to (<a href="#citeproc_bib_item_4">Finkelstein and McKnight 2008</a>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf4fc0d6">6. Discussion and policy implications</a></li>
+<li><a href="#org01dfc94">7. Bibliography</a></li>
+<li><a href="#org8cf4dd3">8. Data</a></li>
+<li><a href="#org0d42997">9. Estimation</a></li>
+</ul>
+</div>
+</div>
+<div class="abstract" id="orgcce989b">
+<p>
+In order to find the long term mortality effects of health policy, we estimate a structural dynamic model following age cohorts over time. This allows us to follow the development in the fraction of people with low health status per category defined by region, age, gender and income. The fraction of people that are unhealthy/ill acts as a stock determining the long term effects of health policy. The model is estimated on regional (NUTS 2) Eurostat data and replicates stylized facts like women and people on high income have more quality adjusted life-years (qaly&rsquo;s). Further, we show that an increase in demand-side cost-sharing does reduce qaly&rsquo;s. In contrast to earlier papers, we find that the effect of cost-sharing on low incomes&rsquo; qaly&rsquo;s is bigger than for high incomes. Our main finding is that the dynamic effect from following an age cohort from 45 till 84 is far bigger than a static estimate (like difference-in-differences or regression discontinuity design) of the mortality effect would suggest.
+</p>
+
+</div>
+
+
+<p>
+<b>JEL codes:</b> I11, I13, I18
+</p>
+
+<p>
+<b>Keywords:</b> out-of-pocket payments, mortality, health insurance, poverty, unmet medical needs
+</p>
+
+
+<p>
+<p class="author">Author: Jan Boone</p>
+</p>
+<div id="outline-container-org0d42700" class="outline-2">
+<h2 id="org0d42700">How does this work?&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
+<div class="outline-text-2" id="text-org0d42700">
+<p>
+With this document, the reader can retrace the code which we use to produce the results, figures, tables etc. for this paper.
+</p>
+
+<p>
+This file is written in <a href="https://www.gnu.org/software/emacs/">Emacs</a> <a href="https://orgmode.org/">org mode</a> which allows us to combine text and code. The file is exported to pdf (via latex) and to html for the web-version. The web-version &#x2013;which you are reading now&#x2013; contains the sections tagged <code>code</code> which are not exported to the pdf version of the paper.
+</p>
+
+<p>
+Here you can download <a href="./dynamic-effects-of-health-insurance-reform.pdf">the pdf of the paper</a>.
+</p>
+
+<p>
+For the export to html we use <a href="https://github.com/vincentdoerig/latex-css">LaTeX.CSS</a> with some small tweaks to make it compatible with the org-exporter that we use which is based on <a href="https://github.com/jkitchin/org-ref">org-ref</a>. The export of the org file to html is almost perfect, but some issues are not yet resolved. To illustrate, the html export has trouble with latex environments like <code>align</code>, <code>split</code> in equations etc. For the time being this is resolved by using multiple <code>equation</code> environments. Further, whereas latex drops the label on equations that are not cited, the html exporter is not able to do this. Hence, there are more numbered equations in the web-version of the paper. This is all a bit clumsy but otherwise works fine.
+</p>
+
+<p>
+We use <a href="https://www.python.org/">Python</a> to program the model and <a href="https://docs.pymc.io/">PyMC</a> for the Bayesian analysis. All these resources are open source and freely available. If you want to install Python, <a href="https://www.anaconda.com/products/individual">Anaconda</a> is a good place to start.
+</p>
+
+<p>
+To avoid replicating code that is used for different models, we use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb</a>. This is used as follows. First, we give the code block a name, like <code>code-preamble</code>. When we want to use this code, we call the code block by <code>&lt;&lt;code-preamble&gt;&gt;</code>.
+</p>
+
+<p>
+There is a separate <a href="./getting_data.html">file</a> which describes how we get the data from Eurostat.
+</p>
+
+<p>
+The repository for the paper can be found <a href="https://github.com/janboone/dynamic-effects-of-health-insurance-reform">here</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd14764e" class="outline-2">
+<h2 id="orgd14764e">preamble&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h2>
+<div class="outline-text-2" id="text-orgd14764e">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>code-header</label><pre class="src src-jupyter-python" id="org9af1d46"><span style="color: #595959;">#########################################################</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">This file is tangled from the index.org file in the root directory</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">the author runs the code from the index.org file directly in emacs</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">if you do not have emacs, you can run the code to generate the trace files</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">from this file</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">the file expects the following folder structure to run without problems:</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">the folder with the data should be located at: ./data/oop_health_data.nc</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">the trace files are written to ./trace</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">figures are written to ./figures</span>
+<span style="color: #595959;">#########################################################</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>code-preamble</label><pre class="src src-jupyter-python" id="org249b980"><span style="color: #531ab6;">import</span> matplotlib.pyplot <span style="color: #531ab6;">as</span> plt
+plt.style.use(<span style="color: #3548cf;">'Solarize_Light2'</span>)
+<span style="color: #531ab6;">import</span> numpy <span style="color: #531ab6;">as</span> np
+<span style="color: #531ab6;">from</span> numpy.lib.stride_tricks <span style="color: #531ab6;">import</span> sliding_window_view
+<span style="color: #531ab6;">import</span> scipy <span style="color: #531ab6;">as</span> sc
+<span style="color: #531ab6;">import</span> pandas <span style="color: #531ab6;">as</span> pd
+<span style="color: #531ab6;">import</span> pymc <span style="color: #531ab6;">as</span> pm
+<span style="color: #531ab6;">from</span> pymc.model.transform.conditioning <span style="color: #531ab6;">import</span> do
+<span style="color: #531ab6;">import</span> arviz <span style="color: #531ab6;">as</span> az
+<span style="color: #531ab6;">import</span> pytensor
+<span style="color: #531ab6;">import</span> pytensor.tensor <span style="color: #531ab6;">as</span> pt
+<span style="color: #531ab6;">import</span> xarray <span style="color: #531ab6;">as</span> xr
+<span style="color: #531ab6;">import</span> seaborn <span style="color: #531ab6;">as</span> sns
+<span style="color: #531ab6;">from</span> tabulate <span style="color: #531ab6;">import</span> tabulate
+</pre>
+</div>
+
+<p>
+We use the following versions of pymc and numpy:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #8f0075;">print</span>(pm.__version__)
+<span style="color: #8f0075;">print</span>(np.__version__)
+</pre>
+</div>
+
+<pre class="example">
+5.19.1
+1.26.4
+</pre>
+</div>
+<div id="outline-container-org23d24f8" class="outline-3">
+<h3 id="org23d24f8">loading data</h3>
+<div class="outline-text-3" id="text-org23d24f8">
+<p>
+In order to have sufficient data for all our variables we analyze data from 2008-2018. We start with the data from 2008-2020. In the code below we make some further selections like positive population levels and a population that exceeds the number of deaths in a category. At the time of our analysis this narrows down the years to 2008-2018. The categories we are analyzing are indexed by age/gender/region/income as explained below.
+</p>
+
+<p>
+We analyze mortality for ages 45-85. At lower ages, mortality is very close to zero; for ages above 85 the number of observations per age group drops rapidly.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>code-data</label><pre class="src src-jupyter-python" id="orgda0dc13"><span style="color: #005e8b;">low_year</span> = 2008
+<span style="color: #005e8b;">high_year</span> = 2020
+<span style="color: #005e8b;">low_age</span> = 45 
+<span style="color: #005e8b;">high_age</span> = 85
+<span style="color: #005e8b;">ds</span> = xr.open_dataset(<span style="color: #3548cf;">'./data/oop_health_data.nc'</span>)
+ds
+</pre>
+</div>
+
+<pre class="example" id="org47b9cdd">
+&lt;xarray.Dataset&gt; Size: 22MB
+Dimensions:                           (nuts2: 313, year: 11, sex: 2, age: 99)
+Coordinates:
+  * nuts2                             (nuts2) &lt;U4 5kB 'AT11' 'AT12' ... 'UKN0'
+  * year                              (year) int64 88B 2008 2009 ... 2017 2018
+  * sex                               (sex) &lt;U1 8B 'F' 'M'
+  * age                               (age) float64 792B 1.0 2.0 ... 98.0 99.0
+    country                           (nuts2) &lt;U14 18kB ...
+Data variables:
+    population                        (age, sex, year, nuts2) float64 5MB ...
+    country_code                      (age, sex, year, nuts2) &lt;U2 5MB ...
+    HF3_PC_CHE                        (age, sex, year, nuts2) float64 5MB ...
+    deaths                            (age, sex, year, nuts2) float64 5MB ...
+    percentage_material_deprivation   (year, nuts2) float64 28kB ...
+    TOOEXP                            (year, nuts2) float64 28kB ...
+    UNMET                             (year, nuts2) float64 28kB ...
+    infant mortality                  (year, nuts2) float64 28kB ...
+    number_physicians per inhabitant  (year, nuts2) float64 28kB ...
+</pre>
+
+
+
+<p>
+Following python code generates the list <code>my_regions</code> where we have data on <code>population,deaths</code> and where we have at least one year (per region) with information on <code>UNMET</code> or where <code>UNMET</code> is not equal to zero for all years.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #595959;"># </span><span style="color: #595959;">my_regions = []</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">for r in np.unique(ds.nuts2.values):</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">A = np.sum(ds.where(ds.nuts2==r,drop=True).population.isnull().values)</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">B = np.sum(ds.where(ds.nuts2==r,drop=True).deaths.isnull().values)</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">C = np.sum(np.isnan(np.nanmean(ds.where(ds.nuts2==r,drop=True).UNMET.values,axis=0)))</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">D = np.sum(np.nanmean(ds.where(ds.nuts2==r,drop=True).UNMET.values,axis=0)==0)</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">if A + B + C + D == 0:</span>
+<span style="color: #595959;">#         </span><span style="color: #595959;">my_regions.append(r)</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">my_regions</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>code-selection</label><pre class="src src-jupyter-python" id="orgfc6b3ac"><span style="color: #005e8b;">cohorts</span> = 30
+<span style="color: #005e8b;">age_matrix</span> = sliding_window_view(np.arange(low_age,high_age+1), cohorts)[:-1]
+<span style="color: #005e8b;">age_indices</span> = age_matrix-low_age
+<span style="color: #005e8b;">my_regions</span> = [<span style="color: #3548cf;">'BG31'</span>, <span style="color: #3548cf;">'BG32'</span>, <span style="color: #3548cf;">'BG33'</span>, <span style="color: #3548cf;">'BG34'</span>, <span style="color: #3548cf;">'BG41'</span>, <span style="color: #3548cf;">'BG42'</span>, <span style="color: #3548cf;">'CH01'</span>, <span style="color: #3548cf;">'CH02'</span>, <span style="color: #3548cf;">'CH03'</span>, <span style="color: #3548cf;">'CH04'</span>, <span style="color: #3548cf;">'CH05'</span>, <span style="color: #3548cf;">'CH06'</span>, <span style="color: #3548cf;">'CH07'</span>, <span style="color: #3548cf;">'DK01'</span>, <span style="color: #3548cf;">'DK02'</span>, <span style="color: #3548cf;">'DK03'</span>, <span style="color: #3548cf;">'DK04'</span>, <span style="color: #3548cf;">'DK05'</span>, <span style="color: #3548cf;">'EL30'</span>, <span style="color: #3548cf;">'EL41'</span>, <span style="color: #3548cf;">'EL42'</span>, <span style="color: #3548cf;">'EL43'</span>, <span style="color: #3548cf;">'EL51'</span>, <span style="color: #3548cf;">'EL52'</span>, <span style="color: #3548cf;">'EL53'</span>, <span style="color: #3548cf;">'EL54'</span>, <span style="color: #3548cf;">'EL61'</span>, <span style="color: #3548cf;">'EL62'</span>, <span style="color: #3548cf;">'EL63'</span>, <span style="color: #3548cf;">'EL64'</span>, <span style="color: #3548cf;">'EL65'</span>, <span style="color: #3548cf;">'FI1B'</span>, <span style="color: #3548cf;">'FI1C'</span>, <span style="color: #3548cf;">'FI1D'</span>, <span style="color: #3548cf;">'HU11'</span>, <span style="color: #3548cf;">'HU12'</span>, <span style="color: #3548cf;">'HU21'</span>, <span style="color: #3548cf;">'HU22'</span>, <span style="color: #3548cf;">'HU23'</span>, <span style="color: #3548cf;">'HU31'</span>, <span style="color: #3548cf;">'HU32'</span>, <span style="color: #3548cf;">'HU33'</span>, <span style="color: #3548cf;">'LT01'</span>, <span style="color: #3548cf;">'LT02'</span>, <span style="color: #3548cf;">'NO01'</span>, <span style="color: #3548cf;">'NO02'</span>, <span style="color: #3548cf;">'NO03'</span>, <span style="color: #3548cf;">'NO04'</span>, <span style="color: #3548cf;">'NO05'</span>, <span style="color: #3548cf;">'NO06'</span>, <span style="color: #3548cf;">'NO07'</span>, <span style="color: #3548cf;">'SE11'</span>, <span style="color: #3548cf;">'SE12'</span>, <span style="color: #3548cf;">'SE21'</span>, <span style="color: #3548cf;">'SE22'</span>, <span style="color: #3548cf;">'SE23'</span>, <span style="color: #3548cf;">'SE31'</span>, <span style="color: #3548cf;">'SE32'</span>, <span style="color: #3548cf;">'SE33'</span>, <span style="color: #3548cf;">'SI03'</span>, <span style="color: #3548cf;">'SI04'</span>, <span style="color: #3548cf;">'SK01'</span>, <span style="color: #3548cf;">'SK02'</span>, <span style="color: #3548cf;">'SK03'</span>, <span style="color: #3548cf;">'SK04'</span>]
+<span style="color: #005e8b;">ds</span> = ds.where((low_age &lt;= ds.age) &amp; (ds.age &lt;= high_age) &amp;\
+              (low_year &lt;= ds.year) &amp; (ds.year &lt;= high_year) &amp;\
+              (ds.nuts2.isin(my_regions)) &amp;\
+              (ds.country_code != <span style="color: #3548cf;">""</span>) &amp;\
+              (ds.population &gt; 1.0) &amp; (ds.population &gt; ds.deaths), drop=<span style="color: #0000b0;">True</span>)
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"TOOEXP"</span>] = ds[<span style="color: #3548cf;">"TOOEXP"</span>].isel(age=0,sex=0)
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"number_physicians"</span>] = ds[<span style="color: #3548cf;">"number_physicians per inhabitant"</span>].isel(age=0,sex=0)
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"infant mortality"</span>] = ds[<span style="color: #3548cf;">"infant mortality"</span>].isel(age=0,sex=0)
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"UNMET"</span>] = ds[<span style="color: #3548cf;">"UNMET"</span>].isel(age=0,sex=0)
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"UNMET_other"</span>] = ds[<span style="color: #3548cf;">"UNMET"</span>]-ds[<span style="color: #3548cf;">"TOOEXP"</span>]
+<span style="color: #005e8b;">ds</span>[<span style="color: #3548cf;">"percentage_material_deprivation"</span>] = ds[<span style="color: #3548cf;">"percentage_material_deprivation"</span>].isel(age=0,sex=0)
+ds
+</pre>
+</div>
+
+<pre class="example" id="orgf835013">
+&lt;xarray.Dataset&gt; Size: 2MB
+Dimensions:                           (age: 41, sex: 2, year: 11, nuts2: 65)
+Coordinates:
+  * nuts2                             (nuts2) &lt;U4 1kB 'BG31' 'BG32' ... 'SK04'
+  * year                              (year) int64 88B 2008 2009 ... 2017 2018
+  * sex                               (sex) &lt;U1 8B 'F' 'M'
+  * age                               (age) float64 328B 45.0 46.0 ... 84.0 85.0
+    country                           (nuts2) &lt;U14 4kB 'Bulgaria' ... 'Slovakia'
+Data variables:
+    population                        (age, sex, year, nuts2) float64 469kB 5...
+    country_code                      (age, sex, year, nuts2) object 469kB 'B...
+    HF3_PC_CHE                        (age, sex, year, nuts2) float64 469kB n...
+    deaths                            (age, sex, year, nuts2) float64 469kB 1...
+    percentage_material_deprivation   (year, nuts2) float64 6kB nan nan ... 10.0
+    TOOEXP                            (year, nuts2) float64 6kB 12.8 ... 0.4
+    UNMET                             (year, nuts2) float64 6kB 27.4 ... 6.5
+    infant mortality                  (year, nuts2) float64 6kB 9.1 8.0 ... 8.8
+    number_physicians per inhabitant  (year, nuts2, age, sex) float64 469kB 3...
+    number_physicians                 (year, nuts2) float64 6kB 373.1 ... 344.6
+    UNMET_other                       (year, nuts2) float64 6kB 14.6 9.5 ... 6.1
+</pre>
+
+
+<p>
+The <code>age_matrix</code> defined above has the following format. In our first year, 2008, we start with people aged 45-74. We follow these age-cohorts over time till 2018 when they are aged 55-84. We summarize this in the paper in Table <a href="#orgabba7fd">1</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #8f0075;">print</span>(tabulate(age_matrix, tablefmt=<span style="color: #3548cf;">"orgtbl"</span>))
+</pre>
+</div>
+
+<pre class="example" id="org8734bc9">
+| 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 |
+| 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 |
+| 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 |
+| 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 |
+| 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 |
+| 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 |
+| 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |
+| 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 |
+| 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 |
+| 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 |
+| 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 |
+</pre>
+
+
+
+
+
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>code-matrices</label><pre class="src src-jupyter-python" id="org627653a"><span style="color: #005e8b;">country</span> = ds.country.values
+<span style="color: #005e8b;">n_regions</span> = ds.nuts2.values.shape[0] <span style="color: #595959;"># </span><span style="color: #595959;">number of regions </span>
+<span style="color: #005e8b;">n_countries</span> = <span style="color: #8f0075;">len</span>(np.unique(ds.country.values)) <span style="color: #595959;"># </span><span style="color: #595959;">number of countries</span>
+<span style="color: #005e8b;">n_ages</span> = ds.age.values.shape[0] <span style="color: #595959;"># </span><span style="color: #595959;">number of ages</span>
+
+<span style="color: #595959;"># </span><span style="color: #595959;">Mapping of regions to countries</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">Example: regions 0, 1 -&gt; country 0; regions 2, 3 -&gt; country 1; regions 4, 5 -&gt; country 2</span>
+<span style="color: #005e8b;">region_to_country</span> = pd.factorize(country)[0]
+
+<span style="color: #595959;"># </span><span style="color: #595959;">Create the matrix (countries x regions)</span>
+<span style="color: #005e8b;">country_region_matrix_01</span> = np.zeros((n_countries, n_regions)) <span style="color: #595959;"># </span><span style="color: #595959;">0-1 matrix with a 1 at position cr if region r belongs to country c</span>
+<span style="color: #531ab6;">for</span> r,c <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">enumerate</span>(region_to_country):
+     <span style="color: #005e8b;">country_region_matrix_01</span>[<span style="color: #005e8b;">c</span>, <span style="color: #005e8b;">r</span>] = 1
+
+<span style="color: #595959;"># </span><span style="color: #595959;">Normalize rows to compute averages per country (across regions)</span>
+<span style="color: #005e8b;">country_region_matrix</span> = country_region_matrix_01 / country_region_matrix_01.<span style="color: #8f0075;">sum</span>(axis=1, keepdims=<span style="color: #0000b0;">True</span>)
+
+</pre>
+</div>
+
+<p>
+For some country/year combinations we see in the data that <code>OOP</code> (<code>HF3_PC_CHE</code>) equals zero. As in no European country healthcare is completely free, we interpret 0 as a missing observation. With <code>xarray</code> we can turn a 0 into <code>nan</code> by setting <code>da = da.where(da != 0)</code> where <code>da</code> denotes the data array. This is the code we use below for <code>OOP, infant mortality</code> and <code>Unmet</code>. No infant mortality in a region or no unmet medical needs is also highly unlikely; hence a zero value is turned into <code>nan</code>. If <code>Unmet</code> equals zero, the same is true for <code>UNMET_other</code> and <code>TooExp</code> because <code>UNMET = TooExp + UNMET_other</code>.
+</p>
+
+<p>
+OOP does not vary with age or gender and hence we can take the average across dimensions <code>(0,1)</code> without losing information. The result is a variable varying over years and across regions. But out-of-pocket varies by country (not by region within a country) and hence we multiply <code>OOP</code> with the <code>country_region_matrix</code> (transformed). This makes sure that <code>OOP_c</code> varies by year and country.
+</p>
+
+<p>
+In our empirical analysis we use the standardized version of the number of physicians per 100k inhabitants. Variables like OOP, material deprivation and unmet medical needs are turned from percentages into fractions for the analysis. We also turn infant mortality (per 1000 life-births) into a variable between 0 and 1 by dividing it by 100 (effectively making it infant mortality per 100k life-births).
+</p>
+
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>code-variables</label><pre class="src src-jupyter-python" id="orgfc619a7"><span style="color: #005e8b;">Population</span> = ds.population.values.astype(<span style="color: #8f0075;">int</span>)
+<span style="color: #005e8b;">physicians</span> = (ds.number_physicians.values-np.nanmean(ds.number_physicians.values))/np.nanstd(ds.number_physicians.values)
+<span style="color: #005e8b;">OOP</span> = ds.HF3_PC_CHE.where(ds.HF3_PC_CHE!=0)/100.0  <span style="color: #595959;"># </span><span style="color: #595959;">replaces OOP equal to 0 with nan</span>
+<span style="color: #005e8b;">m_infant</span> = ds[<span style="color: #3548cf;">'infant mortality'</span>].where(ds[<span style="color: #3548cf;">'infant mortality'</span>]!=0)/100.0  <span style="color: #595959;"># </span><span style="color: #595959;">replaces infant mortality equal to 0 with nan</span>
+<span style="color: #005e8b;">OOP_c</span> = np.dot(OOP.mean(axis=(0,1)),country_region_matrix.T)
+<span style="color: #005e8b;">M</span> = ds.deaths.values.astype(<span style="color: #8f0075;">int</span>)
+<span style="color: #005e8b;">Deprivation</span> = ds.percentage_material_deprivation/100.0 
+<span style="color: #005e8b;">Unmet</span> = ds.UNMET.where(ds.UNMET!=0)/100.0  <span style="color: #595959;"># </span><span style="color: #595959;">replaces UNMET equal to 0 with nan</span>
+<span style="color: #005e8b;">TooExp</span> = ds.TOOEXP.where(ds.UNMET!=0)/100.0
+<span style="color: #005e8b;">Unmet_o</span> = ds.UNMET_other.where(ds.UNMET!=0)/100.0 
+<span style="color: #005e8b;">U_log_odds</span> = np.log((Unmet)/(1-Unmet))
+<span style="color: #005e8b;">U_o_log_odds</span> = np.log((Unmet_o)/(1-Unmet_o))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6b19753" class="outline-3">
+<h3 id="org6b19753">creating cohort data</h3>
+<div class="outline-text-3" id="text-org6b19753">
+<p>
+We analyze population and mortality in tensor-format. The dimensions of the tensors <code>P_cohort, M_cohort</code> are calendar year, cohort size (first row in Table <a href="#orgabba7fd">1</a>), gender and region. 
+</p>
+
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>code-cohorts</label><pre class="src src-jupyter-python" id="org7e2c1d5"><span style="color: #005e8b;">c_dim</span>, <span style="color: #005e8b;">g_dim</span>, <span style="color: #005e8b;">t_dim</span>, <span style="color: #005e8b;">r_dim</span> = cohorts, 2, <span style="color: #8f0075;">len</span>(ds.year), n_regions
+<span style="color: #005e8b;">n_dim</span> = n_countries
+<span style="color: #005e8b;">P_cohort</span> = np.zeros((t_dim, c_dim, g_dim, r_dim))
+<span style="color: #005e8b;">M_cohort</span> = np.zeros((t_dim, c_dim, g_dim, r_dim))
+
+<span style="color: #531ab6;">for</span> offset <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(c_dim):
+  <span style="color: #531ab6;">for</span> g <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(g_dim):
+     <span style="color: #531ab6;">for</span> r <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(r_dim):
+        <span style="color: #005e8b;">P_cohort</span>[:,<span style="color: #005e8b;">offset</span>,<span style="color: #005e8b;">g</span>,<span style="color: #005e8b;">r</span>] = np.diagonal(Population, axis1=0, axis2=2, offset=-offset)[g,r,:]
+        <span style="color: #005e8b;">M_cohort</span>[:,<span style="color: #005e8b;">offset</span>,<span style="color: #005e8b;">g</span>,<span style="color: #005e8b;">r</span>] = np.diagonal(M, axis1=0, axis2=2, offset=-offset)[g,r,:]
+</pre>
+</div>
+
+<p>
+We use the following moments to specify our priors for missing values in these variables. To deal with missing values in <code>Deprivation</code> we model it as a distribution from which we draw missing values. Such a distribution cannot have a standard deviation of zero and hence we add a small number to the standard deviation to avoid this. See section for a discussion of missing values.
+</p>
+
+<p>
+There are four regions in Norway on which we have no information at all about the number of physicians. For these regions we set <code>mean_physician</code> equal to the average number of physicians in Norway and <code>std_physician</code> equal to the average standard deviation for Norway.
+</p>
+
+<p>
+Finally, to define the log-odds of mortality (number of deaths <code>M</code> over population <code>P</code>) we add 1 to <code>M</code> to avoid taking the logarithm of zero.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>code-moments</label><pre class="src src-jupyter-python" id="org7340b26"><span style="color: #005e8b;">mean_depr</span> = Deprivation.mean(axis=(0)).values
+<span style="color: #005e8b;">std_depr</span> = Deprivation.std(axis=(0)).values + 0.0001
+<span style="color: #005e8b;">mean_oop_c</span> = np.nanmean(OOP_c,axis=0)
+<span style="color: #005e8b;">std_oop_c</span> = np.nanstd(OOP_c,axis=0)
+<span style="color: #005e8b;">mean_m_infant</span> = np.nanmean(m_infant,axis=0)
+<span style="color: #005e8b;">std_m_infant</span> = np.nanstd(m_infant,axis=0)
+<span style="color: #005e8b;">mean_physician</span> = np.nanmean(physicians,axis=0) <span style="color: #595959;"># </span><span style="color: #595959;">mean over years </span>
+<span style="color: #005e8b;">std_physician</span> = np.nanstd(physicians,axis=0)   <span style="color: #595959;"># </span><span style="color: #595959;">std over years</span>
+<span style="color: #005e8b;">norway</span> = [<span style="color: #3548cf;">'NO'</span> <span style="color: #531ab6;">in</span> r <span style="color: #531ab6;">for</span> r <span style="color: #531ab6;">in</span> ds.nuts2.values]
+<span style="color: #005e8b;">mean_norway</span> = np.nanmean(mean_physician[norway])
+<span style="color: #005e8b;">mean_physician</span> = np.nan_to_num(mean_physician,nan=mean_norway)
+<span style="color: #005e8b;">std_norway</span> = np.nanmean(std_physician[norway])
+<span style="color: #005e8b;">std_physician</span> = np.nan_to_num(std_physician,nan=std_norway)
+<span style="color: #005e8b;">log_odds_mort</span> = np.log(((1+M)/Population)/(1-((1+M)/Population)))
+<span style="color: #005e8b;">mort_c</span> = np.log(np.tensordot(((1+M_cohort)/P_cohort), country_region_matrix.T, axes=([3],[0]))/(1- np.tensordot(((1+M_cohort)/P_cohort),\
+                                              country_region_matrix.T, axes=([3],[0])))) <span style="color: #595959;"># </span><span style="color: #595959;">varies by age, cohorts, gender, country</span>
+<span style="color: #005e8b;">gender_effect_&#960;</span> = (mort_c.mean(axis=(0,1,3))-mort_c.mean(axis=(0,1,2,3))) <span style="color: #595959;"># </span><span style="color: #595959;">varies by gender</span>
+<span style="color: #005e8b;">country_effect_&#960;</span> = (mort_c.mean(axis=(0,1,2))-mort_c.mean(axis=(0,1,2,3))) <span style="color: #595959;"># </span><span style="color: #595959;">varies by country</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4ee482f" class="outline-2">
+<h2 id="org4ee482f"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Healthcare policy is long run policy. Policy reforms can affect a population&rsquo;s health in 20 years time. A recent literature analyzes the health effects of demand-side cost-sharing where health is proxied by mortality. To identify the causal effect of demand-side cost-sharing on mortality, these papers focus on a narrow band of years and/or ages around a change in cost-sharing. To illustrate, a number of studies use the Medicaid eligibility expansion under the Affordable Care Act (<a href="#citeproc_bib_item_1">Borgschulte and Vogler 2020</a>; <a href="#citeproc_bib_item_7">Miller, Johnson, and Wherry 2021</a>). As this was implemented over time in a number of states, a difference in differences (diff-in-diff) analysis can be used to identify the causal effect. To facilitate the identification only a few years after the policy change are analyzed making it hard to understand long run effects.
+</p>
+
+<p>
+We introduce a simple dynamic health model that allows us to follow a cohort from age 45 to 84. The idea is to capture a &ldquo;health stock&rdquo; by distinguishing people with high and low health status. We keep track of health status at the age/gender/income/year/region level. That is, we follow the health status of an age category (per gender/income/region) over time as the cohort gets older. For the healthy group there is a probability of falling ill. For the low health status group there are a probability to recover and a probability to die. The recovery probability depends on the probability of getting treatment which in turn depends on the degree of demand-side cost-sharing. With higher out-of-pocket expenditure, fewer people can afford treatment and recovery is less likely.
+</p>
+
+<p>
+In such a theoretical model it is straightforward to choose parameter values such that the dynamic effect is far bigger than a static diff-in-diff estimate would suggest. In order to evaluate this difference for reasonably realistic parameter values, we estimate our model on regional (NUTS 2) Eurostat data over an eleven year period. The model allows us to derive the effect of demand-side cost-sharing on mortality and quality adjusted life years (so called qaly&rsquo;s) which give a higher weight to years in full health than years with low health status.
+</p>
+
+<p>
+Our estimated model fits the data well and replicates a number of stylized facts. Women expect more qaly&rsquo;s than men and people on high income more than people in poverty. The probability of falling ill increases with age. Although there is uncertainty about the parameter estimates, there is an unambiguous ordering of countries in terms of expected qaly&rsquo;s for 45 year olds; Switzerland has the highest expected qaly&rsquo;s and Hungary, Bulgaria and Lithuania the lowest. Finally, a 10% point increase in demand-side cost-sharing (that is, in the percentage of out-of-pocket over total healthcare expenditure) reduces qaly&rsquo;s: the average effect is moderate but clearly bounded away from zero.
+</p>
+
+<p>
+Two results stand out compared to the literature discussed below. First, the effect of a change in demand-side cost-sharing on low income qaly&rsquo;s is ten times the effect on high income qaly&rsquo;s. Second, the dynamic effects of demand-side cost-sharing for low incomes are twenty times higher than the static estimate that would follow from a diff-in-diff analysis for this group. The latter result suggests a trade off between a clear-cut causal identification &#x2013;based on, say a diff-in-diff methodology&#x2013; and a long run effect estimate &#x2013;if one is willing to put more structure on the data.
+</p>
+
+<p>
+We estimate the model as a Bayesian model to easily propagate the uncertainty of the estimated parameters to the results that we present, e.g. in terms of qaly&rsquo;s.
+</p>
+
+<p>
+This paper is not the first to examine the impact of demand-side cost-sharing on mortality. There is a collection of recent studies employing innovative methodologies and primarily relying on individual-level data to establish the causal effect of health insurance on health and mortality. Several studies have utilized the Medicaid eligibility expansion under the Affordable Care Act. This expansion was implemented at various times across different states in the US, enabling a diff-in-diff identification strategy. These studies have demonstrated that the Medicaid expansion (resulting in more comprehensive health insurance coverage) has led to a reduction in mortality rates (<a href="#citeproc_bib_item_1">Borgschulte and Vogler 2020</a>; <a href="#citeproc_bib_item_7">Miller, Johnson, and Wherry 2021</a>).
+</p>
+
+<p>
+However, these studies focus on the static or short run effects of insurance and demand-side cost-sharing. To illustrate, Borgschulte and Vogler (<a href="#citeproc_bib_item_1">2020</a>) consider a four year period after the Medicaid reform and do not try to identify the dynamic effect. Miller, Johnson, and Wherry (<a href="#citeproc_bib_item_7">2021</a>) focuses on 55-64 year olds up to three years after the Medicaid reform.
+</p>
+
+<p>
+Chandra, Flack, and Obermeyer (<a href="#citeproc_bib_item_3">2021</a>) analyze the Medicare Part D prescription drug coverage, in which end-of-year pricing displays a non-linear pattern based on expenditure. The primary finding indicates that increases in out-of-pocket (oop) costs for drugs result in reduced drug use, including the use of high-value treatments, subsequently leading to higher mortality rates. There is no dynamic analysis in the sense that the paper only considers 65 year olds and focuses on within year effects.
+</p>
+
+<p>
+Finally, Goldin and colleagues conducted an experimental study in which individuals subject to the Affordable Care Act&rsquo;s health insurance mandate were reminded of potential financial penalties for non-compliance. This reminder prompted individuals to opt for health insurance instead of remaining uninsured, and as a result, mortality rates were lower among those who received the reminder compared to the control group who did not (<a href="#citeproc_bib_item_5">Goldin, Lurie, and McCubbin 2020</a>). This paper analyzes a two year period and focuses on 45-64 year olds, whereas our paper derives effects across 45-84 year olds.
+</p>
+
+<p>
+Our paper adds to this evidence of negative health effects of demand-side cost-sharing in the following dimensions. First, we utilize European instead of US data. European countries tend to have a more homogeneous health insurance system compared to the diverse range of options available within the US. In the US, individuals may have (very generous) employer-sponsored insurance, Medicaid or Medicare coverage, or no insurance at all, making it challenging to detect aggregate-level effects of changes in say, Medicaid coverage. European countries, in contrast, tend to have nationally determined health insurance features, resulting in a higher level of consistency. For instance, the OECD <a href="https://qdd.oecd.org/data/HSC">Health Systems Characteristics Survey</a> shows that more than 90% of the population in European countries obtains primary healthcare coverage through automatic or compulsory insurance, with percentages exceeding 99% in most cases. The corresponding figure for the US is less than one third. In this sense, country or region-wide statistics in Europe provide a better representation of the insurance situation for citizens compared to the US, although they may not capture all individual nuances such as the purchase of complementary insurance.
+</p>
+
+<p>
+With this data we follow an age/gender/income/region cohort over time and estimate the model parameters capturing the probabilities of falling ill, of recovering from illness and death. Then we can simulate the long term effects of a change in demand-side cost-sharing using our estimated parameters. Using this simulated data we can compare our dynamic results with the static (diff-in-diff) estimates. We find that the (true) dynamic effects are magnitudes higher for low incomes than the static estimates would suggest. We illustrate this by using the estimation method in Finkelstein and McKnight (<a href="#citeproc_bib_item_4">2008</a>) to explain the difference in detail.
+</p>
+
+<p>
+Our finding that demand-side cost-sharing affects health and mortality of people on low income aligns with previous research indicating that healthcare utilization is influenced by individuals&rsquo; liquidity constraints. Individuals with lower incomes tend to defer or forgo valuable treatments when these are expensive (<a href="#citeproc_bib_item_6">Gross, Layton, and Prinz 2020</a>; <a href="#citeproc_bib_item_8">Nyman 2003</a>). Individuals with higher incomes may also forgo necessary treatments  (<a href="#citeproc_bib_item_2">Brot-Goldberg et al. 2017</a>; <a href="#citeproc_bib_item_3">Chandra, Flack, and Obermeyer 2021</a>). However, in the latter case, the decision to forgo treatment is more likely driven by factors other than liquidity issues and we find a far smaller effect. 
+</p>
+
+<p>
+Further, Eurostat variables derived from the EU-SILC survey enable us to concentrate on causal mechanisms. The survey includes questions about unmet medical needs in the past months and the reasons for these unmet needs. One of the reasons cited is the out-of-pocket cost, which leads individuals to postpone or forgo treatment because it is too expensive.
+</p>
+
+<p>
+The next section presents a dynamic model of health status and mortality. Then we describe the Eurostat data that we use. We explain the empirical model that we estimate. Estimation results are presented and we conclude with a discussion of the policy implications. The appendix contains more details on our data and estimation. The <a href="https://janboone.github.io/dynamic-effects-of-health-insurance-reform/index.html">online appenix</a> is the html version of this paper which includes &#x2013;per section&#x2013; the python code that is used in each section&rsquo;s analysis.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> This is an advantage of using data at the regional level. The repository contains the python code that gets the data from Eurostat so that each step of this analysis can be replicated.
+</p>
+</div>
+</div>
+<div id="outline-container-org87ec7b3" class="outline-2">
+<h2 id="org87ec7b3"><span class="section-number-2">2.</span> Theory</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+
+</p>
+
+<p>
+The idea of our dynamic model is to follow a cohort aged \(a\) at time \(t\) over time to age \(a+1\) in year \(t+1\). We capture this dynamic with a straightforward Markov model. The model that we estimate is illustrated in Figure <a href="#orga6c8d53">1</a>. We follow individuals from age 45 to age 85. Let&rsquo;s denote the age at which we start following an individual by \(a=0\) at time \(t=0\). If this agent is healthy, there is a probability \(\pi\) that the agent falls ill and moves to state ill at age \(a=1\) in period \(t=1\). With probability \(1-\pi\) the agent stays healthy also at age \(a=1\). For an agent in the unhealthy state, there is a probability \(\sigma\) that she is cured and becomes healthy at age \(a=1\). With probability \(\delta\) she dies and with probability \(1-\sigma-\delta\) she remains in the unhealthy state at \(a=1\). Finally, death is an absorbing state.
+</p>
+
+
+
+<div id="orga6c8d53" class="figure">
+<p><img src="./figures/markov_chain.png" alt="markov_chain.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Markov chain model</p>
+</div>
+
+<p>
+Instead of deriving the steady state outcome of the model, we estimate parameters using the underlying difference equation. Focusing just on age for the moment to ease notation, the model implies the following difference equation. Let \(\iota_a\) denote the fraction of people aged \(a\) who are ill and \(1-\iota_a\) the fraction who are healthy, then \(\iota_a\) evolves over age (and time) as:
+</p>
+\begin{equation}
+\label{orgf4836a1}
+\iota_{a+1} = ((1-\sigma-\delta) \iota_a + \pi_a (1-\iota_a))/(1-\delta \iota_{a})
+\end{equation}
+<p>
+and \(\delta \iota_a\) people die at age \(a\). In words, the fraction of people ill aged \(a+1\) equals the fraction ill aged \(a\) who do neither recover to the healthy state nor die plus the fraction of healthy people who fall ill. We normalize by \(1-\delta \iota_a\) to ensure that the fractions ill and healthy add up to one.
+</p>
+
+<p>
+We differentiate the fraction ill, \(\iota_a\), by region/year/gender/income. If we add all the sub/superscripts we get \(\iota_{atr}^{ij}\) for age \(a\) in year \(t\) and region \(r\) among gender \(i \in \{f,m\}\) and low/high income \(j \in \{l,h\}\). Let \(\alpha_{tr}\) denote the fraction of people on low income in region \(r\) and year \(t\) which is available in our data. We observe in our data mortality \(\mu_{atr}^{i}\), the fraction of females/males \(i\) who die at age \(a\) in year \(t\) in region \(r\). In terms of our model this is given by
+</p>
+\begin{equation}
+\label{orgf2418dd}
+\mu_{atr}^i = \alpha_{tr} \delta \iota_{atr}^{il} + (1-\alpha_{tr}) \delta \iota_{atr}^{ih}
+\end{equation}
+
+<p>
+As we do not observe \(\iota\) directly in our data, we have to estimate the starting points of the fraction of people initially ill, \(\iota_0\), in order to solve the difference equations over time. Our estimates of \(\iota_0\) vary by age/gender/region/income. The reason \(\iota_0\) varies by age is illustrated in Table <a href="#orgabba7fd">1</a>. Differentiated by gender/region/income we follow the cohorts aged 45-74 over time until they are aged 55-84. The data section below motivates this choice. Hence we estimate the initial values \(\iota_0\) for these ages in the year 2008. Then we apply equation \eqref{orgf4836a1} to determine the development of \(\iota_a\) over time as cohorts get older.
+</p>
+
+<table id="orgabba7fd" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> We follow cohorts aged 45-74 over time from 2008 until they are 55-84 in 2018.</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">year</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">age</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2008</td>
+<td class="org-right">45</td>
+<td class="org-right">46</td>
+<td class="org-right">47</td>
+<td class="org-right">48</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">68</td>
+<td class="org-right">69</td>
+<td class="org-right">70</td>
+<td class="org-right">71</td>
+<td class="org-right">72</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+</tr>
+
+<tr>
+<td class="org-right">2009</td>
+<td class="org-right">46</td>
+<td class="org-right">47</td>
+<td class="org-right">48</td>
+<td class="org-right">49</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">69</td>
+<td class="org-right">70</td>
+<td class="org-right">71</td>
+<td class="org-right">72</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+</tr>
+
+<tr>
+<td class="org-right">2010</td>
+<td class="org-right">47</td>
+<td class="org-right">48</td>
+<td class="org-right">49</td>
+<td class="org-right">50</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">70</td>
+<td class="org-right">71</td>
+<td class="org-right">72</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+</tr>
+
+<tr>
+<td class="org-right">2011</td>
+<td class="org-right">48</td>
+<td class="org-right">49</td>
+<td class="org-right">50</td>
+<td class="org-right">51</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">71</td>
+<td class="org-right">72</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+</tr>
+
+<tr>
+<td class="org-right">2012</td>
+<td class="org-right">49</td>
+<td class="org-right">50</td>
+<td class="org-right">51</td>
+<td class="org-right">52</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">72</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+</tr>
+
+<tr>
+<td class="org-right">2013</td>
+<td class="org-right">50</td>
+<td class="org-right">51</td>
+<td class="org-right">52</td>
+<td class="org-right">53</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">73</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+</tr>
+
+<tr>
+<td class="org-right">2014</td>
+<td class="org-right">51</td>
+<td class="org-right">52</td>
+<td class="org-right">53</td>
+<td class="org-right">54</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">74</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+<td class="org-right">80</td>
+</tr>
+
+<tr>
+<td class="org-right">2015</td>
+<td class="org-right">52</td>
+<td class="org-right">53</td>
+<td class="org-right">54</td>
+<td class="org-right">55</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">75</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+<td class="org-right">80</td>
+<td class="org-right">81</td>
+</tr>
+
+<tr>
+<td class="org-right">2016</td>
+<td class="org-right">53</td>
+<td class="org-right">54</td>
+<td class="org-right">55</td>
+<td class="org-right">56</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">76</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+<td class="org-right">80</td>
+<td class="org-right">81</td>
+<td class="org-right">82</td>
+</tr>
+
+<tr>
+<td class="org-right">2017</td>
+<td class="org-right">54</td>
+<td class="org-right">55</td>
+<td class="org-right">56</td>
+<td class="org-right">57</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">77</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+<td class="org-right">80</td>
+<td class="org-right">81</td>
+<td class="org-right">82</td>
+<td class="org-right">83</td>
+</tr>
+
+<tr>
+<td class="org-right">2018</td>
+<td class="org-right">55</td>
+<td class="org-right">56</td>
+<td class="org-right">57</td>
+<td class="org-right">58</td>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">78</td>
+<td class="org-right">79</td>
+<td class="org-right">80</td>
+<td class="org-right">81</td>
+<td class="org-right">82</td>
+<td class="org-right">83</td>
+<td class="org-right">84</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+The remainder of the section explains how \(\pi,\delta,\sigma\) vary with age/year/gender/region/income. First, the probability of falling ill \(\pi\) varies by age/gender/country/income. We know that older people tend to be less healthy than young people, women tend to live longer than men, longevity varies by country and people on low income tend to have lower health status than people on high income. We allow \(\pi\) to vary along these dimensions to capture these stylized facts. 
+</p>
+
+<p>
+Second, once people are in state &ldquo;ill&rdquo; we assume that their probability of death \(\delta\) is the same across age/gender/income. We do allow \(\delta_c\) to vary by country as some healthcare systems may be better in prolonging life for the ill than systems in other countries.
+</p>
+
+<p>
+A final source of variation is the probability \(\sigma\) with which people recover to full health. This probability \(\sigma\) is determined by the probability of treatment and the quality of treatment conditional on being treated. We have data on unmet medical needs. Reasons why people forgo treatment &#x2013;that would be beneficial&#x2013; include waiting lists, hospital too far away, afraid of treatment. The motivation that we focus on is that the treatment is skipped because it is too expensive. Let \(\upsilon \in [0,1]\) denote the fraction of people who have unmet medical needs. We write this as the sum of the fraction of people who indicate that treatment is too expensive, \(\tau\), and the fraction of people who give other reasons, \(\upsilon_0\).
+</p>
+\begin{equation}
+\label{org3200068}
+\upsilon = \upsilon_0 + \tau
+\end{equation}
+<p>
+We expect that \(\tau\) is increasing in the fraction of healthcare expenditures that people pay out-of-pocket, \(oop\).
+</p>
+\begin{equation}
+\label{orgff29c47}
+\tau = \zeta oop
+\end{equation}
+<p>
+where \(oop\) is measured as expenditure paid out-of-pocket over total healthcare expenditure. We interpret this as capturing the generosity of a country&rsquo;s health insurance system. If healthcare is completely free at point-of-service, \(oop=0\) and \(\tau=0\): with free healthcare, no one forgoes treatment because it is too expensive. At the other extreme, no health insurance at all: everything is paid out-of-pocket: \(oop=1\). Then a fraction \(\zeta \in [0,1]\) will indicate they forgo treatment because it is too expensive. We allow \(\zeta\) to depend on income with \(\zeta^l \geq \zeta^h\). We expect people on low income to react more strongly to an increase in \(oop\) than people on high income. Also people on low income are more likely to avoid treatment for other reasons: \(\upsilon_0^l \geq u_0^h\). To illustrate, people on low income may be less skilled, say, in navigating waiting lists or find it more difficult to travel to a hospital that is further away (or even abroad).
+</p>
+
+<p>
+If someone gets treatment, the probability of recovering to full health is given by \(\lambda\). Hence, we write the probability of recovery \(\sigma\) as
+</p>
+\begin{equation}
+\label{org4ff0a92}
+\sigma = \sigma_0 + \lambda (1-\upsilon)
+\end{equation}
+<p>
+where \(\sigma_0\) is the probability that someone recovers without treatment. The parameter \(\lambda\) captures the quality of care which we allow to vary by region and year in ways explained below.
+</p>
+
+<p>
+We consider two applications of our model. First, we calculate the expected quality adjusted life-years (qaly&rsquo;s) of 45 year olds till they are 85. We normalize the value of a life-year in full health to 1.0 and set the qaly for a year being ill equal to \(\theta \in \langle 0, 1]\). The value of a &ldquo;life-year when dead&rdquo; is normalized to 0.0. To make this qaly calculation, we keep track of the size of the groups healthy and ill as follows:
+</p>
+\begin{equation}
+\label{orgc642e2c}
+N^{healthy}_{a+1} = (1-\pi_a) N^{healthy}_a + \sigma N^{ill}_{a}
+\end{equation}
+<p>
+and
+</p>
+\begin{equation}
+\label{org82d44b8}
+N^{ill}_{a+1} = \pi_a N^{healthy}_{a} + (1-\sigma-\delta) N^{ill}_{a}
+\end{equation}
+<p>
+where we start with 45 year olds at \(a=0\) and calculate up to age \(A\) (corresponding to 85 year olds). In contrast to equation \eqref{orgf4836a1} we do not assume that \(N^{ill}_a + N^{healthy}_a = 1\); indeed, the point is that we lose life-years as age increases. As above \(N^{healthy}_{a},N^{ill}_{a},\pi_a,\sigma,\delta\) vary with gender/region/income.
+</p>
+
+<p>
+We then calculate expected quality adjusted life-years from age 1 to \(A\) as the undiscounted sum of qaly&rsquo;s:<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>
+</p>
+\begin{equation}
+\label{orgba2b729}
+Q = \sum_{a=1}^{A} N^{healthy}_a + \theta N^{ill}_{a}
+\end{equation}
+
+<p>
+Second, we consider the effect on qaly&rsquo;s of an increase in demand-side cost-sharing \(\Delta oop > 0\). For this, we calculate qaly&rsquo;s in the baseline outcome, \(Q_0\) and compare it with the outcome where the fraction of people with unmet medical needs increases with \(\Delta \upsilon = \zeta \Delta oop\). We denote the qaly&rsquo;s in this outcome by \(Q_1\). The loss of qaly&rsquo;s  due to increased demand-side cost-sharing is given by:
+</p>
+\begin{equation}
+\label{org27bd9bf}
+\Delta Q = Q_0 - Q_1
+\end{equation}
+<p>
+In words, suppose there was a reform in year \(t=0\) which increased \(oop\). After the reform we follow the cohort aged \(a=0\) over time till age \(a=A\) and calculate their qaly&rsquo;s, \(Q_1\). We compare these qaly&rsquo;s with the counterfactual where \(oop\) was not changed, \(Q_0\). We denote this the dynamic comparison.
+</p>
+
+<p>
+We compare this dynamic analysis with the following static one. Instead of following an age cohort over \(A\) calendar years, we consider \(A\) ages one period after the reform and denote their qaly&rsquo;s by \(\tilde Q_1\). That is, the equation for \(\tilde Q\) is comparable to \eqref{orgba2b729} except that in the latter both age \(a\) and calendar year \(t\) vary over the summation. With \(\tilde Q\) calendar year is fixed at \(t=1\) (with the reform happening in calendar year \(t=0\)). We then compare \(\tilde Q_1\) with the qaly&rsquo;s these \(A\) age groups would have received under the counterfactual where \(oop\) is unchanged, \(\tilde Q_0\).
+</p>
+
+<p>
+To illustrate with Table <a href="#orgabba7fd">1</a>: we start with ages 45-74 at \(t=0\). We have the reform and calculate \(\tilde Q_1\) for the second row in the table (ages 46-75). Then we compare this to qaly&rsquo;s for the second row under the counterfactual of no change in \(oop\). We argue that this captures the estimate made by an event study like a diff-in-diff analysis, say where the reform was introduced in one region but not in another region. The diff-in-diff approach would then control for year effects like a virus going around in the year after the reform.
+</p>
+
+<p>
+This type of analysis can identify the causal effect convincingly but is usually applied for a couple of years only. For instance, because in later years the reform is introduced in other regions as well. Or because over time other factors may change causing a bias in the estimates based on the comparison of the regions.
+</p>
+
+<p>
+Theoretically, it is plausible that the dynamic estimate exceeds the static one. In a model where stocks (of healthy and ill) determine the state of the system and its development over time, ignoring these dynamic effects is likely to cause an under-estimation of the effect on qaly&rsquo;s or mortality. With our estimated model we can quantify the difference between the static and dynamic estimates.
+</p>
+</div>
+<div id="outline-container-org72c8591" class="outline-3">
+<h3 id="org72c8591"><span class="section-number-3">2.1.</span> Markov chain graph&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>Graphviz code block</label><pre class="src src-dot">digraph ER {
+        fontname="Helvetica,Arial,sans-serif"
+        node [fontname="Helvetica,Arial,sans-serif" fontsize="16"]
+        edge [fontname="Helvetica,Arial,sans-serif" fontsize="16"]
+        layout=sfdp
+        node [shape=ellipse]; a; b; death;
+
+        a  [label="healthy"]
+        b  [label="ill"]
+
+        a -&gt; b [label="&amp;pi;\n",len=0.500];
+        b -&gt; a [label="  &amp;sigma;",len=0.500];
+        b -&gt; death [label="&amp;delta;\n",len=0.00];
+}
+</pre>
+</div>
+
+
+<div id="org8a3c640" class="figure">
+<p><img src="./figures/markov_chain.png" alt="markov_chain.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org863d762" class="outline-2">
+<h2 id="org863d762"><span class="section-number-2">3.</span> Data</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The data that we use is from <a href="https://ec.europa.eu/eurostat/web/regions/database">Eurostat&rsquo;s regional database</a> and provides for NUTS 2 regions population size and number of deaths per age/gender category. In principle, we have data on 11 countries and 65 regions for the 11 years 2008-2018 and ages 45-84 for women and men. The years 2008-2018 were chosen  because, at the time of the analysis, for most variables and regions data was available from 2008 onward till 2018. The age range was chosen with the idea that mortality starts to increase from 45 years onward and number of observations per region drop significantly from age 85 onward. Finally, NUTS 2 regions were selected where there was at least one observation for unmet medical needs over the years and where the number of deaths during the year does not exceed the population size at the start of the year.
+</p>
+
+<p>
+Table <a href="#orgc0d92da">2</a> shows the summary statistics for our variables. We briefly discuss the main variables, the appendix provides more detail. We have more than 40k observations for population and deaths per age/gender/year/region category.<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup> We have missing observations and explain below how we deal with these in our Bayesian setting.
+</p>
+
+<p>
+The average population size per region-age-gender category is about 6000 and the average number of deaths 90. Median population size per category equals 5300 and median number of deaths 62. In our data, the percentage of people dying in a NUTS 2/year/age/gender category (<code>mortality</code>) equals 2% on average with a maximum of 17.3% for some region and age combination. The material deprivation measure (denoted <code>deprivation</code>) comes from the EU statistics on income and living conditions (<a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:EU_statistics_on_income_and_living_conditions_(EU-SILC)">EU-SILC</a>) survey. It refers to the enforced inability to pay unexpected expenses, afford adequate heating of the home, durable goods like a washing machine etc. This variable captures the idea that people may feel forced to forgo (valuable) treatment because it is too expensive.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup> The mean deprivation rate across regions and years equals 10%. Some regions have (almost) no people in deprivation, while in others 55% of people live in deprivation. The median rate is around 3%.
+</p>
+
+<p>
+Also from the EU-SILC survey, we use the variable capturing unmet medical needs because the forgone treatment was too expensive (<code>too exp</code>). The variable <code>unmet</code> measures percentage of people in need of healthcare that postpone or forgo treatment because it is either too expensive, the hospital is too far away, there is a waiting list for the treatment, the patient hopes that symptoms will disappear without treatment, the patient is afraid of treatment or has no time to visit a physician. The mean fraction of people forgoing treatment because it is too expensive equals 1.5%, while the mean fraction of people with unmet medical needs (because it is too expensive or other reasons) equals 6.5%. In some regions the fraction of people forgoing treatment because it is too expensive goes up to almost 20% and the fraction of people with unmet medical needs to almost 30%.
+</p>
+
+<p>
+For the model application considering the effect of demand-side cost-sharing on health and mortality, healthcare quality could be a collider. Indeed, if government resources are reduced, there could be both an increase in out-of-pocket payments and a reduction in healthcare quality (by reducing investments in technology and/or reducing the number of physicians). This reduction in quality would also affect health and mortality thereby confounding the healthcare demand effect of out-of-pocket spending. We use two variables to control for the quality of care. First, infant mortality is a well known measure for the quality of a healthcare system. Moreover, infant mortality is not directly related to our measure of mortality which starts at age 45.  On average there are almost four dead infants (younger than one year of age at death) per 1000 live births. But for some regions this almost reaches 16 per 1000 live births. The second quality measure is the number of physicians per 100k inhabitants. On average there are 380 physicians per 100k inhabitants but this varies between regions from 180 to 800. We view this as an approximate measure of resources available for healthcare in a region. Finally, we use the fraction of healthcare expenditure paid out-of-pocket as a signal of how generous health insurance is. This captures country wide policy. On average people pay a bit more than 20% out-of-pocket but this varies from 12% in some countries to more than 40% in others.
+</p>
+
+
+
+<table id="orgc0d92da" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Summary statistics main variables</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">count</th>
+<th scope="col" class="org-right">mean</th>
+<th scope="col" class="org-right">std</th>
+<th scope="col" class="org-right">min</th>
+<th scope="col" class="org-right">median</th>
+<th scope="col" class="org-right">max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">population</td>
+<td class="org-right">42900</td>
+<td class="org-right">5961.0</td>
+<td class="org-right">3788.7</td>
+<td class="org-right">574.0</td>
+<td class="org-right">5286.0</td>
+<td class="org-right">30491.0</td>
+</tr>
+
+<tr>
+<td class="org-left">deaths</td>
+<td class="org-right">42900</td>
+<td class="org-right">88.9</td>
+<td class="org-right">83.7</td>
+<td class="org-right">0</td>
+<td class="org-right">62.0</td>
+<td class="org-right">867.0</td>
+</tr>
+
+<tr>
+<td class="org-left">mortality (%)</td>
+<td class="org-right">42900</td>
+<td class="org-right">1.8</td>
+<td class="org-right">1.9</td>
+<td class="org-right">0</td>
+<td class="org-right">1.2</td>
+<td class="org-right">17.3</td>
+</tr>
+
+<tr>
+<td class="org-left">deprivation (%)</td>
+<td class="org-right">481</td>
+<td class="org-right">9.9</td>
+<td class="org-right">13.3</td>
+<td class="org-right">0</td>
+<td class="org-right">2.8</td>
+<td class="org-right">55.2</td>
+</tr>
+
+<tr>
+<td class="org-left">too expensive (%)</td>
+<td class="org-right">527</td>
+<td class="org-right">1.5</td>
+<td class="org-right">2.6</td>
+<td class="org-right">0</td>
+<td class="org-right">0.5</td>
+<td class="org-right">18.4</td>
+</tr>
+
+<tr>
+<td class="org-left">unmet (%)</td>
+<td class="org-right">527</td>
+<td class="org-right">6.4</td>
+<td class="org-right">4.6</td>
+<td class="org-right">0.7</td>
+<td class="org-right">5.1</td>
+<td class="org-right">28.1</td>
+</tr>
+
+<tr>
+<td class="org-left">infant mortality (\textperthousand)</td>
+<td class="org-right">705</td>
+<td class="org-right">3.8</td>
+<td class="org-right">2</td>
+<td class="org-right">0.8</td>
+<td class="org-right">3.4</td>
+<td class="org-right">15.8</td>
+</tr>
+
+<tr>
+<td class="org-left">physicians per 100k inhab.</td>
+<td class="org-right">594</td>
+<td class="org-right">379.4</td>
+<td class="org-right">108.6</td>
+<td class="org-right">180</td>
+<td class="org-right">363.3</td>
+<td class="org-right">807.9</td>
+</tr>
+
+<tr>
+<td class="org-left">out-of-pocket (%)</td>
+<td class="org-right">55</td>
+<td class="org-right">22.8</td>
+<td class="org-right">9.5</td>
+<td class="org-right">12.0</td>
+<td class="org-right">18.9</td>
+<td class="org-right">43.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outline-container-org801d5a1" class="outline-3">
+<h3 id="org801d5a1"><span class="section-number-3">3.1.</span> data&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The following python code generates Table <a href="#orgc0d92da">2</a> with summary statistics. The noweb notation <code>&lt;&lt;code-preamble&gt;&gt;</code> runs the code from Listing <a href="#org249b980">2</a> into the python cell without using copy/paste.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">&lt;&lt;code-preamble&gt;&gt;
+&lt;&lt;code-data&gt;&gt;
+&lt;&lt;code-selection&gt;&gt;
+<span style="color: #005e8b;">stat_list</span> = []
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">summary_statistics</span>(var,name,stat_list=stat_list):
+   <span style="color: #531ab6;">return</span>  stat_list.append([name,np.<span style="color: #8f0075;">sum</span>(~np.isnan(var)),np.nanmean(var).<span style="color: #8f0075;">round</span>(decimals=1),np.nanstd(var).<span style="color: #8f0075;">round</span>(decimals=1),np.nanmin(var).<span style="color: #8f0075;">round</span>(decimals=1),np.nanmedian(var).<span style="color: #8f0075;">round</span>(decimals=1),np.nanmax(var).<span style="color: #8f0075;">round</span>(decimals=1)])
+
+summary_statistics(P_cohort,<span style="color: #3548cf;">'population'</span>)
+summary_statistics(M_cohort,<span style="color: #3548cf;">'deaths'</span>)
+summary_statistics(M_cohort/P_cohort*100,<span style="color: #3548cf;">'mortality (%)'</span>)
+<span style="color: #005e8b;">variables</span> = [Deprivation.values*100,TooExp.values*100,Unmet.values*100,m_infant.values*100,ds.number_physicians.values,OOP_c*100]
+<span style="color: #005e8b;">names</span> = [<span style="color: #3548cf;">'deprivation (%)'</span>, <span style="color: #3548cf;">'too expensive (%)'</span>,<span style="color: #3548cf;">'unmet (%)'</span>,<span style="color: #3548cf;">'infant mortality (</span><span style="color: #0000b0;">\\</span><span style="color: #3548cf;">textperthousand)'</span>,<span style="color: #3548cf;">'physicians per 100k inhab.'</span>,<span style="color: #3548cf;">'out-of-pocket (%)'</span>]
+<span style="color: #531ab6;">for</span> i <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(<span style="color: #8f0075;">len</span>(variables)):
+   summary_statistics(variables[i],names[i])
+
+<span style="color: #005e8b;">df</span> = pd.DataFrame(stat_list,columns= [<span style="color: #3548cf;">''</span>,<span style="color: #3548cf;">'count'</span>,<span style="color: #3548cf;">'mean'</span>,<span style="color: #3548cf;">'std'</span>,<span style="color: #3548cf;">'min'</span>,<span style="color: #3548cf;">'median'</span>,<span style="color: #3548cf;">'max'</span>])
+
+<span style="color: #005e8b;">headers</span> = [<span style="color: #3548cf;">'count'</span>,<span style="color: #3548cf;">'mean'</span>,<span style="color: #3548cf;">'std'</span>,<span style="color: #3548cf;">'min'</span>,<span style="color: #3548cf;">'median'</span>,<span style="color: #3548cf;">'max'</span>]
+
+<span style="color: #8f0075;">print</span>(tabulate(df,headers,tablefmt=<span style="color: #3548cf;">"orgtbl"</span>,\
+               colalign=(<span style="color: #3548cf;">"left"</span>,<span style="color: #3548cf;">"left"</span>, <span style="color: #3548cf;">"right"</span>, <span style="color: #3548cf;">"right"</span>, <span style="color: #3548cf;">"right"</span>, <span style="color: #3548cf;">"right"</span>, <span style="color: #3548cf;">"right"</span>, <span style="color: #3548cf;">"right"</span>)))
+</pre>
+</div>
+
+<pre class="example" id="org1b80d35">
+|    |                                     |   count |   mean |    std |   min |   median |   max |
+|----+-------------------------------------+---------+--------+--------+-------+----------+-------|
+| 0  | population                          |   42900 |   5961 | 3788.7 |   574 |     5286 | 30491 |
+| 1  | deaths                              |   42900 |   88.9 |   83.7 |     0 |       62 |   867 |
+| 2  | mortality (%)                       |   42900 |    1.8 |    1.9 |     0 |      1.2 |  17.3 |
+| 3  | deprivation (%)                     |     481 |    9.9 |   13.3 |     0 |      2.8 |  55.2 |
+| 4  | too expensive (%)                   |     527 |    1.5 |    2.6 |     0 |      0.5 |  18.4 |
+| 5  | unmet (%)                           |     527 |    6.4 |    4.6 |   0.7 |      5.1 |  28.1 |
+| 6  | infant mortality (\textperthousand) |     705 |    3.8 |      2 |   0.8 |      3.4 |  15.8 |
+| 7  | physicians per 100k inhab.          |     594 |  379.4 |  108.6 |   180 |    363.3 | 807.9 |
+| 8  | out-of-pocket (%)                   |      55 |   22.8 |    9.5 |    12 |     18.9 |  43.2 |
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf37c897" class="outline-2">
+<h2 id="orgf37c897"><span class="section-number-2">4.</span> Estimation</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+
+</p>
+
+<p>
+We estimate the model using Bayesian methods. Here we present the equations of the model. The online appendix contains the details on the choice of priors and the <code>pymc</code> code of the model. Further, we explain how the Bayesian algorithm deals with missing observations.
+</p>
+
+<p>
+We present the model in reverse order. We observe the number of deaths \(m\) and the population size \(n\) per age/gender/region/year dimensions. We model the probability of death \(\mu\) and \(m\) has a Binomial distribution:
+</p>
+\begin{equation}
+\label{orgce3324e}
+m_{atr}^{i} = Binomial(n_{atr}^{i},\mu_{atr}^{i})
+\end{equation}
+<p>
+where \(\mu_{atr}^i\) is given by equation \eqref{orgf2418dd}. Poverty \(\alpha_{tr}\) per region and time period is observed in the data using the material deprivation measure discussed in the previous section. The fraction of people ill \(\iota_{atr}^{ij}\) varies by age \(a\), gender \(i\), time \(t\), region \(r\) and income level \(j\). This fraction \(\iota\) follows from difference equation \eqref{orgf4836a1}. Before we explain how this equation is estimated, recall that the estimate of \(\delta_{c}\) is allowed to vary by country \(c\).
+</p>
+
+<p>
+To solve differential equation \eqref{orgf4836a1}, we start by estimating the initial condition \(\iota_{a0r}^{ij}\) for ages \(a=0-30\) (i.e. ages 45-74) in year \(t=0\) (2008) per region \(r\), gender \(i\) and income category \(j\).
+</p>
+
+<p>
+Next, we need to estimate the probability of falling ill \(\pi_{ar}^{ij}\) which we assume to be additive in age, region, gender and income fixed effects in log-odds space. That is we add together the log-odds effects for age, gender, region and income and apply the inverse logit function \(e^x/(1+e^x)\) to the sum of these log-odds. This gives the probabilities \(\pi_{ar}^{ij} \in \langle 0,1 \rangle\).
+</p>
+
+<p>
+The probability \(\sigma = \sigma_0 + \lambda (1-\upsilon)\) of recovering to full health in equation \eqref{org4ff0a92} is estimated as follows. We estimate the probability \(\sigma_0 \in \langle 0,1 \rangle\) of recovering to health without medical intervention. Further, we observe the fraction of people who indicate that they have unmet medical needs \(\upsilon_{tr}\) at the year/region level. For the ill who do get treatment, \(1-\upsilon\), there is a probability \(\lambda\) of full recovery. The logg-odds of \(\lambda\) are the sum of three effects: (i) year fixed effects, capturing that over time the quality of care improves due to technological progress, (ii) infant mortality and (iii) number of physicians per 100k inhabitants. The latter two capture the variation across time and region in quality of care. Again we use the inverse logit function to turn the log-odds into a probability \(\lambda\). 
+</p>
+
+<p>
+We expect both \(\upsilon_o\) and \(\tau\) to be bigger for low incomes than for high incomes. If your income is higher, you are less likely to skip a treatment because it is too expensive: \(\tau^j = \zeta^j oop\) with \(\zeta^l \geq \zeta^h\) and \(oop_{tc}\) varies with country and time. Further, also with the other reasons for unmet medical needs (like waiting lists) we expect these to be higher for low incomes. Hence, we find that
+</p>
+\begin{equation}
+\label{org7e3cc8b}
+\upsilon_{tr} = \alpha_{tr} (\zeta^{l} oop_{tc} + \upsilon_{otr}^l) + (1-\alpha_{tr}) (\zeta^h oop_{tc} + \upsilon_{otr}^{h})
+\end{equation}
+<p>
+where we observe \(\tau_{tr} = (\alpha_{tr} \zeta^l + (1-\alpha_{tr}) \zeta^h) oop_{tc}\) and \(\upsilon_{otr} = \alpha_{tr} \upsilon^l_{otr} + (1-\alpha_{tr}) \upsilon^h_{otr}\).
+</p>
+
+<p>
+Hence we find
+</p>
+\begin{equation}
+\label{orgf0afdb6}
+\sigma_{tr}^{j} = \sigma_{0} + \lambda_{tr} (1-\zeta^j oop_{tc} - u_{otr}^{j})
+\end{equation}
+
+<p>
+Given that we estimate the initial conditions \(\iota_0\) and the parameters \(\pi_a, \sigma, \delta\) we can solve differential equation \eqref{orgf4836a1} to find \(\iota_{atr}^i\) and thus calculate the probability of death \(\mu_{atr}^i\) in equation \eqref{orgf2418dd} as input in the Binomial distribution \eqref{orgce3324e}.
+</p>
+
+<p>
+One of the conceptual advantages of a Bayesian model is that there is no clear distinction between data and parameters. Both are basically distributions. This comes to the fore when dealing with missing values which are prevalent in our data as shown in Table <a href="#orgc0d92da">2</a>. The Markov Chain Monte Carlo (MCMC) algorithm generates the posterior distribution of parameters by drawing from this distribution. For each parameter we will have 4 chains of 2000 draws, that is 8000 draws from the posterior distribution. When an observation is missing, the algorithm will randomly draw the observation from a pre-defined distribution. This implies that each draw is different signalling the uncertainty that surrounds the missing observation. This is better than imputing the value of the observation as the latter suggests that we are as certain about the imputed value as we are about an observed value; which is obviously not the case.
+</p>
+
+<p>
+For variables based on summation, it is natural to assume a normal distribution. The expectation (standard deviation) of this distribution is then given by the average value (standard deviation) of the observations that we do have for this region or country.
+</p>
+
+<p>
+To improve the efficiency of the algorithm in solving the difference equation while estimating the parameters, the data is not in (two dimensional) dataframe format. Instead we work with multi-dimensional tensors. To illustrate, the tensors with the population and deaths data are 4-dimensional tensors with coordinates age/gender/year/region. The difference equation then iterates over age and calendar year using <a href="https://pytensor.readthedocs.io/en/latest/library/scan.html">pytensor&rsquo;s <code>scan</code> function</a>.
+</p>
+</div>
+<div id="outline-container-org6c962ef" class="outline-3">
+<h3 id="org6c962ef"><span class="section-number-3">4.1.</span> estimation code&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+In estimating the model we follow the age cohorts 45-74 over time from 2008 to 2018 when they are aged 55-84. For each age/gender/income/region category we split the population into low and high health status. The we use <code>pymc</code>&rsquo;s <code>scan</code> function to follow the cohort over time according to the difference equation \eqref{orgf4836a1}. The function <code>transition</code> takes as inputs \(\pi,\sigma,\delta\) and this period&rsquo;s fraction of ill. The function returns next period&rsquo;s fraction of ill.
+</p>
+
+<p>
+The dimensions for observed variables (&ldquo;data&rdquo;) and parameters are: age, gender, year, region and income. Not all variables or parameters have all these dimensions. E.g. some only vary by country (not region), some parameters are constant or only vary by year etc.
+</p>
+
+<p>
+For our first year (2008) we specify the initial fraction of ill, \(\iota_0\). This parameter needs to be estimated and varies by cohort (45-74), gender, region and income. Most probabilities/fractions (like \(\iota_0\) and \(\delta\)) are specified in log-odds terms.
+</p>
+
+<p>
+The probability of falling ill is specified as the addition of age, gender, country and income effects (additive in log-odds space).
+</p>
+
+<p>
+Then the code specifies the distributions of a number of variables for which we have missing values. This is the case for the deprivation variable, OOP, unmet medical needs in total and for reasons other than the treatment is too expensive. Finally, there are also missing values for infant mortality and the number of physicians per 100k inhabitants. For variables that are between 0 and 1, we either use the <code>clip</code> function or specify a Beta distribution. For the Beta distribution we use the parametrization with mean effect <code>mu</code> and number of observations <code>nu</code>.
+</p>
+
+<p>
+The expected number of people with unmet medical needs equals the sum of unmet needs for other reasons plus the fraction of people forgoing treatment because it is too expensive, \(\tau\). We observe \(\tau\) and split it up into \(\tau^l,\tau^h\) such that \(\tau = \alpha \tau^l + (1-\alpha) \tau^h\). Similarly, We observe \(U_o\) and split it up into \(U_o^l, U_o^h\) such that \(U_o = \alpha U_o^l + (1-\alpha) U_o^h\). We do this as follows: \(U_o^j = \xi^j U_o\) with \(\alpha \xi^l + (1-\alpha) \xi^h = 1\) with \(\xi^l = \xi + \varepsilon \geq \xi = \xi^h\). Hence it follows from \(\alpha (\xi + \epsilon) + (1-\alpha) \xi = 1\) that \(\xi = 1-\alpha \varepsilon\) as we model it below in the code.
+</p>
+
+<p>
+We know that an increase in oop makes it more likely that people skip treatment because it is too expensive. Hence we specify that \(\zeta^h \geq 0\) (in terms of <code>slope_ζ</code>) and that \(\zeta^l \geq \zeta^h\) using <code>delta_ζ</code>. Both parameters are modelled as HalfNormal to make sure they are non-negative.
+</p>
+
+<p>
+We model the log-odds of \(\lambda\) as decreasing in infant mortality and increasing in the number of physicians.
+</p>
+
+<p>
+The tensor \(I\) keeps track of the fraction ill per year, cohort, gender, region and income category. Its first &ldquo;row&rdquo; is given by \(\iota_0\) that was estimated above.
+</p>
+
+<p>
+To determine the probability of death per year, cohort, gender and region, we sum over the income dimension as our data does not specify deaths by income category.
+</p>
+
+<p>
+Given this, the number of deaths, <code>M_cohort</code> is a Binomial distribution with parameter \(n\) equals to the population size <code>P_cohort</code> and \(p\) equal to \(\mu\).
+</p>
+
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>code-model</label><pre class="src src-jupyter-python" id="orgf689971"><span style="color: #531ab6;">def</span> <span style="color: #721045;">transition</span>(&#960;,&#963;,I,&#948;):
+    <span style="color: #005e8b;">fit</span> = I*&#963;+(1-&#960;)*(1-I)
+    <span style="color: #005e8b;">ill</span> = &#960;*(1-I)+pt.clip(1-&#963;-&#948;,0.0,1.0)*I
+    <span style="color: #005e8b;">fraction_ill</span> = ill/(fit+ill)
+    <span style="color: #531ab6;">return</span> fraction_ill
+
+<span style="color: #005e8b;">n_y</span> = 2 <span style="color: #595959;"># </span><span style="color: #595959;">low/high income</span>
+<span style="color: #005e8b;">n_g</span> = 2 <span style="color: #595959;"># </span><span style="color: #595959;">female/male</span>
+<span style="color: #005e8b;">countries</span> = np.array([<span style="color: #3548cf;">'Bulgaria'</span>, <span style="color: #3548cf;">'Switzerland'</span>, <span style="color: #3548cf;">'Denmark'</span>, <span style="color: #3548cf;">'Greece'</span>, <span style="color: #3548cf;">'Finland'</span>, <span style="color: #3548cf;">'Hungary'</span>, <span style="color: #3548cf;">'Lithuania'</span>, <span style="color: #3548cf;">'Norway'</span>, <span style="color: #3548cf;">'Sweden'</span>, <span style="color: #3548cf;">'Slovenia'</span>, <span style="color: #3548cf;">'Slovakia'</span>])
+<span style="color: #595959;"># </span><span style="color: #595959;">index: age, gender, year, region, income</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">for some variables we use country instead of region</span>
+
+<span style="color: #005e8b;">coords</span> = {
+    <span style="color: #3548cf;">"region"</span> : ds.nuts2.values,\
+    <span style="color: #3548cf;">"ages"</span> : ds.age.values,\
+    <span style="color: #3548cf;">"cohort"</span> : age_matrix[0],\
+    <span style="color: #3548cf;">"gender"</span> : ds.sex.values,\
+    <span style="color: #3548cf;">"year"</span> : ds.year.values,\
+    <span style="color: #3548cf;">"income"</span> : [<span style="color: #3548cf;">'y_l'</span>,<span style="color: #3548cf;">'y_h'</span>],\
+    <span style="color: #3548cf;">"country"</span>: countries,\
+     <span style="color: #595959;"># </span><span style="color: #595959;">we define dummy dimensions for parameters that do not</span>
+     <span style="color: #595959;"># </span><span style="color: #595959;">vary by this dimension</span>
+     <span style="color: #3548cf;">"dummy0"</span>: np.arange(1),\
+     <span style="color: #3548cf;">"dummy1"</span>: np.arange(1),\
+     <span style="color: #3548cf;">"dummy2"</span>: np.arange(1)}
+
+<span style="color: #531ab6;">with</span> pm.Model(coords=coords) <span style="color: #531ab6;">as</span> AR_model:
+    <span style="color: #005e8b;">logodds_&#953;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_&#953;"</span>,-4.0,1,\
+              dims=(<span style="color: #3548cf;">"cohort"</span>,<span style="color: #3548cf;">"gender"</span>,<span style="color: #3548cf;">"region"</span>,<span style="color: #3548cf;">"income"</span>),\
+              shape=(cohorts,n_g,n_regions,n_y)) 
+    <span style="color: #005e8b;">&#953;_0</span> = pm.Deterministic(<span style="color: #3548cf;">"&#953;_0"</span>,pm.math.invlogit(logodds_&#953;),dims=(<span style="color: #3548cf;">"cohort"</span>,<span style="color: #3548cf;">"gender"</span>,<span style="color: #3548cf;">"region"</span>,<span style="color: #3548cf;">"income"</span>))
+    <span style="color: #595959;"># </span><span style="color: #595959;">&#953;_0 is used to start the sequence in scan =&gt;</span>
+    <span style="color: #595959;"># </span><span style="color: #595959;">no need to add age dimension: we build up the matrix I by following each cohort over the years</span>
+    <span style="color: #005e8b;">logodds_&#948;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_&#948;"</span>,-2.5,0.05,dims=(<span style="color: #3548cf;">"country"</span>)) <span style="color: #595959;"># </span><span style="color: #595959;">conditional on being ill, same prob. of death</span>
+    <span style="color: #595959;"># </span><span style="color: #595959;">&#948; is a non_sequence in the scan loop; no need to add age as a dimension</span>
+    <span style="color: #005e8b;">&#948;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#948;"</span>,pt.dot(pm.math.invlogit(logodds_&#948;), country_region_matrix_01)[<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,:,<span style="color: #0000b0;">None</span>])
+    <span style="color: #595959;"># </span><span style="color: #595959;">we build up the prior for &#960;</span>
+    <span style="color: #005e8b;">logodds_age_&#960;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_age_&#960;"</span>,log_odds_mort.mean(axis=(1,2,3)),log_odds_mort.std(axis=(1,2,3)),dims=(<span style="color: #3548cf;">"ages"</span>))
+    <span style="color: #005e8b;">logodds_sex_&#960;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_sex_&#960;"</span>, gender_effect_&#960;, 0.05, dims=(<span style="color: #3548cf;">"gender"</span>))
+    <span style="color: #005e8b;">logodds_country_&#960;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_country_&#960;"</span>,country_effect_&#960;,0.05, dims=(<span style="color: #3548cf;">"country"</span>))
+    <span style="color: #005e8b;">logodds_&#960;</span> = pm.Deterministic(<span style="color: #3548cf;">"logodds_&#960;"</span>,logodds_age_&#960;[:,<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>] + logodds_sex_&#960;[<span style="color: #0000b0;">None</span>,:,<span style="color: #0000b0;">None</span>] + pt.dot(logodds_country_&#960;, country_region_matrix_01)[<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,:]) <span style="color: #595959;"># </span><span style="color: #595959;">prob. of falling ill varies by age, gender and country</span>
+    <span style="color: #595959;"># </span><span style="color: #595959;">the priors do not impose that women tend to be healthier than men</span>
+    <span style="color: #595959;"># </span><span style="color: #595959;">but we do impose that people on low income tend to have low health status (high &#960;)</span>
+    <span style="color: #005e8b;">delta_&#960;</span> = pm.HalfNormal(<span style="color: #3548cf;">"delta_&#960;"</span>,sigma=0.05,\
+          dims=(<span style="color: #3548cf;">"ages"</span>,<span style="color: #3548cf;">"dummy0"</span>,<span style="color: #3548cf;">"dummy1"</span>),\
+          shape=(n_ages,1,1))
+    <span style="color: #005e8b;">&#960;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#960;"</span>,pt.stack([pm.math.invlogit(\
+                                    logodds_&#960;+ delta_&#960;),\
+                   pm.math.invlogit(logodds_&#960;)],axis=-1), dims=(<span style="color: #3548cf;">"ages"</span>,<span style="color: #3548cf;">"gender"</span>,<span style="color: #3548cf;">"region"</span>,<span style="color: #3548cf;">"income"</span>))
+    <span style="color: #595959;"># </span><span style="color: #595959;">when we draw missing values for OOP, we should draw the same value for all regions/age/gender in the same country</span>
+    <span style="color: #595959;"># </span><span style="color: #595959;">this we do via oop_c which we later bring back to region dimension with country_region_matrix_01</span>
+    <span style="color: #005e8b;">pov</span> = pm.Normal(<span style="color: #3548cf;">"pov"</span>, mean_depr[<span style="color: #0000b0;">None</span>,:], std_depr[<span style="color: #0000b0;">None</span>,:], observed=Deprivation,dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"region"</span>)) <span style="color: #595959;"># </span><span style="color: #595959;">fraction of people on low income</span>
+    <span style="color: #005e8b;">poverty</span> = pt.stack([pt.clip(pov,0,1),1-pt.clip(pov,0,1)],axis=-1) <span style="color: #595959;"># </span><span style="color: #595959;">vector with fraction of low/high income people</span>
+    <span style="color: #005e8b;">oop_c</span> = pm.Normal(<span style="color: #3548cf;">"oop_c"</span>, mean_oop_c[<span style="color: #0000b0;">None</span>,:], std_oop_c[<span style="color: #0000b0;">None</span>,:], observed=OOP_c,dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"country"</span>))
+    <span style="color: #005e8b;">oop</span> = pt.dot(oop_c,country_region_matrix_01)
+
+    <span style="color: #005e8b;">slope_&#950;</span> = pm.HalfNormal(<span style="color: #3548cf;">"slope_&#950;"</span>,sigma=0.05)
+    <span style="color: #005e8b;">delta_&#950;</span> = pm.HalfNormal(<span style="color: #3548cf;">"delta_&#950;"</span>,sigma=0.05)
+    <span style="color: #005e8b;">&#950;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#950;"</span>,pt.stack([(slope_&#950;+ delta_&#950;),\
+                   (slope_&#950;)],axis=-1),dims=(<span style="color: #3548cf;">"income"</span>)) <span style="color: #595959;"># </span><span style="color: #595959;">varies with income</span>
+    <span style="color: #005e8b;">&#964;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#964;"</span>, &#950;[<span style="color: #0000b0;">None</span>,:]*oop[:,:,<span style="color: #0000b0;">None</span>])
+    <span style="color: #005e8b;">mu_U_o</span> = Unmet_o.mean(axis=0).values[<span style="color: #0000b0;">None</span>,:]
+    <span style="color: #005e8b;">nu_U_o</span> = pm.Exponential(<span style="color: #3548cf;">"nu_U_o"</span>, 0.05)
+    <span style="color: #005e8b;">U_o</span> = pm.Beta(<span style="color: #3548cf;">"U_o"</span>, alpha = mu_U_o*nu_U_o, beta = (1-mu_U_o)*nu_U_o,dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"region"</span>), observed=Unmet_o)
+    <span style="color: #005e8b;">mu_U</span> = pt.clip(U_o+pt.<span style="color: #8f0075;">sum</span>(poverty*&#964;,axis=2),0.000001,0.9999)
+    <span style="color: #005e8b;">nu_U</span> = pm.Exponential(<span style="color: #3548cf;">"nu_U"</span>, 0.05)
+    <span style="color: #005e8b;">U</span> = pm.Beta(<span style="color: #3548cf;">"U"</span>,alpha=mu_U*nu_U, beta=(1-mu_U)*nu_U,dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"region"</span>), observed=Unmet)
+    <span style="color: #595959;"># </span><span style="color: #595959;">&#955; measures prob. patient heals if treated (i.e. one minus unmet)</span>
+    <span style="color: #005e8b;">M_infant</span> = pm.Normal(<span style="color: #3548cf;">"M_infant"</span>,mean_m_infant[<span style="color: #0000b0;">None</span>,:],std_m_infant[<span style="color: #0000b0;">None</span>,:],dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"region"</span>),observed=m_infant)
+    <span style="color: #005e8b;">Physicians</span> = pm.Normal(<span style="color: #3548cf;">"Physicians"</span>,mean_physician[<span style="color: #0000b0;">None</span>,:],std_physician[<span style="color: #0000b0;">None</span>,:],dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"region"</span>),observed=physicians)
+    <span style="color: #005e8b;">lambda_1</span> = pm.HalfNormal(<span style="color: #3548cf;">"lambda_1"</span>,sigma=0.01)
+    <span style="color: #005e8b;">lambda_2</span> = pm.HalfNormal(<span style="color: #3548cf;">"lambda_2"</span>,sigma=0.01)
+    <span style="color: #005e8b;">lamba_0</span> = pm.Normal(<span style="color: #3548cf;">"lambda_0"</span>,-4.1,0.05,dims=(<span style="color: #3548cf;">"year"</span>))
+    <span style="color: #005e8b;">logodds_&#955;</span> = pm.Normal(<span style="color: #3548cf;">"logodds_&#955;"</span>,lamba_0[:,<span style="color: #0000b0;">None</span>]-lambda_1*M_infant+lambda_2*Physicians,0.1)
+    <span style="color: #005e8b;">&#955;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#955;"</span>,pm.math.invlogit(logodds_&#955;))<span style="color: #595959;"># </span><span style="color: #595959;">&#955; is between 0 and 1</span>
+    <span style="color: #005e8b;">&#949;</span> = pm.Beta(<span style="color: #3548cf;">"&#949;"</span>,1,3) <span style="color: #595959;"># </span><span style="color: #595959;">&#949; = &#958;_l - &#958;_h &gt; 0</span>
+    <span style="color: #005e8b;">&#958;</span> = 1-poverty[:,:,0]*&#949;
+    <span style="color: #005e8b;">&#965;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#965;"</span>, pt.stack([(&#958;+&#949;)*U_o,&#958;*U_o],axis=-1) + &#964;)
+    <span style="color: #005e8b;">&#963;_0</span> = pm.Beta(<span style="color: #3548cf;">"&#963;_0"</span>,1,3)
+    <span style="color: #005e8b;">&#963;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#963;"</span>,pt.clip(&#963;_0+&#955;[:,<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,:,<span style="color: #0000b0;">None</span>]*(1-&#965;)[:,<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,:,:],0,1))
+    <span style="color: #005e8b;">I</span> = pt.zeros((t_dim,cohorts,n_g,n_regions,n_y))
+    <span style="color: #005e8b;">I</span> = pt.set_subtensor(I[0],&#953;_0)
+
+    <span style="color: #005e8b;">outputs</span>, <span style="color: #005e8b;">updates</span> = pytensor.scan(
+        transition,
+     <span style="color: #595959;"># </span><span style="color: #595959;">age/year is the dynamic part of the model</span>
+     <span style="color: #595959;"># </span><span style="color: #595959;">i.e. first dimension of &#960;</span>
+        sequences=[<span style="color: #8f0075;">dict</span>(<span style="color: #8f0075;">input</span>=&#960;[age_indices]),<span style="color: #8f0075;">dict</span>(<span style="color: #8f0075;">input</span>=&#963;)], <span style="color: #595959;"># </span><span style="color: #595959;">check sequences with order of arguments in =transition=</span>
+     <span style="color: #595959;"># </span><span style="color: #595959;">we loop over the first dimension: age</span>
+     <span style="color: #595959;"># </span><span style="color: #595959;">the initial value for I (at low_age)</span>
+     <span style="color: #595959;"># </span><span style="color: #595959;">outputs_info has no age dimension</span>
+        outputs_info=[<span style="color: #8f0075;">dict</span>(initial=&#953;_0)],
+     <span style="color: #595959;"># </span><span style="color: #595959;">variables that have no age dimension:</span>
+        non_sequences=[&#948;[0]],
+    )
+
+    <span style="color: #005e8b;">I</span> = pt.set_subtensor(I[1:],outputs[:t_dim-1])
+    <span style="color: #595959;"># </span><span style="color: #595959;">&#956; is probability of death for age/gender/year/region</span>
+    <span style="color: #005e8b;">ill</span> = pm.Deterministic(<span style="color: #3548cf;">"ill"</span>,I)
+    <span style="color: #005e8b;">&#956;</span> = pm.Deterministic(<span style="color: #3548cf;">"&#956;"</span>,(pt.<span style="color: #8f0075;">sum</span>(&#948;*I*poverty[:,<span style="color: #0000b0;">None</span>,<span style="color: #0000b0;">None</span>,:,:],axis=4)))<span style="color: #595959;"># </span><span style="color: #595959;">aggregate over income</span>
+    <span style="color: #005e8b;">mortality</span> = pm.Binomial(<span style="color: #3548cf;">"mortality"</span>,n=P_cohort,p=&#956;,observed=M_cohort,dims=(<span style="color: #3548cf;">"year"</span>,<span style="color: #3548cf;">"cohort"</span>,<span style="color: #3548cf;">"gender"</span>,<span style="color: #3548cf;">"region"</span>))
+
+</pre>
+</div>
+</div>
+<div id="outline-container-org9a5cf36" class="outline-4">
+<h4 id="org9a5cf36">sampling</h4>
+<div class="outline-text-4" id="text-org9a5cf36">
+<p>
+In order to sample from the posterior distribution of our parameters, we call all relevant code blocks above and sample using the Markov Chain Monte Carlo NUTS sampler.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">&lt;&lt;code-preamble&gt;&gt;
+&lt;&lt;code-data&gt;&gt;
+&lt;&lt;code-selection&gt;&gt;
+&lt;&lt;code-matrices&gt;&gt;
+&lt;&lt;code-variables&gt;&gt;
+&lt;&lt;code-cohorts&gt;&gt;
+&lt;&lt;code-moments&gt;&gt;
+&lt;&lt;code-model&gt;&gt;
+<span style="color: #595959;"># </span><span style="color: #595959;">with AR_model:</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">idata = pm.sample(draws=2000,target_accept = 0.95)</span>
+<span style="color: #595959;">#     </span><span style="color: #595959;">pm.sample_posterior_predictive(idata,\</span>
+<span style="color: #595959;">#                                    </span><span style="color: #595959;">extend_inferencedata=True)</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">idata.to_netcdf("./trace/baseline_model_lambda.nc")</span>
+</pre>
+</div>
+
+<pre class="example" id="orgd4a61d4">
+/var/folders/g3/0hgyvgbn6x3105r_s_rgnrx40000gn/T/ipykernel_89091/872835129.py:82: RuntimeWarning: Mean of empty slice
+  mean_physician = np.nanmean(physicians,axis=0) # mean over years
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/numpy/lib/nanfunctions.py:1879: RuntimeWarning: Degrees of freedom &lt;= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in pov contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in oop_c contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in U_o contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in U contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in M_infant contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+/Users/janboone/anaconda3/envs/pymc_env/lib/python3.12/site-packages/pymc/model/core.py:1302: ImputationWarning: Data in Physicians contains missing values and will be automatically imputed from the sampling distribution.
+  warnings.warn(impute_message, ImputationWarning)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4fb0486" class="outline-2">
+<h2 id="org4fb0486"><span class="section-number-2">5.</span> Results</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+In this section we present the results of the estimation of the model. Before presenting the outcome of our estimation, we present some (graphical) checks of our model.
+</p>
+</div>
+<div id="outline-container-org72a97f6" class="outline-3">
+<h3 id="org72a97f6"><span class="section-number-3">5.1.</span> Model fit</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+A first check of the model is to see whether it fits the data. Figure <a href="#org5856aeb">2</a> shows for all our observations the observed number of deaths on the horizontal axis and the predicted number on the vertical axis. Further, for each prediction we add a dashed vertical line representing the 95% prediction interval (of the posterior predictive distribution). The predictions clearly follow the 45-degree line and almost all 95% prediction intervals intersect the 45-degree line. In this sense the model fit seems quite good.
+</p>
+
+
+<div id="org5856aeb" class="figure">
+<p><img src="./figures/fit_model.png" alt="fit_model.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Observed vs predicted number of deaths (per age/gender/region/year) together with the 95% prediction intervals.</p>
+</div>
+
+<p>
+Figure <a href="#orge91edd7">6</a> in the appendix presents the trace plots and Table <a href="#org947e3e8">5</a> the values for r-hat for estimated parameters. The r-hat values are close to one and the traceplots satisfy the following three criteria. First, the plots in the right column of the figure should be stationary; that is, not trending upward or downward. This implies that the posterior mean of the coefficient is (more or less) constant as we sample. Second, there should be good mixing which translates in condensed zig-zagging. In other words, the algorithm manages to draw values across the whole domain of the posterior quickly one after the other. Finally, the four chains cover the same regions. This is most easily checked in the left column of the trace plot. All three features are satisfied in the figure.
+</p>
+
+<p>
+To gain an intuition on how the model works, Figure <a href="#org678f2b9">3</a> shows a number of estimated outcomes. The top-left panel shows the probability of falling ill, \(\pi\), as a function of age for women and men.<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup> This probability is quite low around age 45 and increases to 40% for men in their eighties. As shown in the panel below this one, the probability of death &#x2013;conditional on being ill&#x2013; is above 10% per year. In other words, falling ill in our model  does not refer to a regular cough or breaking a leg. The observation that the average probability of falling ill is higher for men than for women is in line with the observation that women tend to live longer than men. The 95% posterior probability interval shows that there is quite some variation in the probability of falling ill at older ages but that uncertainty is small till age 75. In order not to crowd the figure we do not report the 95% intervals for males but they are of similar magnitude.
+</p>
+
+<p>
+The top-right panel shows the country offsets (in log-odds terms) for four countries. There is a clear dichotomy between Switzerland and Norway on the one hand and Lithuania and Hungary on the other. But even between these countries there is hardly overlap between the distributions. Of these four countries, people in Switzerland are least likely to fall ill (at any age) and in Hungary most likely.
+</p>
+
+<p>
+Similarly, the probability of dying conditional on being ill, \(\delta_{c}\), varies by country. Of the four countries presented, it is lowest for Denmark and Finland and highest for Hungary and Bulgaria.
+</p>
+
+<p>
+Finally, the bottom-right panel shows the fraction of people ill for four categories: people aged 55 and 60 with low/high income. The fraction of people who are ill is higher for low than for high incomes, as one would expect. Also the fraction increases with age. The posterior distributions for these fractions do not overlap.
+</p>
+
+
+<div id="org678f2b9" class="figure">
+<p><img src="./figures/summary_figure.png" alt="summary_figure.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Summary of selected features of the model</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org030fe68" class="outline-3">
+<h3 id="org030fe68"><span class="section-number-3">5.2.</span> Analysis</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+The analysis in this section makes the following points. First, the expected qaly&rsquo;s per person vary a lot between countries and within countries between gender and income categories. Second, when we increase demand-side cost-sharing by ten percentage points (\(\Delta oop = 0.1\)), there is a clear but modest reduction in qaly&rsquo;s. Third, the effect is almost zero for people on high income but far higher for people on low income. In this sense, effect heterogeneity is high and considering the average effect (across incomes) is not informative. Finally, instead of comparing qaly&rsquo;s lost over, say, a thirty year time period (for which one needs a dynamic model), we can compare the loss in qaly&rsquo;s for the same age groups from one year before the increase in \(oop\) to one year after. The latter is close to a (static) measure used in most event study analyses. We show that the dynamic effect is an order of magnitude bigger than the estimated static effect.
+</p>
+
+
+<div id="orgfe5b7f9" class="figure">
+<p><img src="./figures/summary_two_applications.png" alt="summary_two_applications.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Summarizing two applications of the model: left panel shows the fraction of the maximum qaly&rsquo;s realized by country and the right panel shows qaly&rsquo;s lost due to 0.1 increase in \(oop\).</p>
+</div>
+
+<p>
+Figure <a href="#orgfe5b7f9">4</a> summarizes the two applications that we analyse with the model. First, since our estimation method identifies the fraction of people who have low health status, we can derive qaly&rsquo;s using equation \eqref{orgba2b729}. In the figure we use \(\theta=0.6\): the quality of life for someone who is ill (and has a 10% probability of dying per year) is 60% of the quality of life for someone in full health. This is an arbitrary choice and obviously different choices can be made here. Different values for \(\theta\) will change the precise numerical values but not the main (qualitative) conclusions of the analysis.
+</p>
+
+<p>
+The figure was made as follows. For each group (female/male, low/high income) of 45 year olds we create a population of 1000 individuals. At 45 we use our estimates of \(\iota_0\) to split the groups into low/high health status. With our estimated parameters \(\pi,\sigma,\delta\) we follow these individuals as they age over time till they are 85. Hence, for each group there are at max. 40,000 life-years (in full health) to be had over this period. For each subgroup gender/income we calculate the realized quality adjusted life-years and divide this by 40,000. The left panel of Figure <a href="#orgfe5b7f9">4</a> shows the lowest qaly&rsquo;s realized (base qaly) and the highest qaly&rsquo;s. The latter are always realized by women with high income. The former are (almost) always by low income males.<sup><a id="fnr.6" class="footref" href="#fn.6" role="doc-backlink">6</a></sup> The panel shows that in, say Switzerland, low income males get 80% of the max. number of qaly&rsquo;s and high income females get 10% of 40,000 qaly&rsquo;s more. That is, the latter get 12.5% (\(0.10/0.80\)) more qaly&rsquo;s than the former. This gender/income gap ranges all the way up to 20% in Hungary, Bulgaria and Lithuania.
+</p>
+
+<p>
+The panel on the right shows what happens if \(oop\) is increased by 0.1: people pay an additional 10% of their healthcare expenditure out-of-pocket for each country in our data. The average effect is around 3.0: among 1000 people, a region/gender/income group loses 3 life-years for 45-85 year olds due to \(\Delta oop=0.1\). This effect is not huge (people do not just pass away because cost-sharing is increased), but it is clearly bounded away from 0.
+</p>
+
+<p>
+What is more surprising is the effect heterogeneity for high and low incomes. The effect is almost ten times bigger for people on low income. People on high income hardly react in terms of healthcare expenditure to the increase in \(oop\) as they can afford it anyway. But for low incomes, the increase reduces their demand for treatment. This raises unmet medical needs because it is too expensive and hence, for this group, reduces the probability \(\sigma\) of recovering to the healthy state. This has two effects on their qaly&rsquo;s. First, the quality of life in the ill state is lower than in the healthy state. Second, staying longer in the ill state, increases the probability of death (compared to being in the healthy state).
+</p>
+
+
+<p>
+Finally, we compare the dynamic (across years) qaly effect derived above with a year-on-year effect for the same ages. To avoid making additional assumptions we do this for the ages 45-74 in the first row of Table <a href="#orgabba7fd">1</a>. This is the cohort of ages that we use to estimate the model. Hence we have a well defined \(\iota_0\) fraction of people that are ill per age/gender/region/income category in the year before the reform. Then we use the equations for \(\tilde Q_0, \tilde Q_1\) defined in the theory section to find the static effect on qaly&rsquo;s. We compare this to the dynamic estimate in equation \eqref{orgba2b729} for the same ages till \(A=75\).
+</p>
+
+
+<table id="orgc21491b" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> Dynamic vs. static estimates of qaly&rsquo;s lost due to \(\Delta oop = 0.1\).</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">male</th>
+<th scope="col" class="org-right">female</th>
+<th scope="col" class="org-right">male</th>
+<th scope="col" class="org-right">female</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">estimate</th>
+<th scope="col" class="org-right">low income</th>
+<th scope="col" class="org-right">low income</th>
+<th scope="col" class="org-right">high income</th>
+<th scope="col" class="org-right">high income</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(Q_0 - Q_1\)</td>
+<td class="org-right">8.01</td>
+<td class="org-right">5.23</td>
+<td class="org-right">0.82</td>
+<td class="org-right">0.46</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\tilde Q_0 - \tilde Q_1\)</td>
+<td class="org-right">0.31</td>
+<td class="org-right">0.24</td>
+<td class="org-right">0.12</td>
+<td class="org-right">0.06</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+As shown in Table <a href="#orgc21491b">3</a>, the dynamic low income estimates are lower than in Figure <a href="#orgfe5b7f9">4</a> (right panel): the dynamic estimates across ages till 75 are lower than over the full range till 85.
+</p>
+
+<p>
+Comparing static and dynamic estimates shows that for this type of health model the dynamic estimates of qaly&rsquo;s lost \(Q_0-Q_1\) are a factor 20 higher for low incomes than the static estimates \(\tilde Q_0 - \tilde Q_1\). For high incomes the factor exceeds 7. As noted in section , we expect the dynamic effect to be bigger than the static effect because the former takes the effect on the stock of ill/healthy into account. However, the size of the difference is larger than one might have expected.
+</p>
+
+
+<p>
+This suggests that for health models where an underlying (latent) health variable is important, short-term estimates (as often with a diff-in-diff analysis) severely under-estimate the overall effect of a policy change.
+</p>
+
+<p>
+One can see the following trade-off. A diff-in-diff approach leads to a cleaner causal identification. It often allows for a convincing way to keep other factors constant. In contrast, identification in our model (which allows for a dynamic analysis) is based on underlying theory but suffers from potential missing variable bias. We show that for reasonable parameter values, the static estimate under-estimates the effect compared to a dynamic one taking into account the cumulative effects over a life-time.
+</p>
+
+<p>
+Figure <a href="#org46cac33">5</a> illustrates how a static estimate like diff-in-diff ignores the dynamics of health. The figure is an abstract representation of the diff-in-diff estimate of Finkelstein and McKnight (<a href="#citeproc_bib_item_4">2008</a>) analysing the introduction of Medicare in 1966 providing universal public health insurance to individuals aged 65 and over. To find the health effect of Medicare, the paper compares the average mortality rate of 65-74 year olds with the rate for 55-64 year olds both before and after the introduction of Medicare; the years 1952-1975. 
+</p>
+
+<p>
+The logic of comparing age category 55-64 with 65-74 is the underlying assumption that the two categories do not differ except for the introduction of Medicare. This assumption would be harder to motivate when comparing 55-64 with 82 year olds. The idea of the paper is that if Medicare has substantial health effects one expects that the mortality rate for 65-74 year olds falls compared to 55-64 year olds after 1966. The paper does not find such an effect and the figure illustrates one mechanism why this can be the case.
+</p>
+
+<p>
+To place this analysis in the context of our paper, we simulate the effect of a 10% point increase in oop (\(\Delta oop = 0.1\)) in year 0 for people aged 65 and over. Hence, in our model this implies that mortality will increase for the 65+ category (not decrease as in the Medicare example). We can simulate both the reform and the counterfactual and hence can make the comparison within age category; no need to compare the effect to 55-64 year olds. For this comparison between the diff-and-diff and dynamic estimates we only need the estimated parameters to be reasonable, not perfectly accurate. As shown above, this assumption is likely to be satisfied.
+</p>
+
+<p>
+We do the simulations for low income men in one region in Bulgaria aged 65 and above who face \(\Delta oop = 0.1\) in year 0. On the horizontal axis we plot age for this group. The vertical axis shows the years after the introduction in year 0. The color intensity of a point indicates the number of years an agent has faced this higher oop. In the first year everyone aged 65 and above faced the higher out-of-pocket for one year (bottom row in the figure). In the second year, people aged 66 and over faced this for two years and the 65 year olds only for one year etc.
+</p>
+
+<p>
+The horizontal black line indicates the comparison group used in the paper (65-74) for year 10 (last year in the Finkelstein and McKnight (<a href="#citeproc_bib_item_4">2008</a>) data). The figure illustrates how &#x2013;from a dynamic point of view&#x2013; the effect gets diluted as the 65 year olds in this group have only experienced the reform for one year, the 66 year olds for two years etc. In contrast the blue diagonal line gives the true dynamic effect when we follow 65 year olds in year 0 till they become 83 with 19 years of increased oop. The diagonal includes points with a darkness intensity that the horizontal line does not capture for any of the years 0-18. In this sense, the static estimate under-estimates the true dynamic effect.
+</p>
+
+<p>
+The right panel shows the consequences of this. The vertical axis shows the increase in mortality by age normalized on the average mortality effect for 65-74 year olds. Hence, the static estimate for 65-74 year olds is one by construction. But due to the dynamics of health in our model, the effect is first below 1 (till age 69) and then increases to six times the static estimate for 80 year olds. In order to identify this (far bigger) effect, one has to estimate a model capturing the age effects instead of relying on the diff-in-diff estimate. It will depend on the application whether a static precise causal estimate is preferable or a less precise estimate that takes the dynamics of the problem into account.
+</p>
+
+
+<div id="org46cac33" class="figure">
+<p><img src="./figures/years_treatment.png" alt="years_treatment.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>Diff-in-diff vs. dynamic estimates of a 10% point increase in out-of-pocket expenditure for low income men aged 65 and over. The left panel shows the intensity of the effect across ages and years after the reform. The right panel shows the effect when following the 65 year old cohort till they are 83.</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4519116" class="outline-3">
+<h3 id="org4519116"><span class="section-number-3">5.3.</span> model fit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+As sampling takes some time, we generate the posterior samples one and save these. Here we read them in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">idata</span> = az.from_netcdf(<span style="color: #3548cf;">"./trace/baseline_model_lambda.nc"</span>)
+</pre>
+</div>
+
+<p>
+For the parameters where we do not have (too) many indices, we can summarize the results both in a table and with trace plots.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">pd.set_option(<span style="color: #3548cf;">'display.max_rows'</span>, 75)
+
+<span style="color: #005e8b;">headers</span> = [<span style="color: #3548cf;">'mean'</span>, <span style="color: #3548cf;">'sd'</span>, <span style="color: #3548cf;">'hdi_3%'</span>, <span style="color: #3548cf;">'hdi_97%'</span>,\
+           <span style="color: #3548cf;">'ess_bulk'</span>, <span style="color: #3548cf;">'r_hat'</span>]
+<span style="color: #005e8b;">variables</span> = [<span style="color: #3548cf;">"logodds_sex_&#960;"</span>,<span style="color: #3548cf;">"&#950;"</span>,<span style="color: #3548cf;">"nu_U"</span>,<span style="color: #3548cf;">"nu_U_o"</span>,<span style="color: #3548cf;">"&#949;"</span>,<span style="color: #3548cf;">"lambda_1"</span>,<span style="color: #3548cf;">"lambda_2"</span>]
+<span style="color: #595959;"># </span><span style="color: #595959;">variables = ["&#950;","&#948;","&#955;","&#960;"]</span>
+<span style="color: #005e8b;">df_summary</span> = az.summary(idata,var_names=variables)[headers]
+<span style="color: #8f0075;">print</span>(tabulate(df_summary,\
+               headers,tablefmt=<span style="color: #3548cf;">'orgtbl'</span>,floatfmt=<span style="color: #3548cf;">".2f"</span>))
+</pre>
+</div>
+
+<pre class="example" id="org77ed9ab">
+|                  |   mean |    sd |   hdi_3% |   hdi_97% |   ess_bulk |   r_hat |
+|------------------+--------+-------+----------+-----------+------------+---------|
+| logodds_sex_π[F] |  -0.19 |  0.03 |    -0.25 |     -0.13 |     349.00 |    1.01 |
+| logodds_sex_π[M] |   0.50 |  0.03 |     0.44 |      0.56 |     354.00 |    1.01 |
+| ζ[y_l]           |   0.27 |  0.01 |     0.25 |      0.30 |    8429.00 |    1.00 |
+| ζ[y_h]           |   0.03 |  0.00 |     0.03 |      0.04 |    6048.00 |    1.00 |
+| nu_U             | 299.81 | 18.94 |   264.86 |    336.40 |    7950.00 |    1.00 |
+| nu_U_o           | 109.35 |  6.59 |    97.78 |    122.34 |    5584.00 |    1.00 |
+| ε                |   0.07 |  0.07 |     0.00 |      0.19 |   10331.00 |    1.00 |
+| lambda_1         |   0.01 |  0.01 |     0.00 |      0.02 |    6389.00 |    1.00 |
+| lambda_2         |   0.06 |  0.01 |     0.04 |      0.07 |    1704.00 |    1.01 |
+</pre>
+
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">plt.<span style="color: #005e8b;">rcParams</span>[<span style="color: #3548cf;">'figure.constrained_layout.use'</span>] = <span style="color: #0000b0;">True</span>
+az.plot_trace(idata,var_names=variables);
+</pre>
+</div>
+
+
+<div id="orgf24c544" class="figure">
+<p><img src="./figures/trace.png" alt="trace.png" />
+</p>
+</div>
+
+<p>
+The following plot shows the observed number of deaths per age/gender/year/region categories against the model prediction.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">predictions</span> = idata.posterior_predictive.mortality.\
+              mean(dim=(<span style="color: #3548cf;">"chain"</span>,<span style="color: #3548cf;">"draw"</span>)).values
+<span style="color: #005e8b;">perc_predictions</span> = np.percentile(idata.posterior_predictive.mortality.values,q=[2.5,97.5],axis=(0,1))
+plt.vlines(M_cohort,perc_predictions[0],perc_predictions[1],color=<span style="color: #3548cf;">'grey'</span>,linestyles=<span style="color: #3548cf;">"dashed"</span>,linewidth=1,label=<span style="color: #3548cf;">"95% interval"</span>,alpha=0.4)
+plt.scatter((M_cohort),(predictions))
+<span style="color: #595959;"># </span><span style="color: #595959;">plt.scatter((M/Population).flatten(),(predictions/Population).flatten())</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">plt.plot([0,0.2],[0,0.2],c='k')</span>
+plt.plot([0,860],[0,860],c=<span style="color: #3548cf;">'k'</span>)
+plt.legend()
+plt.xlabel(<span style="color: #3548cf;">"number of deaths"</span>)
+plt.ylabel(<span style="color: #3548cf;">"predicted number of deaths"</span>);
+</pre>
+</div>
+
+
+<div id="orgf331078" class="figure">
+<p><img src="./figures/fit_model.png" alt="fit_model.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org01a6fff" class="outline-3">
+<h3 id="org01a6fff"><span class="section-number-3">5.4.</span> results&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+We plot the age profile for the probability of falling ill, \(\pi\). As one would expect, this probability increases with age and is higher for men than for women. We plot the country offsets (in log-odds space) for four countries and the probability of death \(\delta_c\) for four (other) countries. Finally, we plot the fraction of people ill by income for two age categories.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">plt.style.use(<span style="color: #3548cf;">'Solarize_Light2'</span>)
+fig, ((ax1,ax2),(ax3,ax4)) = plt.subplots(2, 2, dpi=140,figsize=(14,14))
+
+<span style="color: #005e8b;">pi_avg</span> = np.mean(idata.posterior.&#960;.values,axis=(0,1,4,5))
+<span style="color: #005e8b;">perc_pi</span> = np.percentile(idata.posterior.&#960;.values,[2.5,97.5],axis=(0,1,4,5))
+<span style="color: #595959;"># </span><span style="color: #595959;">fig 1</span>
+ax1.plot(np.arange(low_age,high_age-1),pi_avg[:-2,1],label=<span style="color: #3548cf;">"male"</span>)
+ax1.plot(np.arange(low_age,high_age-1),pi_avg[:-2,0],label=<span style="color: #3548cf;">"female"</span>)
+ax1.vlines(np.arange(low_age,high_age-1),perc_pi[0,:-2,0],perc_pi[1,:-2,0],color=<span style="color: #3548cf;">'black'</span>,linestyles=<span style="color: #3548cf;">"dashed"</span>,linewidth=1,label=<span style="color: #3548cf;">"95% interval"</span>)
+ax1.set_title(<span style="color: #3548cf;">"Age profile of the probability of falling ill, $</span><span style="color: #0000b0;">\\</span><span style="color: #3548cf;">pi$,</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;"> and the 95% interval for females"</span>)
+ax1.set_xlabel(<span style="color: #3548cf;">'Age'</span>)
+ax1.set_ylabel(<span style="color: #3548cf;">'Probability'</span>)
+ax1.legend();
+<span style="color: #595959;"># </span><span style="color: #595959;">fig 2</span>
+<span style="color: #005e8b;">post_logodds_pi</span> = idata.posterior.logodds_country_&#960;.values
+sns.kdeplot(ax=ax2,data=post_logodds_pi[:,:,1].flatten(),label=<span style="color: #3548cf;">"Switzerland"</span>)
+sns.kdeplot(ax=ax2,data=post_logodds_pi[:,:,7].flatten(),label=<span style="color: #3548cf;">"Norway"</span>)
+sns.kdeplot(ax=ax2,data=post_logodds_pi[:,:,6].flatten(),label=<span style="color: #3548cf;">"Lithuania"</span>)
+sns.kdeplot(ax=ax2,data=post_logodds_pi[:,:,5].flatten(),label=<span style="color: #3548cf;">"Hungary"</span>)
+ax2.set_xlabel(<span style="color: #3548cf;">"Log-odds falling ill"</span>)
+ax2.set_title(<span style="color: #3548cf;">"Country offsets falling ill, log-odds $</span><span style="color: #0000b0;">\\</span><span style="color: #3548cf;">pi$,</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;">for selected countries"</span>)
+ax2.legend();
+<span style="color: #595959;"># </span><span style="color: #595959;">fig 3</span>
+<span style="color: #005e8b;">post_logodds_delta</span> = idata.posterior.logodds_&#948;.values
+sns.kdeplot(ax=ax3,data=pm.math.invlogit(post_logodds_delta[:,:,2].flatten()).<span style="color: #8f0075;">eval</span>(),label=<span style="color: #3548cf;">"Denmark"</span>)
+sns.kdeplot(ax=ax3,data=pm.math.invlogit(post_logodds_delta[:,:,4].flatten()).<span style="color: #8f0075;">eval</span>(),label=<span style="color: #3548cf;">"Finland"</span>)
+sns.kdeplot(ax=ax3,data=pm.math.invlogit(post_logodds_delta[:,:,5].flatten()).<span style="color: #8f0075;">eval</span>(),label=<span style="color: #3548cf;">"Hungary"</span>)
+sns.kdeplot(ax=ax3,data=pm.math.invlogit(post_logodds_delta[:,:,0].flatten()).<span style="color: #8f0075;">eval</span>(),label=<span style="color: #3548cf;">"Bulgaria"</span>)
+ax3.set_xlabel(<span style="color: #3548cf;">"Probability of dying"</span>)
+ax3.set_title(<span style="color: #3548cf;">"Probability of death conditional on being ill, $</span><span style="color: #0000b0;">\\</span><span style="color: #3548cf;">delta_c$"</span>)
+ax3.legend();
+<span style="color: #595959;"># </span><span style="color: #595959;">fig 4</span>
+<span style="color: #005e8b;">ill_by_income</span> = idata.posterior.ill.values.mean(axis=(4,5))
+ax4.hist(ill_by_income[:,:,10,0,1].flatten(),bins=70,density=<span style="color: #0000b0;">True</span>,label=<span style="color: #3548cf;">"55 year old, high income"</span>)
+ax4.hist(ill_by_income[:,:,10,0,0].flatten(),bins=70,density=<span style="color: #0000b0;">True</span>,label=<span style="color: #3548cf;">"55 year old, low income"</span>)
+ax4.hist(ill_by_income[:,:,10,5,1].flatten(),bins=70,density=<span style="color: #0000b0;">True</span>,label=<span style="color: #3548cf;">"60 year old, high income"</span>)
+ax4.hist(ill_by_income[:,:,10,5,0].flatten(),bins=70,density=<span style="color: #0000b0;">True</span>,label=<span style="color: #3548cf;">"60 year old, low income"</span>)
+ax4.set_xlabel(<span style="color: #3548cf;">"Fraction ill"</span>)
+ax4.set_ylabel(<span style="color: #3548cf;">"Density"</span>)
+ax4.set_title(<span style="color: #3548cf;">"Fraction of people ill for</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;">55 and 60 year olds per income category"</span>)
+ax4.legend();
+
+</pre>
+</div>
+
+
+<div id="orgd08fd2d" class="figure">
+<p><img src="./figures/summary_figure.png" alt="summary_figure.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5d85e87" class="outline-3">
+<h3 id="org5d85e87"><span class="section-number-3">5.5.</span> do analysis&#xa0;&#xa0;&#xa0;<span class="tag"><span class="code">code</span></span></h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+An advantage of doing Bayesian analysis in <code>pymc</code> is that it has implemented the &ldquo;causal do&rdquo; operator. In the code below we first run a simulation with the baseline value for unmet, \(\upsilon\), which equals the sum of too expensive and other stated reasons why patient decided to forego treatment. The model estimates the fraction of people that forego treatment because it is too expensive as \(\zeta oop\). Hence, if \(oop\) is increased by \(\Delta oop\), the fraction of people skipping treatment because it is too expensive increases by \(\zeta \Delta oop\). This we add to the baseline value of \(\upsilon\) for the counterfactual simulation. 
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">&#965;_baseline</span> = idata.posterior.&#965;.mean(axis=(0,1)).values
+<span style="color: #005e8b;">pov_no_missing</span> = idata.posterior.pov.mean(axis=(0,1)).values
+<span style="color: #005e8b;">zeta</span> = idata.posterior.&#950;.mean(axis=(0,1)).values
+<span style="color: #005e8b;">delta_oop</span> = 0.1
+<span style="color: #005e8b;">delta_&#964;</span> = zeta.reshape(1,2)*delta_oop
+<span style="color: #005e8b;">iota_0</span> = idata.posterior.&#953;_0.mean(axis=(0,1))[0].values
+<span style="color: #005e8b;">AR_model_0</span> = do(AR_model, {<span style="color: #3548cf;">"&#965;"</span>: &#965;_baseline})
+<span style="color: #005e8b;">AR_model_1</span> = do(AR_model, {<span style="color: #3548cf;">"&#965;"</span>: &#965;_baseline + delta_&#964;})
+</pre>
+</div>
+
+<p>
+Having defined the two models <code>AR_model_0, AR_model_1</code>, we sample from these models with the new values for unmet medical needs \(\upsilon\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">SEED</span>=44
+<span style="color: #595959;"># </span><span style="color: #595959;">Sample &#963; from baseline model</span>
+<span style="color: #005e8b;">idata_0</span> = pm.sample_posterior_predictive(
+    idata,
+    model=AR_model_0,
+    predictions=<span style="color: #0000b0;">True</span>,
+    var_names=[<span style="color: #3548cf;">"&#963;"</span>,<span style="color: #3548cf;">"ill"</span>],
+    random_seed=SEED,
+)
+<span style="color: #595959;"># </span><span style="color: #595959;">Sample new &#963; with higher oop</span>
+<span style="color: #005e8b;">idata_1</span> = pm.sample_posterior_predictive(
+    idata,
+    model=AR_model_1,
+    predictions=<span style="color: #0000b0;">True</span>,
+    var_names=[<span style="color: #3548cf;">"&#963;"</span>,<span style="color: #3548cf;">"ill"</span>],
+    random_seed=SEED,
+)
+
+</pre>
+</div>
+
+
+
+
+<p>
+We can save the posterior distributions of these (counter-factual) simulations.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">idata_0.to_netcdf(<span style="color: #3548cf;">"./trace/baseline_model_do_0.nc"</span>)
+idata_1.to_netcdf(<span style="color: #3548cf;">"./trace/baseline_model_do_1.nc"</span>)
+</pre>
+</div>
+
+<pre class="example">
+./trace/baseline_model_do_1.nc
+</pre>
+
+
+<p>
+And read in these trace files when we need them:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">idata_0</span> = az.from_netcdf(<span style="color: #3548cf;">"./trace/baseline_model_do_0.nc"</span>)
+<span style="color: #005e8b;">idata_1</span> = az.from_netcdf(<span style="color: #3548cf;">"./trace/baseline_model_do_1.nc"</span>)
+</pre>
+</div>
+
+<p>
+In order to find the fractions of people who are ill and fit in these simulations, we need the parameters \(\pi,\delta\) and \(\sigma\) from the model. From these parameters, only \(\sigma\) differs between the baseline and the counterfactual simulation.
+</p>
+
+<p>
+We want to project the effects for 40 years into the future and hence cannot use the year dimension in the model (which is only 11 years). Therefore we take the latest year for \(\sigma\) as the most recent information for our simulations.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">pi</span> = idata.posterior.&#960;.values.transpose((2,3,4,5,0,1))[:,:,:,:,:,:]
+<span style="color: #005e8b;">delta</span> = idata.posterior.&#948;.values.transpose((2,3,4,5,6,0,1))[0]
+<span style="color: #005e8b;">sigma_0</span> = idata_0.predictions.&#963;.values.transpose((2,3,4,5,6,0,1))[-1] <span style="color: #595959;"># </span><span style="color: #595959;">use latest year</span>
+<span style="color: #005e8b;">sigma_1</span> = idata_1.predictions.&#963;.values.transpose((2,3,4,5,6,0,1))[-1]
+</pre>
+</div>
+
+<p>
+Since we are interested in the dynamic effects of the change in oop, we consider the longest run that we have in the model: people who are 45 at the start of the simulation and we follow this cohort until they are 85.
+</p>
+
+<p>
+In order to calculate/normalize the life years, we start with 1000 forty-five year olds per category gender/income and region. We use our estimate of \(\iota_0\) to split the 1000 individuals into fit and ill. Then we run through our Markov model keeping track of who switches health state and who dies. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">iota_0</span> = idata.posterior.&#953;_0.values.transpose((2,3,4,5,0,1))[0,<span style="color: #0000b0;">None</span>,:,:,:,:,:]
+<span style="color: #595959;"># </span><span style="color: #595959;">outcomes baseline:</span>
+<span style="color: #005e8b;">shape</span> = (2,n_ages,n_g,n_regions,n_y,4,2000) <span style="color: #595959;"># </span><span style="color: #595959;">fit/ill, age, gender, region, income, chain, samples</span>
+<span style="color: #005e8b;">N_0</span> = np.zeros(shape) 
+<span style="color: #005e8b;">N_0</span>[0,0] = (1-iota_0)*1000 <span style="color: #595959;"># </span><span style="color: #595959;">fit</span>
+<span style="color: #005e8b;">N_0</span>[1,0] = iota_0*1000     <span style="color: #595959;"># </span><span style="color: #595959;">ill</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">outcomes counterfactual:</span>
+<span style="color: #005e8b;">N_1</span> = np.zeros(shape) <span style="color: #595959;"># </span><span style="color: #595959;">fit/ill, age, gender, region, income, samples</span>
+<span style="color: #005e8b;">N_1</span>[0,0] = (1-iota_0)*1000 <span style="color: #595959;"># </span><span style="color: #595959;">fit</span>
+<span style="color: #005e8b;">N_1</span>[1,0] = iota_0*1000     <span style="color: #595959;"># </span><span style="color: #595959;">ill</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">follow these 45 year olds till they are 85</span>
+<span style="color: #531ab6;">for</span> j <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(1,n_ages):
+   <span style="color: #005e8b;">N_0</span>[0,j] = (1-pi[j-1])*N_0[0,j-1] + sigma_0 * N_0[1,j-1]
+   <span style="color: #005e8b;">N_0</span>[1,j] = pi[j-1]*N_0[0,j-1] + (1-sigma_0 - delta) * N_0[1,j-1] 
+   <span style="color: #005e8b;">N_1</span>[0,j] = (1-pi[j-1])*N_1[0,j-1] + sigma_1 * N_1[1,j-1]
+   <span style="color: #005e8b;">N_1</span>[1,j] = pi[j-1]*N_1[0,j-1] + (1-sigma_1 - delta) * N_1[1,j-1] 
+</pre>
+</div>
+
+<p>
+To calculate life years over the lifetime (from 45-85), we count a healthy life year as 1.0 and a life year while ill at <code>qaly_ill</code> and add these together. When someone dies, there are no life years left for this person (weight 0.0). The variable <code>delta_lifeyears</code> calculates the difference between life years in the baseline simulation and the counterfactual. We adjust the &rsquo;qaly&rsquo; for the ill to a value smaller than 1.0 to capture the idea that with a probability of dying above 10% per year (conditional on being ill) suggests that patients do face significant restrictions in daily life.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">qaly_ill</span> = 0.6
+<span style="color: #005e8b;">lifeyears_0</span> = N_0[0].<span style="color: #8f0075;">sum</span>(axis=0) + qaly_ill*N_0[1].<span style="color: #8f0075;">sum</span>(axis=0)
+<span style="color: #005e8b;">lifeyears_1</span> = N_1[0].<span style="color: #8f0075;">sum</span>(axis=0) + qaly_ill*N_1[1].<span style="color: #8f0075;">sum</span>(axis=0)
+<span style="color: #005e8b;">delta_lifeyears</span> = lifeyears_0 - lifeyears_1
+</pre>
+</div>
+
+
+<p>
+In order to summarize the results we present two qaly outcomes per country. The following code presents the unweighted average of regions into countries.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">lifeyears_per_country</span> = np.tensordot(country_region_matrix,lifeyears_0,axes=([1,1]))
+<span style="color: #595959;"># </span><span style="color: #595959;">index: country/gender/income/chain/samples</span>
+</pre>
+</div>
+
+<p>
+Plot lowest and highest qaly score per country; highest score is always women with high income; lowest score is men with low income &#x2013;with the exception of Bulgaria and Hungary where men with high/low income are close
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">
+<span style="color: #005e8b;">category_names</span> = [<span style="color: #3548cf;">'base qaly'</span>, <span style="color: #3548cf;">'qaly high income women'</span>]
+<span style="color: #005e8b;">labels</span> = countries
+
+<span style="color: #005e8b;">data</span> = np.stack((lifeyears_per_country.mean(axis=(3,4)).<span style="color: #8f0075;">min</span>(axis=(1,2)),lifeyears_per_country.mean(axis=(3,4)).<span style="color: #8f0075;">max</span>(axis=(1,2))),axis=1)/40000
+<span style="color: #005e8b;">category_colors</span> = plt.get_cmap(<span style="color: #3548cf;">'viridis'</span>)(
+    np.linspace(0.15, 0.85, data.shape[1]))
+
+fig, (<span style="color: #005e8b;">ax1</span>,<span style="color: #005e8b;">ax2</span>) = plt.subplots(1,2, figsize=(16, 6))
+ax1.invert_yaxis()
+<span style="color: #595959;"># </span><span style="color: #595959;">ax.xaxis.set_visible(False)</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">ax.set_xlim(0, 1)</span>
+ax1.set_title(<span style="color: #3548cf;">"Fraction of max. qaly's realized for 45 year olds per country</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;">"</span>)
+
+<span style="color: #531ab6;">for</span> i, (colname, color) <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">enumerate</span>(<span style="color: #8f0075;">zip</span>(category_names, category_colors)):
+    <span style="color: #005e8b;">starts</span> = i * data[:,0]
+    <span style="color: #005e8b;">widths</span> = data[:, i] - starts
+    ax1.barh(labels, widths, left = starts, height=0.5,
+            label=colname, color=color)
+    <span style="color: #005e8b;">xcenters</span> = starts + widths / 2
+
+    <span style="color: #005e8b;">r</span>, <span style="color: #005e8b;">g</span>, <span style="color: #005e8b;">b</span>, <span style="color: #005e8b;">_</span> = color
+    <span style="color: #005e8b;">text_color</span> = <span style="color: #3548cf;">'white'</span> <span style="color: #531ab6;">if</span> r * g * b &lt; 0.5 <span style="color: #531ab6;">else</span> <span style="color: #3548cf;">'darkgrey'</span>
+    <span style="color: #531ab6;">for</span> y, (x, c) <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">enumerate</span>(<span style="color: #8f0075;">zip</span>(xcenters, widths)):
+        ax1.text(x, y, <span style="color: #3548cf;">"{:.2f}"</span>.<span style="color: #8f0075;">format</span>(c), ha=<span style="color: #3548cf;">'center'</span>, va=<span style="color: #3548cf;">'center'</span>,
+                color=text_color)
+ax1.legend(ncol=<span style="color: #8f0075;">len</span>(category_names), bbox_to_anchor=(0, 1),
+          loc=<span style="color: #3548cf;">'lower left'</span>, fontsize=<span style="color: #3548cf;">'small'</span>)
+
+
+ax2.hist(delta_lifeyears[0,0,1].flatten(),bins=20,label=<span style="color: #3548cf;">"high income, female"</span>,density=<span style="color: #0000b0;">True</span>,alpha=0.5)
+ax2.hist(delta_lifeyears[1,0,1].flatten(),bins=20,label=<span style="color: #3548cf;">"high income, male"</span>,density=<span style="color: #0000b0;">True</span>,alpha=0.5)
+ax2.hist(delta_lifeyears[0,0,0].flatten(),bins=20,label=<span style="color: #3548cf;">"low income, female"</span>,density=<span style="color: #0000b0;">True</span>,alpha=0.5)
+ax2.hist(delta_lifeyears[1,0,0].flatten(),bins=20,label=<span style="color: #3548cf;">"low income, male"</span>,density=<span style="color: #0000b0;">True</span>,alpha=0.5)
+ax2.legend()
+ax2.set_title(<span style="color: #3548cf;">"Qaly's lost (per 1000 population) due to $oop$ increase by $0.1$"</span>);
+</pre>
+</div>
+
+
+<div id="org1cb3ede" class="figure">
+<p><img src="./figures/summary_two_applications.png" alt="summary_two_applications.png" />
+</p>
+</div>
+
+
+
+<p>
+In order to compare the dynamic and static approach, use the ages 45-74 (first cohort at the start of our data; see the first row in Table <a href="#orgabba7fd">1</a>). Then we compare this with the dynamic estimate <code>delta_lifeyears</code> over the same age-range (that is, not the range 45-84 that we consider above).
+</p>
+
+
+<p>
+The following code calculates the dynamic loss in life years from 45 to 74 and returns the data in the first row of Table <a href="#orgc21491b">3</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">lifeyears_0_d</span> = N_0[0,:30].<span style="color: #8f0075;">sum</span>(axis=0) + qaly_ill*N_0[1,:30].<span style="color: #8f0075;">sum</span>(axis=0)
+<span style="color: #005e8b;">lifeyears_1_d</span> = N_1[0,:30].<span style="color: #8f0075;">sum</span>(axis=0) + qaly_ill*N_1[1,:30].<span style="color: #8f0075;">sum</span>(axis=0)
+<span style="color: #005e8b;">delta_lifeyears_d</span> = lifeyears_0_d - lifeyears_1_d
+delta_lifeyears_d.mean(axis=(1,3,4))
+</pre>
+</div>
+
+<pre class="example">
+array([[5.22867775, 0.45827571],
+       [8.00927005, 0.82308271]])
+</pre>
+
+
+<p>
+To find the static estimate, we do the following. For \(\iota_0\) we are only interested in the first year; hence, index 0 in the slicing of <code>ill</code> to get <code>ill_0</code>. We will compare the qaly&rsquo;s after 1 year of the introduction of \(\Delta oop\) with the counterfactual after 1 year without the increase in \(oop\). The latter is denoted <code>lifeyears_0_s</code> (with <code>s</code> for static) and the former <code>lifeyears_1_s</code>. The code returns the second row of Table <a href="#orgc21491b">3</a> (and repeats the first row for ease of reference).
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">ill_0</span> = idata_0.predictions.ill.values[:,:,0,:,:,:,:].transpose((2,3,4,5,0,1))*1000
+<span style="color: #005e8b;">fit_0</span> = 1000-ill_0
+<span style="color: #005e8b;">fit_1_0</span> = (1-pi[:30])*fit_0 + sigma_0 * ill_0
+<span style="color: #005e8b;">ill_1_0</span> = pi[:30]*fit_0 + (1-sigma_0-delta) * ill_0
+<span style="color: #005e8b;">deaths_1_0</span> = delta * ill_1_0
+<span style="color: #005e8b;">lifeyears_0_s</span> = fit_1_0 + ill_1_0 * (1-delta) * qaly_ill
+<span style="color: #005e8b;">fit_1_1</span> = (1-pi[:30])*fit_0 + sigma_1 * ill_0
+<span style="color: #005e8b;">ill_1_1</span> = pi[:30]*fit_0 + (1-sigma_1-delta) * ill_0
+<span style="color: #005e8b;">deaths_1_1</span> = delta * ill_1_1
+<span style="color: #005e8b;">lifeyears_1_s</span> = fit_1_1 + ill_1_1 * (1-delta) * qaly_ill
+<span style="color: #005e8b;">delta_lifeyears_s</span> = (lifeyears_0_s - lifeyears_1_s).<span style="color: #8f0075;">sum</span>(axis=0)
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">"The qaly effect based on a one year (static) comparison:"</span>)
+<span style="color: #8f0075;">print</span>(delta_lifeyears_s.mean(axis=(1,3,4)))
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">"The qaly effect based on a 30 year (dynamic) comparison:"</span>)
+<span style="color: #8f0075;">print</span>(delta_lifeyears_d.mean(axis=(1,3,4)))
+
+</pre>
+</div>
+
+<pre class="example">
+The qaly effect based on a one year (static) comparison:
+[[0.24927238 0.05729696]
+ [0.31104821 0.11820345]]
+The qaly effect based on a 30 year (dynamic) comparison:
+[[5.22867775 0.45827571]
+ [8.00927005 0.82308271]]
+</pre>
+</div>
+<div id="outline-container-org3623e4a" class="outline-4">
+<h4 id="org3623e4a">comparison to (<a href="#citeproc_bib_item_4">Finkelstein and McKnight 2008</a>)</h4>
+<div class="outline-text-4" id="text-org3623e4a">
+<p>
+As a final illustration of the difference between the dynamic and static estimates, consider (<a href="#citeproc_bib_item_4">Finkelstein and McKnight 2008</a>). We illustrate their estimate &#x2013;which we call static&#x2013; with our dynamic estimate using our framework of \(\Delta oop = 0.1\) instead of the introduction of Medicare that they actually analyse. Doing the comparison in our framework of \(\Delta oop\) makes it easier to understand this section in terms of the analysis we do above.
+</p>
+
+<p>
+Hence, there are two differences:
+</p>
+<ul class="org-ul">
+<li>we consider a change in oop instead of introducing a new insurance scheme and</li>
+<li>in our case the reform is a reduction in insurance instead of an expansion.</li>
+</ul>
+
+<p>
+As explained in the main text, we do not need to compare 65-74 year olds with 55-64 year olds. As we simulate our model, we can compare 65-74 year olds both with and without the reform. Of course, their comparison is based on the diff-in-diff methodology and makes sense in their paper.
+</p>
+
+<p>
+The following figure illustrates the intensity of treatment (how many years the agent faced the reform \(\Delta oop = 0.1\)) after 65.The horizontal black line shows the sample used by (<a href="#citeproc_bib_item_4">Finkelstein and McKnight 2008</a>) to estimate the effect of the reform. The blue illustrates our dynamic estimate. Clearly, the blue line touches intensities (above 75) that are not reached by the static estimate. The right panel shows that the dynamic effect above 80 is more than six times the static effect.
+</p>
+
+<p>
+We calculate the effect for low income males in the first region of Bulgaria, <code>BG31</code>. We start at 65 (index 20) for \(\iota_0\) and \(\pi\). We derive the development of the number of ill and fit (starting with a normalized population of 1000) and calculate the difference in mortality.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">n_years</span> = 18
+<span style="color: #005e8b;">iota_0</span> = idata.posterior.&#953;_0.values.transpose((2,3,4,5,0,1))[20,1,0,0,:,:] <span style="color: #595959;"># </span><span style="color: #595959;">age 65 and higher</span>
+<span style="color: #005e8b;">pi</span> = idata.posterior.&#960;.values.transpose((2,3,4,5,0,1))[20:,1,0,0,:,:]
+<span style="color: #005e8b;">delta</span> = idata.posterior.&#948;.values.transpose((2,3,4,5,6,0,1))[0][0,0,0,0]
+<span style="color: #005e8b;">sigma_0</span> = idata_0.predictions.&#963;.values.transpose((2,3,4,5,6,0,1))[-1][0,0,0,0]
+<span style="color: #005e8b;">sigma_1</span> = idata_1.predictions.&#963;.values.transpose((2,3,4,5,6,0,1))[-1][0,0,0,0]
+
+<span style="color: #595959;"># </span><span style="color: #595959;">outcomes baseline:</span>
+<span style="color: #005e8b;">shape</span> = (2,n_years,4,2000) <span style="color: #595959;"># </span><span style="color: #595959;">fit/ill, year, chain, samples</span>
+<span style="color: #005e8b;">N_0</span> = np.zeros(shape) 
+<span style="color: #005e8b;">N_0</span>[0,0] = (1-iota_0)*1000 <span style="color: #595959;"># </span><span style="color: #595959;">fit</span>
+<span style="color: #005e8b;">N_0</span>[1,0] = iota_0*1000     <span style="color: #595959;"># </span><span style="color: #595959;">ill</span>
+<span style="color: #595959;"># </span><span style="color: #595959;"># # outcomes counterfactual:</span>
+<span style="color: #005e8b;">N_1</span> = np.zeros(shape) <span style="color: #595959;"># </span><span style="color: #595959;">fit/ill, age, gender, region, income, samples</span>
+<span style="color: #005e8b;">N_1</span>[0,0] = (1-iota_0)*1000 <span style="color: #595959;"># </span><span style="color: #595959;">fit</span>
+<span style="color: #005e8b;">N_1</span>[1,0] = iota_0*1000     <span style="color: #595959;"># </span><span style="color: #595959;">ill</span>
+<span style="color: #005e8b;">a</span> = 0 <span style="color: #595959;"># </span><span style="color: #595959;">start from 65 year olds in year 0</span>
+<span style="color: #531ab6;">for</span> y <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(1,n_years):
+        <span style="color: #005e8b;">N_0</span>[0,y] = (1-pi[y-1])*N_0[0,y-1] + sigma_0 * N_0[1,y-1]
+        <span style="color: #005e8b;">N_0</span>[1,y] = pi[y-1]*N_0[0,y-1] + (1-sigma_0 - delta) * N_0[1,y-1] 
+        <span style="color: #005e8b;">N_1</span>[0,y] = (1-pi[y-1])*N_1[0,y-1] + sigma_1 * N_1[1,y-1]
+        <span style="color: #005e8b;">N_1</span>[1,y] = pi[y-1]*N_1[0,y-1] + (1-sigma_1 - delta) * N_1[1,y-1]
+
+
+<span style="color: #005e8b;">mortality_difference</span> = delta*(N_1[1]/(N_1[0]+N_1[1])-N_0[1]/(N_0[0]+N_0[1]))
+</pre>
+</div>
+
+<p>
+The matrix <code>C</code> keeps track of the number of years that a given age/year combination has been exposed to the reform.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #005e8b;">n_ages</span>=19
+<span style="color: #005e8b;">C</span> = np.zeros([n_ages,n_ages])
+<span style="color: #531ab6;">for</span> c <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(n_ages):
+    <span style="color: #531ab6;">for</span> r <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(n_ages):
+        <span style="color: #005e8b;">C</span>[<span style="color: #005e8b;">c</span>,<span style="color: #005e8b;">r</span>] = <span style="color: #8f0075;">min</span>(c,r)
+
+</pre>
+</div>
+
+<p>
+The left panel plots the treatment intensity as a function of age and years after the reform. The right panel shows the dynamic estimate normalized the mean mortality difference for ages 65-74. With this normalization, the static effect equals one.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">
+fig, (<span style="color: #005e8b;">ax1</span>,<span style="color: #005e8b;">ax2</span>) = plt.subplots(1,2, figsize=(16, 6))
+
+
+<span style="color: #531ab6;">for</span> r <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span>(n_ages):
+    ax1.scatter(r*np.ones(n_ages),<span style="color: #8f0075;">range</span>(n_ages),c=C.T[r]/18.0,cmap=<span style="color: #3548cf;">'YlGn'</span>,vmin=0.0,vmax=1.0)
+    ax1.set_xticks(<span style="color: #8f0075;">range</span>(n_ages),np.arange(n_ages)+65)
+    ax1.set_yticks(<span style="color: #8f0075;">range</span>(n_ages),np.arange(n_ages))
+<span style="color: #005e8b;">eps</span>=0.4
+ax1.plot([0,18],[0-eps,18-eps])
+ax1.plot([0,9],[10-eps,10-eps],c=<span style="color: #3548cf;">'k'</span>)
+ax1.set_xlabel(<span style="color: #3548cf;">'age'</span>)
+ax1.set_ylabel(<span style="color: #3548cf;">'year'</span>)
+ax1.set_title(<span style="color: #3548cf;">'Treatment intensity of new policy affecting ages 65+</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;"> introduced in year 0'</span>)
+
+
+
+ax2.plot(mortality_difference.mean(axis=(1,2))/mortality_difference[:9].mean(),label=<span style="color: #3548cf;">'dynamic estimate'</span>)
+ax2.plot([0,9],[1,1],c=<span style="color: #3548cf;">'k'</span>,label = <span style="color: #3548cf;">'static estimate'</span>)
+ax2.set_xlabel(<span style="color: #3548cf;">'age'</span>)
+ax2.set_title(<span style="color: #3548cf;">'Mortality effect of new policy affecting 65+ over time</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;"> relative to average effect for 65-74 year olds'</span>)
+ax2.set_ylabel(<span style="color: #3548cf;">'normalized mortality difference'</span>)
+ax2.set_xticks(np.arange(18),np.arange(65,83))
+ax2.legend();
+</pre>
+</div>
+
+
+<div id="org60f68fe" class="figure">
+<p><img src="./figures/years_treatment.png" alt="years_treatment.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf4fc0d6" class="outline-2">
+<h2 id="orgf4fc0d6"><span class="section-number-2">6.</span> Discussion and policy implications</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+We introduce a simple dynamic model of health status and mortality. We estimate the fraction of people with high and low health status per age/gender/year/region/income category and the flow probabilities between these health states and death. Using this we follow cohorts over time and predict the number of deaths per age/gender/year/region. The fit of the model is quite good and it replicates stylized facts like mortality is higher for men than women, for low than high incomes.
+</p>
+
+<p>
+The model can be used to rank countries in terms of expected quality adjusted life years for 45 year olds and estimate the health gap between low income men and high income women. We also use the model to illustrate the quantitative difference between static estimates (like a diff-in-diff) of the mortality effect of a health reform and the dynamic estimate. The former needs fewer assumptions to identify the causal effect. But when health is viewed as a stock variable, it turns out that the dynamic effect is up till six times bigger than the static estimate would suggest.
+</p>
+</div>
+</div>
+<div id="outline-container-org01dfc94" class="outline-2">
+<h2 id="org01dfc94"><span class="section-number-2">7.</span> Bibliography</h2>
+<div class="outline-text-2" id="text-7">
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Borgschulte, Mark, and Jacob Vogler. 2020. “Did the Aca Medicaid Expansion Save Lives?” <i>Journal of Health Economics</i> 72 (July):102333. <a href="https://doi.org/10.1016/j.jhealeco.2020.102333">https://doi.org/10.1016/j.jhealeco.2020.102333</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Brot-Goldberg, Zarek C., Amitabh Chandra, Benjamin R. Handel, and Jonathan T. Kolstad. 2017. “What Does a Deductible Do? the Impact of Cost-Sharing on Health Care Prices, Quantities, and Spending Dynamics.” <i>The Quarterly Journal of Economics</i> 132 (3): 1261–1318. <a href="https://doi.org/10.1093/qje/qjx013">https://doi.org/10.1093/qje/qjx013</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>Chandra, Amitabh, Evan Flack, and Ziad Obermeyer. 2021. “The Health Costs of Cost-Sharing,” February. <a href="https://doi.org/10.3386/w28439">https://doi.org/10.3386/w28439</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>Finkelstein, Amy, and Robin McKnight. 2008. “What Did Medicare Do? the Initial Impact of Medicare on Mortality and out of Pocket Medical Spending.” <i>Journal of Public Economics</i> 92 (7): 1644–68. <a href="https://doi.org/10.1016/j.jpubeco.2007.10.005">https://doi.org/10.1016/j.jpubeco.2007.10.005</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>Goldin, Jacob, Ithai Z. Lurie, and Janet McCubbin. 2020. “Health Insurance and Mortality: Experimental Evidence from Taxpayer Outreach.” <i>The Quarterly Journal of Economics</i> 136 (1): 1–49. <a href="https://doi.org/10.1093/qje/qjaa029">https://doi.org/10.1093/qje/qjaa029</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>Gross, Tal, Timothy Layton, and Daniel Prinz. 2020. “The Liquidity Sensitivity of Healthcare Consumption: Evidence from Social Security Payments,” October. <a href="https://doi.org/10.3386/w27977">https://doi.org/10.3386/w27977</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_7"></a>Miller, Sarah, Norman Johnson, and Laura R Wherry. 2021. “Medicaid and Mortality: New Evidence from Linked Survey and Administrative Data.” <i>The Quarterly Journal of Economics</i>, January. <a href="https://doi.org/10.1093/qje/qjab004">https://doi.org/10.1093/qje/qjab004</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_8"></a>Nyman, J.A. 2003. <i>The Theory of Demand for Health Insurance</i>. Stanford University Press.</div>
+</div>
+
+
+<p>
+
+
+</p>
+</div>
+</div>
+<div id="outline-container-org8cf4dd3" class="outline-2">
+<h2 id="org8cf4dd3"><span class="section-number-2">8.</span> Data</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+All our variables come from Eurostat. Table <a href="#org7fc2464">4</a> shows the dimensions over which our variables vary: country, NUTS 2, calendar year, age and sex. We also present a clickable link to the variable on the Eurostat website for ease of reference. The file <a href="./getting_data.html">./getting_data.html</a> presents the code to download the Eurostat data.<sup><a id="fnr.7" class="footref" href="#fn.7" role="doc-backlink">7</a></sup>
+</p>
+
+
+<table id="org7fc2464" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> Variables and the dimensions over which they vary.</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">variable</th>
+<th scope="col" class="org-left">country</th>
+<th scope="col" class="org-left">NUTS 2</th>
+<th scope="col" class="org-left">time</th>
+<th scope="col" class="org-left">age</th>
+<th scope="col" class="org-left">sex</th>
+<th scope="col" class="org-left">reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">population</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_D2JAN/default/table?lang=en&amp;category=demo.demopreg">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">deaths</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_MAGEC/default/table?lang=en&amp;category=demo.demomreg">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">deprivation</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">too expensive</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">unmet</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">infant mortality</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_MINFIND/default/table?lang=en&amp;category=demo.demomreg">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">number of physicians</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_physreg/default/table?lang=en&amp;category=hlth.hlth_care.hlth_res.hlth_staff">link</a></td>
+</tr>
+
+<tr>
+<td class="org-left">out-of-pocket</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en">link</a></td>
+</tr>
+</tbody>
+</table>
+
+
+
+<p>
+The variables on deprivation and access to care (unmet and too expensive) come from the <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=EU_statistics_on_income_and_living_conditions_(EU-SILC)_methodology">EU statistics on income and living conditions (EU-SILC)</a> survey.
+</p>
+
+<p>
+From the <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:At-risk-of-poverty_rate">Eurostat Glossary:</a> &ldquo;<a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Material_deprivation">Material deprivation</a> refers to a state of economic strain and durables, defined as the enforced inability (rather than the choice not to do so) to pay unexpected expenses, afford a one-week annual holiday away from home, a meal involving meat, chicken or fish every second day, the adequate heating of a dwelling, durable goods like a washing machine, colour television, telephone or car, being confronted with payment arrears (mortgage or rent, utility bills, hire purchase instalments or other loan payments).&rdquo; Our variable &ldquo;material deprivation&rdquo; equals the share of people in a NUTS 2 region in material deprivation.
+</p>
+
+<p>
+Fraction of people with self-reported unmet needs for medical examination is based on the same survey. In particular, the definition of this item is &ldquo;Self-reported unmet needs for health care: Proportion of people in need of health care reporting to have experienced delay in getting health care in the previous 12 months for reasons of financial barriers, long waiting lists, distance or transportation problems.&rdquo; We use both the general definition of unmet needs and the specific reason that treatment was too expensive.
+</p>
+
+<p>
+Infant mortality measures the number of deaths of infants per 1000 live births in a year at the NUTS 2 region level.
+</p>
+
+<p>
+We measure the number of physicians per 100k inhabitants per NUTS 2 region and calendar year. It gives an idea of the resources spent on healthcare in a region. Together with infant mortality and unmet medical needs it gives an idea of healthcare quality in a region.
+</p>
+
+<p>
+We characterize how generous a health insurance system is using the variable <code>OOP</code> in our analysis. This variable is derived from data on health care expenditure by financing scheme at the country level. For our <code>OOP</code> measure we focus on household out-of-pocket payment (<code>out-of-pocket</code>) as share of total current health expenditure.
+</p>
+</div>
+</div>
+<div id="outline-container-org0d42997" class="outline-2">
+<h2 id="org0d42997"><span class="section-number-2">9.</span> Estimation</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Table <a href="#org947e3e8">5</a> shows the details of the parameters in the model that do not have too many indices. To illustrate we do not present the results for <code>logodds_age_π</code> as this would entail 40 rows in the table.
+</p>
+
+<p>
+The value of <code>r_hat</code> is equal or close to one for all variables. This suggests that the NUTS algorithm converged in drawing samples from the posterior distribution. The probability of falling ill is clearly lower for women than for men. The increase in the fraction of people forgoing treatment because it is too expensive, \(\zeta\), is higher for low incomes than for high incomes. The \(\nu\) parameter of the Beta distribution is sometimes referred to as sample size. For the distribution of the fraction of people reporting unmet medical needs due to reasons other than the treatment being too expensive, \(\nu_{U_{o}}\) is above 100. For the fraction of people reporting unmet medical needs (for any reason) \(\nu_U\) is close to 300. The variable \(\varepsilon\) captures the extent to which unmet medical needs for other reasons than too expensive originates with low incomes compared to high incomes. Although the posterior expectation of \(\varepsilon\) is positive, zero is part of the 94% credibility interval. The uncertainty of this parameter, including that \(\varepsilon\) equals zero, is propagated through our results and simulated outcomes. Finally, \(\lambda_1\) equals the (negative) effect of healthcare quality as measured by infant mortality on the log odds of \(\lambda\), the probability of recovery conditional on being treated. When measuring quality with the number of physicians per 100k inhabitants, \(\lambda_2\) captures the effect on the log odds of \(\lambda\).
+</p>
+\begin{equation}
+\label{org5ef8fb9}
+\log(\lambda/(1-\lambda)) = \lambda_0 - \lambda_1 M_{infant} + \lambda_2 N_{physician}
+\end{equation}
+<p>
+where \(\lambda_0\) varies by year to capture technical progress, \(M_{infant}\) measures infant mortality and \(N_{physician}\) the number of physicians. The table shows that \(\lambda_1\) is positive in expectation but can be zero. For \(\lambda_2\) there is clearer evidence that the effect of physicians on recovery is positive.
+</p>
+
+
+
+
+
+<table id="org947e3e8" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> Estimated parameters of the main model</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">mean</th>
+<th scope="col" class="org-right">sd</th>
+<th scope="col" class="org-right">hdi_3%</th>
+<th scope="col" class="org-right">hdi_97%</th>
+<th scope="col" class="org-right">ess_bulk</th>
+<th scope="col" class="org-right">r_hat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">logodds_sex_π[F]</td>
+<td class="org-right">-0.19</td>
+<td class="org-right">0.03</td>
+<td class="org-right">-0.25</td>
+<td class="org-right">-0.13</td>
+<td class="org-right">349.00</td>
+<td class="org-right">1.01</td>
+</tr>
+
+<tr>
+<td class="org-left">logodds_sex_π[M]</td>
+<td class="org-right">0.50</td>
+<td class="org-right">0.03</td>
+<td class="org-right">0.44</td>
+<td class="org-right">0.56</td>
+<td class="org-right">354.00</td>
+<td class="org-right">1.01</td>
+</tr>
+
+<tr>
+<td class="org-left">ζ[y_l]</td>
+<td class="org-right">0.27</td>
+<td class="org-right">0.01</td>
+<td class="org-right">0.25</td>
+<td class="org-right">0.30</td>
+<td class="org-right">8429.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">ζ[y_h]</td>
+<td class="org-right">0.03</td>
+<td class="org-right">0.00</td>
+<td class="org-right">0.03</td>
+<td class="org-right">0.04</td>
+<td class="org-right">6048.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">nu_U</td>
+<td class="org-right">299.81</td>
+<td class="org-right">18.94</td>
+<td class="org-right">264.86</td>
+<td class="org-right">336.40</td>
+<td class="org-right">7950.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">nu_U_o</td>
+<td class="org-right">109.35</td>
+<td class="org-right">6.59</td>
+<td class="org-right">97.78</td>
+<td class="org-right">122.34</td>
+<td class="org-right">5584.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">ε</td>
+<td class="org-right">0.07</td>
+<td class="org-right">0.07</td>
+<td class="org-right">0.00</td>
+<td class="org-right">0.19</td>
+<td class="org-right">10331.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">lambda_1</td>
+<td class="org-right">0.01</td>
+<td class="org-right">0.01</td>
+<td class="org-right">0.00</td>
+<td class="org-right">0.02</td>
+<td class="org-right">6389.00</td>
+<td class="org-right">1.00</td>
+</tr>
+
+<tr>
+<td class="org-left">lambda_2</td>
+<td class="org-right">0.06</td>
+<td class="org-right">0.01</td>
+<td class="org-right">0.04</td>
+<td class="org-right">0.07</td>
+<td class="org-right">1704.00</td>
+<td class="org-right">1.01</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+Figure <a href="#orge91edd7">6</a> shows the traceplots for the main parameters of the model. We check the following three characteristics of the plots. First, the plot should be stationary; that is, not trending upward or downward. This implies that the posterior mean of the coefficient is (more or less) constant as we sample. Second, there should be good mixing which translates in condensed zig-zagging. In other words, the algorithm manages to draw values across the whole domain of the posterior quickly one after the other. Finally, the four chains cover the same regions. All three features are satisfied for the coefficients in the right panel of the figure.
+</p>
+
+
+
+
+<div id="orge91edd7" class="figure">
+<p><img src="./figures/trace.png" alt="trace.png" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Traceplot for the main model</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">See the github repository: <a href="https://github.com/janboone/dynamic-effects-of-health-insurance-reform">https://github.com/janboone/dynamic-effects-of-health-insurance-reform</a>.</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">We use an undiscounted sum here to make it easy to compare to the static version \(\tilde Q\) discussed below.</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">The max. number of observations that we could have is: 65 (regions) \(*\) 11 (years) \(*\) 30 (ages) \(*\) 2 (genders) \(=42,900\) which we have in first three rows. For the next 5 rows in the table we have data for at max. 11 years and 65 regions which corresponds to 715 obervations and for out-of-pocket we have at max. 11 years and 11 countries corresponding to 121.</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">Eurostat also provides the variable &ldquo;at-risk-of-poverty&rdquo; per NUTS 2 region. This is a relative poverty measure: the share of people with disposable income after social transfers below a threshold based on the national median disposable income. But the link between this poverty measure and forgoing treatment because it is too expensive is weaker. Further, there are more missing observations for this variable than for the deprivation variable.</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">These probabilities are calculated by averaging \(\pi_{ar}^{ij}\) over region \(r\) and income \(j\).</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">The two exceptions are Bulgaria and Hungary where high income males&rsquo; qaly&rsquo;s were just below the low income males&rsquo; qaly&rsquo;s.</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">This file can be found in the github repository: <a href="https://github.com/janboone/dynamic-effects-of-health-insurance-reform">https://github.com/janboone/dynamic-effects-of-health-insurance-reform</a>.</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

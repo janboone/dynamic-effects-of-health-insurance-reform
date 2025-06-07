@@ -20,6 +20,7 @@ SHP/
 *.out
 *.toc
 *.pdf.bak
+*.csl
 
 ## Intermediate documents:
 *.dvi
